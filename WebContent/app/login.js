@@ -2,17 +2,20 @@ Vue.component("log", {
 	data: function () {
 		    return {
 		      sc: null,
-		      user: null
+		      user: null,
+		      username: null,
+		      password: null
 		    }
 	},
 	template: ` 
 <div id="user" class="loginBox">
-	<h2>Prijava</h2>
+	<h2>Prijavawxssa</h2>
 	<form>
 		<div class="inputBox">
 			<input type="text" v-model="username">
 			<label>Korisnicko ime</label>
 		</div>
+		<label class="message1" style="color:red">{{korisnickoImeValidacija}}</label>
 		<div class="inputBox">
 			<input type="text" v-model="password">
 			<label>Lozinka</label>
@@ -22,7 +25,14 @@ Vue.component("log", {
 	
 </div>		  
 `
-	, 
+	,
+	computed: {
+		korisnickoImeValidacija: function(){
+			if(this.username === "1") return 'Korisnicko ime je obavezno polje.';
+			else return null;
+		},
+		
+	},
 	methods : {
 		init : function() {
 			this.sc = {};
