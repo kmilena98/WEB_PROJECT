@@ -9,16 +9,18 @@ Vue.component("log", {
 	},
 	template: ` 
 <div id="user" class="loginBox">
-	<h2>Prijavawxssa</h2>
+	<h2>Prijava</h2>
 	<form>
 		<div class="inputBox">
 			<input type="text" v-model="username">
-			<label>Korisnicko ime</label>
+			<p class="message1" style="color:red;font-size:12px">{{korisnickoImeValidacija}}</p>
+			<label>Korisnicko ime:</label>
 		</div>
-		<label class="message1" style="color:red">{{korisnickoImeValidacija}}</label>
+		
 		<div class="inputBox">
 			<input type="text" v-model="password">
-			<label>Lozinka</label>
+			<label>Lozinka:</label>
+			<p class="message2" font-size:20px style="color:red;font-size:12px">{{passwordValidacija}}</p>
 		</div>
 			<input type="submit" name="" value="Potvrdi" v-on:click="login(username, password)">
 	</form>
@@ -28,7 +30,10 @@ Vue.component("log", {
 	,
 	computed: {
 		korisnickoImeValidacija: function(){
-			if(this.username === "1") return 'Korisnicko ime je obavezno polje.';
+			if(this.username === '') return 'Korisnicko ime je obavezno polje!';
+			else return null;
+		},passwordValidacija: function(){
+			if(this.password === '') return 'Lozinka je obavezno polje!';
 			else return null;
 		},
 		

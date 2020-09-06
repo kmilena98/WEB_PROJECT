@@ -1,7 +1,11 @@
 Vue.component("reg", {
 	data: function () {
 		    return {
-		      sc: null
+		    	username: undefined,
+				name: undefined,
+				surname: undefined,
+				password: undefined,
+				gender: undefined	
 		    }
 	},
 	template: ` 
@@ -10,19 +14,23 @@ Vue.component("reg", {
 	<form>
 		<div class="inputBox">
 			<input type="text" v-model="username">
-			<label>Korisnicko ime</label>
+			<p class="message1" style="color:red;font-size:12px">{{korisnickoImeValidacija}}</p>
+			<label>Korisnicko ime: </label>
 		</div>
 		<div class="inputBox">
 			<input type="text" v-model="name">
-			<label>Ime</label>
+			<p class="message2" style="color:red;font-size:12px">{{imeValidacija}}</p>
+			<label>Ime:</label>
 		</div>
 		<div class="inputBox">
 			<input type="text" v-model="surname">
-			<label>Prezime</label>
+			<p class="message3" style="color:red;font-size:12px">{{prezimeValidacija}}</p>
+			<label>Prezime:</label>
 		</div>
 		<div class="inputBox">
 			<input type="password" v-model="password">
-			<label>Lozinka</label>
+			<p class="message4" style="color:red;font-size:12px">{{lozinkaValidacija}}</p>
+			<label>Lozinka:</label>
 		</div>
 		<div class="radioButton">
 			<label class="gender">Pol</label>
@@ -40,16 +48,38 @@ Vue.component("reg", {
 </div>			  
 `
 	, 
+	computed :{
+		korisnickoImeValidacija: function(){
+			if(this.username === '') return 'Korisnicko ime je obavezno polje.';
+			else return null;
+		},
+		lozinkaValidacija: function(){
+			if(this.password === '') return 'Lozinka je obavezno polje.';
+			else return null;
+		},
+		imeValidacija: function(){
+			if(this.name != undefined && this.name.length > 0){
+				let imeMatch = this.name.match('[A-Za-z ]*');
+				if(imeMatch != this.name) return 'Ime u sebi moze sadrzati iskljucivo slova.';
+				else if(this.name[0].match('[A-Z]') === null) return 'Ime mora pocinjati velikim slovom.'; 
+			}
+			else if(this.name === '') return 'Ime je obavezno polje.';
+			else return null;
+		},
+		prezimeValidacija: function(){
+			if(this.surname != undefined && this.surname.length > 0){
+				let prezimeMatch = this.surname.match('[A-Za-z ]*');
+				if(prezimeMatch != this.surname) return 'Prezimese u sebi moze sadrzati iskljucivo slova';
+				else if(this.surname[0].match('[A-Z]') === null) return 'Prezime mora pocinjati velikim slovom'; 
+			}
+			else if(this.surname === '') return 'Prezime je obavezno polje.';
+			else return null;
+		},
+	},
 	methods : {
 		init : function() {
 			this.sc = {};
 		}, 
-		/*clearSc : function () {
-			if (confirm('Da li ste sigurni?') == true) {
-				axios
-		          .post('rest/proizvodi/clearSc')
-		          .then(response => (this.init()))
-			},*/ 
 		registration : function(username, name, surname, password) {
 			//alert("radi")
 			axios
@@ -57,12 +87,4 @@ Vue.component("reg", {
 	          .then(response => (this.init()))
 		} 
 	}
-	/*mounted () {
-        axios
-          .get('rest/proizvodi/getJustSc')
-          .then(response => (this.sc = response.data));
-        axios
-        .get('rest/proizvodi/getTotal')
-        .then(response => (this.total = response.data));
-    }*/
 });
