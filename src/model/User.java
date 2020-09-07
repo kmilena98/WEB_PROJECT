@@ -12,14 +12,22 @@ public class User {
 	private Gender gender;
 	private Role role;
 	
-	/*public User(String username, String password, String name, String surname) {
+	public User() {
+		this.username = "";
+		this.password = "";
+		this.name = "";
+		this.surname = "";
+		
+		
+	}
+	public User(String username, String password, String name, String surname) {
 		//super();
 		this.username = username;
 		this.password = password;
 		this.name = name;
 		this.surname = surname;
 		
-	}*/
+	}
 	
 	public User(String username, String password, String name, String surname, Gender gender, Role role) {
 		super();

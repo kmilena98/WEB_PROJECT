@@ -45,29 +45,42 @@ public class Registration {
 		}
 		
 		@POST
-		@Path("/login")
+		@Path("/add")
 		@Consumes(MediaType.APPLICATION_JSON)
 		@Produces(MediaType.APPLICATION_JSON)
-		public Response login(User u) {
-			System.out.println("radi");
-			User ulogovani = (User) request.getSession().getAttribute("ulogovani");
+		public String registracija(User u) {
+			System.out.println("Korisnik je registrovan!");
+			return "Odradio!";
+			/*User ulogovani = (User) request.getSession().getAttribute("ulogovani");
 			if(ulogovani != null) {
-				return Response.status(400).entity("Vec ste se priavili.").build();
+				return Response.status(400).entity("Ne mozete registrovati novog korisnika dok ste prijavljeni").build();
 			}
+			if(u.getUsername().equals("") || u.getPassword().equals("") || u.getName().equals("") || u.getSurname().equals("")) {
+				return Response.status(400).entity("Niste popunili sva obavezna polja").build();
+			}
+
+			//java.util.regex.Pattern p = java.util.regex.Pattern.compile("[A-Z][a-zA-Z ]*");
+			//java.util.regex.Matcher m = p.matcher(k.getIme());
+			//if(!m.matches()) return Response.status(400).entity("Niste ispravno popunili sva polja forme").build();
+
+			//p = java.util.regex.Pattern.compile("[A-Z][a-zA-Z ]*");
+			//m = p.matcher(k.getPrezime());
+			//if(!m.matches()) return Response.status(400).entity("Niste ispravno popunili sva polja forme").build();
 			
-			if(u.getUsername().equals("") || u.getPassword().equals(""))
-				return Response.status(400).entity("Niste unijeli sva obavezvna polja").build();
+			//p = java.util.regex.Pattern.compile("[A-Z][a-zA-Z ]*");
+			//m = p.matcher(k.getGrad());
+			//if(!m.matches()) return Response.status(400).entity("Niste ispravno popunili sva polja forme").build();
 			
-			Users users = (Users) ctx.getAttribute("users");
+			Users users = (Users) ctx.getAttribute("korisnici");
 			HashMap<String, User> mapa = users.getUsers();
 			
-			User postoji = (User)mapa.get(u.getUsername());
-			if(postoji != null && postoji.getPassword().equals(u.getPassword())) {
-				request.getSession().setAttribute("ulogovani", postoji);
+			if(!mapa.containsKey(u.getUsername())) {
+				users.dodaj(u);
 				return Response.status(200).build();
 			}
-			else
-				return Response.status(400).entity("Pogresno korisnicko ime ili lozinka").build();
+			else {
+				return Response.status(400).entity("Korisnicko ime koje ste unijeli vec postoji.").build();
+			}*/
 		}
 		
 }

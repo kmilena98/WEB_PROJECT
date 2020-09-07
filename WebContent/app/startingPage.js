@@ -8,7 +8,6 @@ Vue.component("start", {
 <div>
 	
 	<div class="header">
-		<img src="app/images/l.jpg"/>
 		<h1>Rezervacija apartmana </h1>
 		<p>Izaberite svoju najbolju ponudu iz snova!</p>
 	</div>

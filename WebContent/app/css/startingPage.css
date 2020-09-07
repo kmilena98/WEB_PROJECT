@@ -8,14 +8,13 @@ body {
   background-color: #f1f1f1;
   padding: 20px;
   text-align: center;
-  background-image: url(images/l.jpg);
   background-size: cover;
 }
 
-/*.header img{
+.header img{
 	height: 30%;
 	width: 30%;
-}*/
+}
 
 /* Style the top navigation bar */
 .topnav {

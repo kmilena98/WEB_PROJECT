@@ -43,7 +43,7 @@ Vue.component("reg", {
   				<span></span>
   			</label>
   		</div>
-			<input type="submit" name="" value="Potvrdi" v-on:click="registration(username, name, surname, password)">
+			<input type="submit" name="" value="Potvrdi" v-on:click="registration()">
 	</form>	
 </div>			  
 `
@@ -80,8 +80,26 @@ Vue.component("reg", {
 		init : function() {
 			this.sc = {};
 		}, 
-		registration : function(username, name, surname, password) {
-			//alert("radi")
-		} 
+		registration : function() {
+			
+			var u = {
+					'username': this.username,
+					'password': this.password,
+					'name': this.name,
+					'surname': this.surname,
+				};
+			alert("radi!");
+		    axios.post('rest/registracija/add', u)
+        	
+            .then(function (response) {
+            	alert(response.data);
+				window.location.href = '#/sa';
+
+            })
+            .catch(function (error) {
+            	alert("usao u exaption!");
+                alert(error.response.data);
+		});
+		},
 	}
 });
