@@ -22,7 +22,7 @@ Vue.component("log", {
 			<label>Lozinka:</label>
 			<p class="message2" font-size:20px style="color:red;font-size:12px">{{passwordValidacija}}</p>
 		</div>
-			<input type="submit" name="" value="Potvrdi" v-on:click="login(username, password)">
+			<input type="submit" name="" value="Potvrdi" v-on:click.prevent="login">
 	</form>
 	
 </div>		  
@@ -30,7 +30,7 @@ Vue.component("log", {
 	,
 	computed: {
 		korisnickoImeValidacija: function(){
-			if(this.username === '') return 'Korisnicko ime je obavezno polje!';
+			if(this.username === '') return 'Korisnicko ime je obavezno polje 1!';
 			else return null;
 		},passwordValidacija: function(){
 			if(this.password === '') return 'Lozinka je obavezno polje!';
@@ -42,27 +42,43 @@ Vue.component("log", {
 		init : function() {
 			this.sc = {};
 		}, 
-		/*clearSc : function () {
-			if (confirm('Da li ste sigurni?') == true) {
-				axios
-		          .post('rest/proizvodi/clearSc')
-		          .then(response => (this.init()))
+		 login(){
+			//alert("Hello! !");
+            var user = {
+                'korisnickoIme': this.username,
+                'lozinka': this.password,
+                'ime': '',
+				'prezime': '',
+				'uloga': 'GUEST',
+				'gender':'MALE',
+            };
+            
+            var ok = true;
+            
+            if(this.username != undefined) this.username.trim();
+			else this.username = '';
+
+            if(this.password != undefined) this.password.trim();
+			else this.password = '';
+           
+			if(this.username === undefined || this.username === '' || this.password === undefined || this.password === ''){
+				ok = false;
 			}
-		},*/
-		
-		login : function(username, password) {
-			//alert("radi")
-			axios
-	          .post('rest/proizvodi/getJustSc')
-	          .then(response => (this.sc = response.data));
-		}
-	}/*,
-	mounted () {
-        axios
-          .get('rest/proizvodi/getJustSc')
-          .then(response => (this.sc = response.data));
-        axios
-        .get('rest/proizvodi/getTotal')
-        .then(response => (this.total = response.data));
-    }*/
+			else{
+				ok = true;
+			}
+			alert(this.username);
+			if(ok){
+				//alert("Hello! I am an alert box!!");
+				alert(user.korisnickoIme);
+				axios.post('rest/registracija/login', user)
+                .then(function (response) {
+						window.location.href = "pr.html";
+                })
+                .catch(function (error) {
+                    alert(error.response.data);
+                });
+			}
+        }        
+	}
 });

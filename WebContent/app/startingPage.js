@@ -16,6 +16,7 @@ Vue.component("start", {
 <div class="topnav">
   <a href="#/sc">Prijava</a>
   <a href="#/ss">Registracija</a>
+  <a href="#/sa">Proba</a>
 </div>
 
 <div class="row">

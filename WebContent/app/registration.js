@@ -82,9 +82,6 @@ Vue.component("reg", {
 		}, 
 		registration : function(username, name, surname, password) {
 			//alert("radi")
-			axios
-	          .post('rest/proizvodi/clearSc')
-	          .then(response => (this.init()))
 		} 
 	}
 });
