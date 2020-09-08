@@ -83,4 +83,30 @@ public class Registration {
 			}*/
 		}
 		
+		@POST
+		@Path("/login")
+		@Consumes(MediaType.APPLICATION_JSON)
+		@Produces(MediaType.APPLICATION_JSON)
+		public /*Response*/String login(User u) {
+			return "Odradio!";
+			/*User ulogovani = (User) request.getSession().getAttribute("ulogovani");
+			if(ulogovani != null) {
+				return Response.status(400).entity("Vec ste prijavljeni.").build();
+			}
+			
+			if(u.getUsername().equals("") || u.getPassword().equals(""))
+				return Response.status(400).entity("Niste unijeli sva obavezvna polja").build();
+			
+			Users users = (Users) ctx.getAttribute("korisnici");
+			HashMap<String, User> mapa = users.getUsers();
+			
+			User postoji = (User)mapa.get(u.getUsername());
+			if(postoji != null && postoji.getPassword().equals(u.getPassword())) {
+				request.getSession().setAttribute("ulogovani", postoji);
+				return Response.status(200).build();
+			}
+			else
+				return Response.status(400).entity("Pogresno korisnicko ime ili lozinka").build();*/
+		}
+		
 }

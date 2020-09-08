@@ -18,7 +18,7 @@ Vue.component("log", {
 		</div>
 		
 		<div class="inputBox">
-			<input type="text" v-model="password">
+			<input type="password" v-model="password">
 			<label>Lozinka:</label>
 			<p class="message2" font-size:20px style="color:red;font-size:12px">{{passwordValidacija}}</p>
 		</div>
@@ -45,11 +45,11 @@ Vue.component("log", {
 		 login(){
 			//alert("Hello! !");
             var user = {
-                'korisnickoIme': this.username,
-                'lozinka': this.password,
-                'ime': '',
-				'prezime': '',
-				'uloga': 'GUEST',
+                'username': this.username,
+                'password': this.password,
+                'name': '',
+				'surname': '',
+				'role': 'GUEST',
 				'gender':'MALE',
             };
             
@@ -73,7 +73,7 @@ Vue.component("log", {
 				alert(user.korisnickoIme);
 				axios.post('rest/registracija/login', user)
                 .then(function (response) {
-						window.location.href = "pr.html";
+						window.location.href = "#/sa";
                 })
                 .catch(function (error) {
                     alert(error.response.data);

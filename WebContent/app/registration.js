@@ -94,7 +94,7 @@ Vue.component("reg", {
             .then(function (response) {
             	//alert("bla");
             	//alert(response.data);
-				location.href = '#/sa';
+				window.location.href = '#/sa';
 
             })
             .catch(function (error) {
