@@ -2,6 +2,8 @@ const Start = { template: '<start></start>' }
 const LogIn = { template: '<log></log>' }
 const Reg = { template: '<reg></reg>' }
 const Logged = { template: '<logged></logged>' }
+const Apartment = { template: '<ap></ap>' }
+const PersonalData = { template: '<pr></pr>' }
 
 const router = new VueRouter({
 	  mode: 'hash',
@@ -9,7 +11,9 @@ const router = new VueRouter({
 	    { path: '/', component: Start},
 	    { path: '/sc', component: LogIn },
 	    { path: '/ss', component: Reg },
-	    { path: '/sa', component: Logged }
+	    { path: '/sa', component: Logged },
+	    { path: '/sb', component: Apartment },
+	    { path: '/sd', component: PersonalData }
 	  ]
 });
 

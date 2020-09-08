@@ -1,0 +1,122 @@
+body{
+	margin: 0;
+	padding: 0;
+	background-image: url(images/blue1.jpg);
+	background-size: cover;
+	background-position: center;
+	font-family: sans-serif;
+}
+
+.header {
+  background-color: #f1f1f1;
+  padding: 20px;
+  text-align: center;
+  background-image: url(images/l.jpg);
+  background-size: cover;
+}
+
+.l h2{
+	margin: 30px 20px 40px;
+	padding: 0;
+}
+
+.table tr, .table td input{
+	height: 25px;
+	width: 200px;
+}
+
+.table tr .radioButton, .table td .radio input{
+	height: 25px;
+	width: 200px;
+}
+
+.table tr, .table td input[type="radio"]{
+	height: 17px;
+	width: 17px;
+}
+
+/*.table  .radioButton td{
+	height: 15px;
+	width: 20px;
+}*/
+
+.table .radioButton .radio label input{
+	margin-left: 30px;
+}
+
+.table .radioButton .radio + .radio{
+	margin-left: 60px;
+}
+
+.tabletr, .table td button {
+	background: transparent;
+	border: none;
+	outline: none;
+	color: #fff;
+	background: #03a9f4;
+	padding: 10px 10px;
+	cursor: pointer;
+	border-radius: 5px;
+	margin-top: 20px;
+	
+}
+
+/*.table tr .radioButton, .table td{
+	height: 15px;
+	width: 20px;
+}
+
+.table tr .radioButton{
+	margin: 0 20px 20px 0;
+}
+
+.table .radioButton .radio{
+		font-size: 15px;
+		font-weight: 500;
+		text-transform: capitalize;
+		display: inline-block;
+		vertical-align: middle;
+		color: #fff;
+		position: relative;
+		padding-left: 38px;
+		cursor: pointer;
+}
+
+.table .radioButton .radio + .radio{
+	margin-left: 60px;
+}
+
+.table .radioButton .radio input[type="radio"]{
+	display: none;
+}
+
+.table .radioButton .radio span{
+	height: 10px;
+	width: 10px;
+	border-radius: 50%;
+	border: 2px solid #00aeef;
+	display: block;
+	position: absolute;
+	left: 18px;
+	top: 2px;
+}
+
+.table .radioButton .radio span:after{
+	content: "";
+	height: 5px;
+	width: 5px;
+	background: #00aeef;
+	display: block;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%) scale(0);
+	border-radius: 50%;
+	transition: 300ms ease-in-out 0s;
+	
+}
+
+.table .radioButton .radio input[type="radio"]:checked ~ span:after{
+	transform: translate(-50%, -50%) scale(1);
+}
+*/

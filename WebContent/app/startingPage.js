@@ -8,14 +8,19 @@ Vue.component("start", {
 <div>
 	
 	<div class="header">
+		<img src="v.png">
 		<h1>Rezervacija apartmana </h1>
 		<p>Izaberite svoju najbolju ponudu iz snova!</p>
 	</div>
 
 <div class="topnav">
-  <a href="#/sc">Prijava</a>
-  <a href="#/ss">Registracija</a>
-  <a href="#/sa">Proba</a>
+	<a href="#/sa">Proba</a>
+	<a href="#/sb">Apartmani</a>
+	<div class="topnav-right">
+		<a href="#/sc">Prijava</a>
+		<a href="#/ss">Registracija</a>
+		<a href="#/sd">Moj profil</a>
+	</div>
 </div>
 
 <div class="row">
@@ -35,7 +40,6 @@ Vue.component("start", {
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
   </div>
 </div>
-
 <div class="footer">
   <p>Footer</p>
 </div>
