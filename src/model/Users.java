@@ -39,7 +39,18 @@ public class Users {
 	}
 	
 	public void sacuvajKorisnike(String path) {
+		String current;
+		try {
+			current = new java.io.File( "." ).getCanonicalPath();
+			System.out.println("Current dir:"+current);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        
+        
 		String putanja = path + "podaci\\users.json";
+		System.out.println("Putanja je :"+ putanja);
 		File f = new File(putanja);
 		FileWriter fileWriter = null;
 		try {

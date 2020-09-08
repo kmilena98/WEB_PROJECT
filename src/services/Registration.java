@@ -48,17 +48,16 @@ public class Registration {
 		@Path("/add")
 		@Consumes(MediaType.APPLICATION_JSON)
 		@Produces(MediaType.APPLICATION_JSON)
-		public String registracija(User u) {
-			System.out.println("Korisnik je registrovan!");
-			return "Odradio!";
-			/*User ulogovani = (User) request.getSession().getAttribute("ulogovani");
+		public Response registracija(User u) {
+			System.out.println("Korisnik je :" + u.getName()+ u.getSurname());
+			User ulogovani = (User) request.getSession().getAttribute("ulogovani");
 			if(ulogovani != null) {
 				return Response.status(400).entity("Ne mozete registrovati novog korisnika dok ste prijavljeni").build();
 			}
 			if(u.getUsername().equals("") || u.getPassword().equals("") || u.getName().equals("") || u.getSurname().equals("")) {
 				return Response.status(400).entity("Niste popunili sva obavezna polja").build();
 			}
-
+			
 			//java.util.regex.Pattern p = java.util.regex.Pattern.compile("[A-Z][a-zA-Z ]*");
 			//java.util.regex.Matcher m = p.matcher(k.getIme());
 			//if(!m.matches()) return Response.status(400).entity("Niste ispravno popunili sva polja forme").build();
@@ -70,17 +69,16 @@ public class Registration {
 			//p = java.util.regex.Pattern.compile("[A-Z][a-zA-Z ]*");
 			//m = p.matcher(k.getGrad());
 			//if(!m.matches()) return Response.status(400).entity("Niste ispravno popunili sva polja forme").build();
-			
-			Users users = (Users) ctx.getAttribute("korisnici");
-			HashMap<String, User> mapa = users.getUsers();
-			
+			Users users = (Users) ctx.getAttribute("users");
+			HashMap<String, User>  mapa = users.getUsers();
+			// proveri dal dobro radi dodavanje, jer dodaje u users a ne setuje atribut opet..
 			if(!mapa.containsKey(u.getUsername())) {
 				users.dodaj(u);
 				return Response.status(200).build();
 			}
 			else {
 				return Response.status(400).entity("Korisnicko ime koje ste unijeli vec postoji.").build();
-			}*/
+			}
 		}
 		
 		@POST

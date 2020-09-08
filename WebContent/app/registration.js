@@ -35,11 +35,11 @@ Vue.component("reg", {
 		<div class="radioButton">
 			<label class="gender">Pol</label>
 			<label class="radio">
-				<input type="radio" name="gender" value="male" checked="checked"> Male
+				<input type="radio" id = "radio1" name="gender" value="MALE" > Male
   				<span></span>
   			</label>
   			<label class="radio">
-  				<input type="radio" name="gender" value="female"> Female<br>
+  				<input type="radio" name="gender" value="FEMALE"checked="checked" > Female<br>
   				<span></span>
   			</label>
   		</div>
@@ -81,12 +81,18 @@ Vue.component("reg", {
 			this.sc = {};
 		}, 
 		registration : function() {
-			
+				if(document.getElementById('radio1').checked){
+					this.gender = "MALE";
+				}else{
+					this.gender = "FEMALE";
+				}
+				alert(this.gender);
 			var u = {
 					'username': this.username,
 					'password': this.password,
 					'name': this.name,
 					'surname': this.surname,
+					'gender' : this.gender
 				};
 			alert("radi!");
 		    axios.post('rest/registracija/add', u)
@@ -94,7 +100,7 @@ Vue.component("reg", {
             .then(function (response) {
             	//alert("bla");
             	//alert(response.data);
-				window.location.href = '#/sa';
+				window.location.href = '#/g';
 
             })
             .catch(function (error) {

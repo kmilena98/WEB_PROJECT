@@ -1,4 +1,5 @@
 const Start = { template: '<start></start>' }
+const Guest = { template: '<guest></guest>' }
 const LogIn = { template: '<log></log>' }
 const Reg = { template: '<reg></reg>' }
 const Logged = { template: '<logged></logged>' }
@@ -12,6 +13,7 @@ const router = new VueRouter({
 	    { path: '/sc', component: LogIn },
 	    { path: '/ss', component: Reg },
 	    { path: '/sa', component: Logged },
+	    { path: '/g', component: Guest },
 	    { path: '/sb', component: Apartment },
 	    { path: '/sd', component: PersonalData }
 	  ]
