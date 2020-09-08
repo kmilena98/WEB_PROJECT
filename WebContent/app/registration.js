@@ -43,7 +43,7 @@ Vue.component("reg", {
   				<span></span>
   			</label>
   		</div>
-			<input type="submit" name="" value="Potvrdi" v-on:click="registration()">
+			<input type="reset" name="" value="Potvrdi" v-on:click="registration()">
 	</form>	
 </div>			  
 `
@@ -92,8 +92,9 @@ Vue.component("reg", {
 		    axios.post('rest/registracija/add', u)
         	
             .then(function (response) {
-            	alert(response.data);
-				window.location.href = '#/sa';
+            	//alert("bla");
+            	//alert(response.data);
+				location.href = '#/sa';
 
             })
             .catch(function (error) {
