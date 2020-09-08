@@ -8,7 +8,7 @@ Vue.component("start", {
 <div>
 	
 	<div class="header">
-		<img src="v.png">
+		<img class="image" src="images/l.jpg" style="width:150px;height:100px;">
 		<h1>Rezervacija apartmana </h1>
 		<p>Izaberite svoju najbolju ponudu iz snova!</p>
 	</div>

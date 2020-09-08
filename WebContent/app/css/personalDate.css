@@ -8,10 +8,9 @@ body{
 }
 
 .header {
-  background-color: #f1f1f1;
+  background-color: white;
   padding: 20px;
   text-align: center;
-  background-image: url(images/l.jpg);
   background-size: cover;
 }
 

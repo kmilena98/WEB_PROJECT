@@ -5,10 +5,18 @@ body {
 
 /* Style the header */
 .header {
-  background-color: #f1f1f1;
   padding: 20px;
   text-align: center;
   background-size: cover;
+  background-color: white;
+}
+
+.header h1{
+	font-size: 23px;
+}
+
+.header p{
+	font-size: 15px;
 }
 
 .header img{

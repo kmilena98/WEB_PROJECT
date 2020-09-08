@@ -9,17 +9,12 @@ body{
 
 /* Style the header */
 .header {
-  background-color: #f1f1f1;
+  background-color: white;
   padding: 20px;
   text-align: center;
-  background-image: url(images/l.jpg);
   background-size: cover;
 }
 
-/*.header img{
-	height: 30%;
-	width: 30%;
-}*/
 
 /* Add a black background color to the top navigation */
 .topnav {
@@ -55,7 +50,7 @@ body{
 }
 .main {
   position: absolute;
-    top:40%;
+    top:47%;
     right: 40%;
     z-index: 999;
 }

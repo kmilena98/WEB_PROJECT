@@ -11,7 +11,7 @@ Vue.component("pr", {
 	template: ` 
 <div>
 	<div class="header">
-		<img src="app/images/l.jpg"/>
+		<img class="image" src="images/l.jpg" style="width:150px;height:100px;">
 		<h1>Rezervacija apartmana </h1>
 		<p>Izaberite svoju najbolju ponudu iz snova!</p>
 	</div>
