@@ -42,14 +42,15 @@ public class Users {
 	}
 	
 	public void loadUsers(String path) {
-		String putanja = path + "podaci\\korisnici.json";
+		String putanja = path + "podaci\\users.json";
+		System.out.println("putanja za citanje je : "+putanja);
 		FileWriter fileWriter = null;
 		BufferedReader in = null;
 		File file = null;
 		try {
 			file = new File(putanja);
 			in = new BufferedReader(new FileReader(file));
-
+			
 			ObjectMapper objectMapper = new ObjectMapper();
 			objectMapper.setVisibilityChecker(
 					VisibilityChecker.Std.defaultInstance().withFieldVisibility(JsonAutoDetect.Visibility.ANY));
@@ -58,16 +59,19 @@ public class Users {
 			objectMapper.getFactory().configure(JsonGenerator.Feature.ESCAPE_NON_ASCII, true);
 			@SuppressWarnings("unchecked")
 			HashMap<String, Object> podaci = (HashMap<String, Object>) objectMapper.readValue(file, type);
+			System.out.println("korisnici su :" + podaci.size()
+			);
 			for (Map.Entry<String, Object> par : podaci.entrySet()) {
 				ObjectMapper mapper = new ObjectMapper();
 				String jsonInString = (String) par.toString();
-				User u;
-				if(jsonInString.contains("role=GUEST,"))
+				User u = mapper.convertValue(par.getValue(), User.class);
+				System.out.println("pretvorio se u usera!");
+				/*if(jsonInString.contains("role=GUEST,"))
 		            u = mapper.convertValue(par.getValue(), Guest.class);
 				else if(jsonInString.contains("role=HOST,"))
 					 u = mapper.convertValue(par.getValue(),Host.class);
 				else 
-					 u = mapper.convertValue(par.getValue(),Administrator.class);
+					 u = mapper.convertValue(par.getValue(),Administrator.class);*/
 				users.put(u.getUsername(), u);
 			}
 
@@ -117,6 +121,8 @@ public class Users {
 		}
         
 		String putanja = path + "podaci\\users.json";
+
+		System.out.println("putanja za upis je : "+putanja);
 		File f = new File(putanja);
 		FileWriter fileWriter = null;
 		try {

@@ -128,5 +128,46 @@ Vue.component("pr", {
 		registration : function(username, name, surname, password) {
 			//alert("radi")
 		} 
-	}
+	},
+	mounted(){
+
+        axios
+            .get('rest/korisnici/ulogovani')
+            .then(response =>{
+	        	this.korisnik = response.data;
+	        	if(this.korisnik.uloga === 'Prodavac'){
+                    this.prodavac = true;    
+                    this.admin = false;    		
+                    this.kupac = false;
+                }
+                else if(this.korisnik.uloga === 'Administrator'){
+                    this.admin = true;
+                    this.prodavac = false;
+                    this.kupac = false;
+                }
+                else if(this.korisnik.uloga === 'Kupac'){
+                    this.prodavac = false;
+                    this.admin = false;
+					this.kupac = true;
+					this.korisnickoIme = this.korisnik.korisnickoIme;
+                }
+                else{
+                    this.prodavac = false;
+                    this.admin = false;
+                    this.kupac = false;
+                }
+    	    })
+	        .catch(error => {
+    	        alert("Doslo je do greske prilikom ucitavanja prijavljenog");
+    	    })
+
+		axios
+        .get('rest/oglasi')
+        .then(response =>{
+        	this.oglasi = response.data;
+        })
+        .catch(error => {
+            alert("Doslo je do greske prilikom ucitavanja oglasa");
+        })
+	},
 });
