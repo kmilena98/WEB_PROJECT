@@ -1,0 +1,10 @@
+{
+  "mix" : {
+    "username" : "mix",
+    "password" : "mix",
+    "name" : "Mix",
+    "surname" : "Mix",
+    "gender" : "FEMALE",
+    "role" : "GUEST"
+  }
+}
