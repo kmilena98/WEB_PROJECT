@@ -1,7 +1,6 @@
 Vue.component("log", {
 	data: function () {
 		    return {
-		      sc: null,
 		      user: null,
 		      username: null,
 		      password: null
@@ -69,13 +68,15 @@ Vue.component("log", {
 			}
 			alert(this.username);
 			if(ok){
-				//alert("Hello! I am an alert box!!");
-				alert(user.korisnickoIme);
+				alert("Dosao do ajax poziva")
+				alert(user.username);
 				axios.post('rest/registracija/login', user)
                 .then(function (response) {
-						window.location.href = "#/sa";
+						window.location.href = "#/g";
                 })
+                alert()
                 .catch(function (error) {
+                	alert("usao u exaption");
                     alert(error.response.data);
                 });
 			}

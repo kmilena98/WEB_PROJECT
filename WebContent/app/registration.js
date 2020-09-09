@@ -100,9 +100,8 @@ Vue.component("reg", {
 		    axios.post('rest/registracija/add', u)
         	
             .then(function (response) {
-            	//alert("bla");
-            	//alert(response.data);
-				window.location.href = '#/g';
+            	alert("Uspesno ste se registrovali.");
+				window.location.href = '#/sc';
 
             })
             .catch(function (error) {

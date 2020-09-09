@@ -1,13 +1,22 @@
 package model;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
+import com.fasterxml.jackson.databind.type.MapType;
+import com.fasterxml.jackson.databind.type.TypeFactory;
+
 
 
 public class Users {
@@ -16,14 +25,8 @@ public class Users {
 	public Users(String path) {
 		this.users = new HashMap<String, User>();
 		this.path = path;
-		/*users.put("a", new User("a","123","Milos","Markovic",Gender.MALE,Role.HOST));
-		users.put("b", new User("b","223"," Nikola","Ivic",Gender.MALE,Role.ADMINISTRATOR));
-		users.put("c", new User("c","323","Marko","Jakov",Gender.MALE,Role.GUEST));
-		users.put("d", new User("d","423","Nikolina","Boskovic",Gender.FEMALE,Role.HOST));
-		users.put("e", new User("e","523","Andjela","Nikcevic",Gender.FEMALE,Role.GUEST));
-		users.put("f", new User("f","623","Milica","Jon",Gender.FEMALE,Role.GUEST));
-		users.put("g", new User("g","723","Ivona","Zubac",Gender.FEMALE,Role.GUEST));
-		users.put("h", new User("h","823","Leki","Kovacevic",Gender.MALE,Role.GUEST));*/
+		loadUsers(path);
+		System.out.println("Ucitao korisnike iz fajla!"+ users.size());
 	}
 	
 	public HashMap<String, User> getUsers() {
@@ -38,19 +41,82 @@ public class Users {
 		sacuvajKorisnike(path);
 	}
 	
+	public void loadUsers(String path) {
+		String putanja = path + "podaci\\korisnici.json";
+		FileWriter fileWriter = null;
+		BufferedReader in = null;
+		File file = null;
+		try {
+			file = new File(putanja);
+			in = new BufferedReader(new FileReader(file));
+
+			ObjectMapper objectMapper = new ObjectMapper();
+			objectMapper.setVisibilityChecker(
+					VisibilityChecker.Std.defaultInstance().withFieldVisibility(JsonAutoDetect.Visibility.ANY));
+			TypeFactory factory = TypeFactory.defaultInstance();
+			MapType type = factory.constructMapType(HashMap.class, String.class, Object.class);
+			objectMapper.getFactory().configure(JsonGenerator.Feature.ESCAPE_NON_ASCII, true);
+			@SuppressWarnings("unchecked")
+			HashMap<String, Object> podaci = (HashMap<String, Object>) objectMapper.readValue(file, type);
+			for (Map.Entry<String, Object> par : podaci.entrySet()) {
+				ObjectMapper mapper = new ObjectMapper();
+				String jsonInString = (String) par.toString();
+				User u;
+				if(jsonInString.contains("role=GUEST,"))
+		            u = mapper.convertValue(par.getValue(), Guest.class);
+				else if(jsonInString.contains("role=HOST,"))
+					 u = mapper.convertValue(par.getValue(),Host.class);
+				else 
+					 u = mapper.convertValue(par.getValue(),Administrator.class);
+				users.put(u.getUsername(), u);
+			}
+
+		} catch (FileNotFoundException fnfe) {
+			try {
+				file.createNewFile();
+				fileWriter = new FileWriter(file);
+				ObjectMapper objectMapper = new ObjectMapper();
+				objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+				objectMapper.getFactory().configure(JsonGenerator.Feature.ESCAPE_NON_ASCII, true);
+				String stringUsers = objectMapper.writeValueAsString(users);
+				fileWriter.write(stringUsers);
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				if (fileWriter != null) {
+					try {
+						fileWriter.close();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			if (in != null) {
+				try {
+					in.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	
 	public void sacuvajKorisnike(String path) {
 		String current;
 		try {
 			current = new java.io.File( "." ).getCanonicalPath();
-			System.out.println("Current dir:"+current);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
         
-        
 		String putanja = path + "podaci\\users.json";
-		System.out.println("Putanja je :"+ putanja);
 		File f = new File(putanja);
 		FileWriter fileWriter = null;
 		try {

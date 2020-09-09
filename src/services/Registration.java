@@ -49,7 +49,6 @@ public class Registration {
 		@Consumes(MediaType.APPLICATION_JSON)
 		@Produces(MediaType.APPLICATION_JSON)
 		public Response registracija(User u) {
-			System.out.println("Korisnik je :" + u.getName()+ u.getSurname());
 			User ulogovani = (User) request.getSession().getAttribute("ulogovani");
 			if(ulogovani != null) {
 				return Response.status(400).entity("Ne mozete registrovati novog korisnika dok ste prijavljeni").build();
@@ -58,20 +57,17 @@ public class Registration {
 				return Response.status(400).entity("Niste popunili sva obavezna polja").build();
 			}
 			
-			//java.util.regex.Pattern p = java.util.regex.Pattern.compile("[A-Z][a-zA-Z ]*");
-			//java.util.regex.Matcher m = p.matcher(k.getIme());
-			//if(!m.matches()) return Response.status(400).entity("Niste ispravno popunili sva polja forme").build();
+			java.util.regex.Pattern p = java.util.regex.Pattern.compile("[A-Z][a-zA-Z ]*");
+			java.util.regex.Matcher m = p.matcher(u.getName());
+			if(!m.matches()) return Response.status(400).entity("Niste ispravno popunili sva polja forme").build();
 
-			//p = java.util.regex.Pattern.compile("[A-Z][a-zA-Z ]*");
-			//m = p.matcher(k.getPrezime());
-			//if(!m.matches()) return Response.status(400).entity("Niste ispravno popunili sva polja forme").build();
+			p = java.util.regex.Pattern.compile("[A-Z][a-zA-Z ]*");
+			m = p.matcher(u.getSurname());
+			if(!m.matches()) return Response.status(400).entity("Niste ispravno popunili sva polja forme").build();
 			
-			//p = java.util.regex.Pattern.compile("[A-Z][a-zA-Z ]*");
-			//m = p.matcher(k.getGrad());
 			//if(!m.matches()) return Response.status(400).entity("Niste ispravno popunili sva polja forme").build();
 			Users users = (Users) ctx.getAttribute("users");
 			HashMap<String, User>  mapa = users.getUsers();
-			// proveri dal dobro radi dodavanje, jer dodaje u users a ne setuje atribut opet..
 			if(!mapa.containsKey(u.getUsername())) {
 				users.dodaj(u);
 				return Response.status(200).build();
@@ -85,9 +81,9 @@ public class Registration {
 		@Path("/login")
 		@Consumes(MediaType.APPLICATION_JSON)
 		@Produces(MediaType.APPLICATION_JSON)
-		public /*Response*/String login(User u) {
-			return "Odradio!";
-			/*User ulogovani = (User) request.getSession().getAttribute("ulogovani");
+		public Response login(User u) {
+			System.out.println("usao u login");
+			User ulogovani = (User) request.getSession().getAttribute("ulogovani");
 			if(ulogovani != null) {
 				return Response.status(400).entity("Vec ste prijavljeni.").build();
 			}
@@ -95,16 +91,29 @@ public class Registration {
 			if(u.getUsername().equals("") || u.getPassword().equals(""))
 				return Response.status(400).entity("Niste unijeli sva obavezvna polja").build();
 			
-			Users users = (Users) ctx.getAttribute("korisnici");
+			Users users = (Users) ctx.getAttribute("users");
 			HashMap<String, User> mapa = users.getUsers();
-			
+			System.out.println("uzela korisnike!"+ mapa.size());
 			User postoji = (User)mapa.get(u.getUsername());
 			if(postoji != null && postoji.getPassword().equals(u.getPassword())) {
 				request.getSession().setAttribute("ulogovani", postoji);
+				System.out.println("zavrsio login uspesno");
 				return Response.status(200).build();
 			}
-			else
-				return Response.status(400).entity("Pogresno korisnicko ime ili lozinka").build();*/
+			else 				
+				return Response.status(400).entity("Pogresno korisnicko ime ili lozinka").build();
+		}
+		
+		@POST
+		@Path("/logout")
+		@Produces(MediaType.APPLICATION_JSON)
+		public Response logout() {
+			User ulogovani = (User) request.getSession().getAttribute("ulogovani");
+			if(ulogovani == null) {
+				return Response.status(400).entity("Niko nije prijavljen.").build();
+			}
+			request.getSession().invalidate();
+			return Response.status(200).build();
 		}
 		
 }

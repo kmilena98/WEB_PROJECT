@@ -65,7 +65,7 @@ Vue.component("guest", {
 <div>
 	
 	<div class="header">
-		<img src="v.png">
+		<img class="image" src="images/l.jpg" style="width:150px;height:100px;">
 		<h1>Rezervacija apartmana </h1>
 		<p>Izaberite svoju najbolju ponudu iz snova!</p>
 	</div>
@@ -75,7 +75,7 @@ Vue.component("guest", {
 	<a href="#/sb">Apartmani</a>
 	<div class="topnav-right">
 		<a href="#/sd">Moj profil</a>
-		<a href="#/">Odjava</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
 	</div>
 </div>
 
@@ -105,6 +105,21 @@ Vue.component("guest", {
 `
 	, 
 	methods : {
+		logout : function() {
+		alert("radi!");
+	    axios.post('rest/registracija/logout')
+    	
+        .then(function (response) {
+        	//alert("dosao do loogouta");
+			window.location.href = '#/';
+
+        })
+        .catch(function (error) {
+        	alert("usao u exaption!");
+            alert(error.response.data);
+	});
+	},
+
 		
 	},
 	mounted () {
