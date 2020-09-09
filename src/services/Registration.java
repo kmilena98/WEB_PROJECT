@@ -20,12 +20,6 @@ import model.Users;
 @Path ("/registracija")
 public class Registration {
 		
-	@GET
-	@Path("/test")
-	@Produces(MediaType.APPLICATION_JSON)
-	public String test() {
-		return "REST rulez!";
-	}
 	
 		@Context
 		ServletContext ctx;
@@ -43,6 +37,20 @@ public class Registration {
 				ctx.setAttribute("users", new Users(contextPath));
 			}
 		}
+		
+		
+		@GET
+		@Path("/ulogovani")
+		@Consumes(MediaType.APPLICATION_JSON)
+		@Produces(MediaType.APPLICATION_JSON)
+		public User login() {
+			System.out.println("Usao u rest");
+			User u = (User) request.getSession().getAttribute("ulogovani");
+			System.out.println("RESTTTTTTTTTTTTTTTKorisnik koji je ulogovan je :"+ u.getName());
+			return u;
+		}
+		
+		
 		
 		@POST
 		@Path("/add")

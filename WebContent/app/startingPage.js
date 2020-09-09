@@ -74,7 +74,7 @@ Vue.component("guest", {
 	<a href="#/sa">Proba</a>
 	<a href="#/sb">Apartmani</a>
 	<div class="topnav-right">
-		<a href="#/sd">Moj profil</a>
+		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
 	</div>
 </div>
