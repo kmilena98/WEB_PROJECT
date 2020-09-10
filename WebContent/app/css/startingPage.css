@@ -11,8 +11,9 @@ body {
   background-color: white;
 }
 
-.header h1{
-	font-size: 23px;
+.header h1,p{
+	font-size: 24px;
+	font-family: serif;
 }
 
 .header p{
@@ -23,6 +24,7 @@ body {
 	height: 30%;
 	width: 30%;
 }
+
 
 /* Style the top navigation bar */
 .topnav {
