@@ -20,6 +20,7 @@ Vue.component("pr", {
 			this.surname = this.user.surname;
 			this.password = this.user.password;
 			this.gender = this.user.gender;
+			this.role = this.user.role;
         })
         .catch(error => {
             alert("Doslo je do greske prilikom ucitavanja korisnika");
@@ -82,6 +83,12 @@ Vue.component("pr", {
 				 <tr><td>&nbsp;</td><td>&nbsp;</td>
                     <td align="left" style="color: red">{{prezimeValidacija}}</td>
 				 </tr>
+				 <tr>
+                    <td align="right"><label>Uloga:</label></td>
+                     <td>&nbsp;</td>
+                    <td align="left">{{role}}</td>
+                     <td>&nbsp;</td>
+                </tr>
 				 <tr class="radioButton">
 				 	<td align="right">Pol:</td>
                     <td>&nbsp;</td>
@@ -147,9 +154,10 @@ Vue.component("pr", {
 					'name': this.name,
 					'surname': this.surname,
 					'password': this.password,
+					'role': this.role,
 					'gender': this.gender,
 				};
-
+				alert(user.name);
 				axios.post('rest/registracija/izmena', user)
 				.then(function (response) {
 					window.location.href = "#/pd";

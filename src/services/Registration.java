@@ -140,21 +140,30 @@ public class Registration {
 		@Path("/izmena")
 		@Produces(MediaType.APPLICATION_JSON)
 		public Response izmijeni(User u) {
-			Users users = (Users) ctx.getAttribute("users");
-			User user = users.getUser(u.getUsername());
-			users.getUsers().remove(user.getUsername());
-			
+			System.out.println("IZMENAAAAAAAAAAA");
 			if(u.getUsername().equals("") || u.getPassword().equals("") || u.getName().equals("") || u.getSurname().equals("")) {
+				System.out.println("Izmena 1");
 				return Response.status(400).entity("Niste popunili sva obavezna polja").build();
 			}
-			
 			java.util.regex.Pattern p = java.util.regex.Pattern.compile("[A-Z][a-zA-Z ]*");
 			java.util.regex.Matcher m = p.matcher(u.getName());
-			if(!m.matches()) return Response.status(400).entity("Niste ispravno popunili sva polja forme").build();
+			if(!m.matches()) {
+				System.out.println("Izmena 2");
+				return Response.status(400).entity("Niste ispravno popunili sva polja forme").build();
+			}
 
 			p = java.util.regex.Pattern.compile("[A-Z][a-zA-Z ]*");
 			m = p.matcher(u.getSurname());
-			if(!m.matches()) return Response.status(400).entity("Niste ispravno popunili sva polja forme").build();
+			if(!m.matches()) { 
+				System.out.println("Izmena 3");
+				return Response.status(400).entity("Niste ispravno popunili sva polja forme").build();
+			}
+			
+			Users users = (Users) ctx.getAttribute("users");
+			User user = users.getUser(u.getUsername());
+			users.getUsers().remove(user.getUsername());
+			System.out.println("Usao u izmenu!"+user.getName());
+			
 			
 			String contextPath = ctx.getRealPath("");
 			users.sacuvajKorisnike(contextPath);
@@ -165,6 +174,7 @@ public class Registration {
 			/*korisnici.sacuvajKorisnike(contextPath);
 			oglasi.sacuvajOglase(contextPath);
 			kategorije.sacuvajKategorije(contextPath);*/
+			System.out.println("Izmena : Vratio dobro!");
 			return Response.status(200).build();
 		}
 		
