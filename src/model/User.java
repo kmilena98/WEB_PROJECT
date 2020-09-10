@@ -90,9 +90,6 @@ public class User {
 			return "GUEST";
 	}
 	
-
-
-
 	public void setRole(Role role) {
 		this.role = role;
 	}

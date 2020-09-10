@@ -9,7 +9,7 @@ const Logged = { template: '<logged></logged>' }
 const Apartment = { template: '<ap></ap>' }
 const PersonalDataEdit = { template: '<pr></pr>' }
 const PersonalData = { template: '<pr1></pr1>' }
-
+const UsersReview = { template: '<pk></pk>' }
 const router = new VueRouter({
 	  mode: 'hash',
 	  routes: [
@@ -23,7 +23,8 @@ const router = new VueRouter({
 	    { path: '/a', component: Admin },
 	    { path: '/sb', component: Apartment },
 	    { path: '/sd', component: PersonalDataEdit },
-	    { path: '/pd', component: PersonalData }
+	    { path: '/pd', component: PersonalData },
+	    { path: '/pk', component: UsersReview }
 	  ]
 });
 

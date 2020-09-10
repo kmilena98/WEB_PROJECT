@@ -212,7 +212,7 @@ Vue.component("admin", {
 
 <div class="topnav">
 	<a href="#/sb">Apartmani</a>
-	<a href="#/sb">Korisnici</a>
+	<a href="#/pk">Korisnici</a>
 	<a href="#/sh">Registracija Domacina</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
