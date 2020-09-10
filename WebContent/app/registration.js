@@ -117,7 +117,8 @@ Vue.component("reghost", {
 				name: undefined,
 				surname: undefined,
 				password: undefined,
-				gender: undefined	
+				gender: undefined,
+				role:undefined
 		    }
 	},
 	template: ` 
@@ -203,14 +204,14 @@ Vue.component("reghost", {
 					'password': this.password,
 					'name': this.name,
 					'surname': this.surname,
+					'role':"HOST",
 					'gender' : this.gender
 				};
 		    axios.post('rest/registracija/add', u)
         	
             .then(function (response) {
-            	//alert("bla");
-            	//alert(response.data);
-				window.location.href = '#/g';
+            	alert("Registracija uspesno obavljena");
+				window.location.href = '#/a';
 
             })
             .catch(function (error) {

@@ -211,8 +211,9 @@ Vue.component("admin", {
 	</div>
 
 <div class="topnav">
-	<a href="#/sa">Proba</a>
 	<a href="#/sb">Apartmani</a>
+	<a href="#/sb">Korisnici</a>
+	<a href="#/sh">Registracija Domacina</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>

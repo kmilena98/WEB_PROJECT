@@ -5,7 +5,17 @@
     "name" : "Saska",
     "surname" : "Savic",
     "gender" : "FEMALE",
-    "role" : "ADMINISTRATOR"
+    "role" : "ADMINISTRATOR",
+    "role2" : "ADMINISTRATOR"
+  },
+  "e" : {
+    "username" : "e",
+    "password" : "e",
+    "name" : "Elena",
+    "surname" : "Elez",
+    "gender" : "FEMALE",
+    "role" : "HOST",
+    "role2" : "HOST"
   },
   "k" : {
     "username" : "k",
@@ -13,7 +23,8 @@
     "name" : "Kosta",
     "surname" : "Kostic",
     "gender" : "MALE",
-    "role" : "GUEST"
+    "role" : "GUEST",
+    "role2" : "GUEST"
   },
   "l" : {
     "username" : "l",
@@ -21,7 +32,8 @@
     "name" : "Lazar",
     "surname" : "Lazic",
     "gender" : "MALE",
-    "role" : "GUEST"
+    "role" : "GUEST",
+    "role2" : "GUEST"
   },
   "n" : {
     "username" : "n",
@@ -29,6 +41,7 @@
     "name" : "Nikola",
     "surname" : "Ninkovic",
     "gender" : "MALE",
-    "role" : "ADMINISTRATOR"
+    "role" : "ADMINISTRATOR",
+    "role2" : "ADMINISTRATOR"
   }
 }

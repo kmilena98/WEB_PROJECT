@@ -84,6 +84,16 @@ public class User {
 	public Role getRole() {
 		return role;
 	}
+	
+	public String getRole2() {
+		if(role.toString().contains("HOST"))
+			return "HOST";
+		else if(role.toString().contains("ADMINISTRATOR"))
+			return "ADMINISTRATOR";
+		else
+			return "GUEST";
+	}
+
 
 	public void setRole(Role role) {
 		this.role = role;
