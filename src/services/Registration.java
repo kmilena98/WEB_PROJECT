@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.annotation.PostConstruct;
@@ -13,6 +14,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
 
 import model.User;
 import model.Users;
@@ -48,6 +50,18 @@ public class Registration {
 			User u = (User) request.getSession().getAttribute("ulogovani");
 			System.out.println("RESTTTTTTTTTTTTTTTKorisnik koji je ulogovan je :"+ u.getName());
 			return u;
+		}
+		
+		@GET
+		@Path("/korisnici")
+		@Produces(MediaType.APPLICATION_JSON)
+		public HashMap<String, User> getKorisnici() {
+			User ulogovani = (User) request.getSession().getAttribute("ulogovani");
+			if(ulogovani == null) {
+				return null;
+			}		
+			Users users = (Users) ctx.getAttribute("korisnici");
+			return users.getUsers();
 		}
 		
 		
@@ -121,6 +135,37 @@ public class Registration {
 				return Response.status(400).entity("Niko nije prijavljen.").build();
 			}
 			request.getSession().invalidate();
+			return Response.status(200).build();
+		}
+		
+		@POST
+		@Path("/izmena")
+		@Produces(MediaType.APPLICATION_JSON)
+		public Response izmijeni(User u) {
+			Users users = (Users) ctx.getAttribute("users");
+			User user = users.getUser(u.getUsername());
+			users.getUsers().remove(user.getUsername());
+			
+			if(u.getUsername().equals("") || u.getPassword().equals("") || u.getName().equals("") || u.getSurname().equals("")) {
+				return Response.status(400).entity("Niste popunili sva obavezna polja").build();
+			}
+			
+			java.util.regex.Pattern p = java.util.regex.Pattern.compile("[A-Z][a-zA-Z ]*");
+			java.util.regex.Matcher m = p.matcher(u.getName());
+			if(!m.matches()) return Response.status(400).entity("Niste ispravno popunili sva polja forme").build();
+
+			p = java.util.regex.Pattern.compile("[A-Z][a-zA-Z ]*");
+			m = p.matcher(u.getSurname());
+			if(!m.matches()) return Response.status(400).entity("Niste ispravno popunili sva polja forme").build();
+			
+			String contextPath = ctx.getRealPath("");
+			users.sacuvajKorisnike(contextPath);
+			
+			users.dodaj(u);
+			
+			/*korisnici.sacuvajKorisnike(contextPath);
+			oglasi.sacuvajOglase(contextPath);
+			kategorije.sacuvajKategorije(contextPath);*/
 			return Response.status(200).build();
 		}
 		

@@ -2,9 +2,9 @@
   "mix" : {
     "username" : "mix",
     "password" : "mix",
-    "name" : "Mix",
-    "surname" : "Mix",
+    "name" : "Mi",
+    "surname" : "Mi",
     "gender" : "FEMALE",
-    "role" : "GUEST"
+    "role" : null
   }
 }

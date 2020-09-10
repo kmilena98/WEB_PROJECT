@@ -1,13 +1,38 @@
 Vue.component("pr", {
 	data: function () {
 		    return {
-		    	user : undefined,
-		    	username: undefined,
-				name: undefined,
-				surname: undefined,
-				password: undefined,
-				gender: undefined	
+		    	user: {username:'', name:'', surname: '', password:'', gender:''},
+		    	username:'',
+		    	name: '',
+		    	surname:'',
+		    	password:'',
+				gender:'',
+				old:'',
 		    }
+	},
+	mounted(){		
+		axios
+        .get('rest/registracija/ulogovani' /*+ this.$route.params.username*/)
+        .then(response =>{
+        	//alert("ohohoho");
+        	//alert(username);
+        	this.user = response.data;
+        	//this.user = response.data.user;
+        	alert(this.user.username);
+			this.username = this.user.username;
+			alert(this.username);
+			this.name = this.user.name;
+			//this.stara = this.korisnik.uloga;
+			this.surname = this.user.surname;
+			this.password = this.user.password;
+			this.gender = this.user.gender;
+        })
+        .catch(error => {
+            alert("Doslo je do greske prilikom ucitavanja korisnika");
+        })
+	},
+	updated() {
+		   console.log(this.$route)
 	},
 	template: ` 
 <div>
@@ -21,8 +46,8 @@ Vue.component("pr", {
 	<a href="#/sa">Proba</a>
 	<a href="#/sb">Apartmani</a>
 	<div class="topnav-right">
-		<a href="#/sd">Moj profil</a>
-		<a href="#/">Odjava</a>
+		<a href="#/pd">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
 	</div>
 </div>
 	<div class="l">
@@ -33,7 +58,7 @@ Vue.component("pr", {
                 <tr>
                     <td align="right"><label>Korisnicko ime:</label></td>
                      <td>&nbsp;</td>
-                    <td align="left">{{this.user.username}}</td>
+                    <td align="left">{{username}}</td>
                      <td>&nbsp;</td>
                 </tr>
 				<tr><td>&nbsp;</td><td>&nbsp;</td>
@@ -42,7 +67,7 @@ Vue.component("pr", {
                 <tr>
                     <td align="right">Lozinka:</td>
                     <td>&nbsp;</td>
-                    <td align="left"><input type="password" id="lozinka" name="lozinka" v-model="password" v-model="this.user.password"/></td>
+                    <td align="left"><input type="password" id="lozinka" v-model="password"/></td>
                     <td>&nbsp;</td>
                 </tr>
 				 <tr><td>&nbsp;</td><td>&nbsp;</td>
@@ -51,7 +76,7 @@ Vue.component("pr", {
                 <tr>
                     <td align="right">Ime:</td>
                     <td>&nbsp;</td>
-                    <td align="left"><input type="text" id="ime" name="ime" v-model="name" v-model="this.user.name" /></td>
+                    <td align="left"><input type="text" id="ime"  v-model="name" /></td>
                     <td>&nbsp;</td>
                 </tr>
 				 <tr><td>&nbsp;</td><td>&nbsp;</td>
@@ -60,7 +85,7 @@ Vue.component("pr", {
                 <tr>
                     <td align="right">Prezime:</td>
                     <td>&nbsp;</td>
-                    <td align="left"><input type="text" id="prezime" name="prezime" v-model="surname" v-model="this.user.surname"></input></td>
+                    <td align="left"><input type="text" id="prezime" name="prezime" v-model="surname"></input></td>
                     <td>&nbsp;</td>
                 </tr> 
 				 <tr><td>&nbsp;</td><td>&nbsp;</td>
@@ -85,7 +110,7 @@ Vue.component("pr", {
 				
                 <tr>
                 	<td>&nbsp;</td><td>&nbsp;</td>
-                    <td align="right"><button v-on:click.prevent="registracija">Sacuvaj</button></td>
+                    <td align="right"><button v-on:click.prevent="izmeni">Sacuvaj</button></td>
                 </tr>  			   			
             </table>            
         </form>
@@ -94,10 +119,6 @@ Vue.component("pr", {
 `
 	, 
 	computed :{
-		korisnickoImeValidacija: function(){
-			if(this.username === '') return 'Korisnicko ime je obavezno polje.';
-			else return null;
-		},
 		lozinkaValidacija: function(){
 			if(this.password === '') return 'Lozinka je obavezno polje.';
 			else return null;
@@ -121,14 +142,7 @@ Vue.component("pr", {
 			else return null;
 		},
 	},
-	created : {
-		init : function() {
-			this.sc = {};
-		}, 
-		registration : function(username, name, surname, password) {
-		} 
-	},
-	mounted(){
+	/*mounted(){
 		
         alert("Pozvao mounted");
         axios
@@ -145,6 +159,63 @@ Vue.component("pr", {
 		}else{
 			document.getElementByID("gendera").checked= true;
 		}
+	},*/
+	methods: {
+		/*odustani: function(){
+			window.location.href = "korisnici.html#/profil/" +  this.$route.params.korisnickoIme;
+	  	},*/
+		izmeni: function(){
+			//if(this.old != this.uloga){
+				var user = {
+					'username': this.username,
+					'name': this.name,
+					'surname': this.surname,
+					'password': this.password,
+					'gender': this.gender,
+				};
+
+				axios.post('rest/registracija/izmena', user)
+				.then(function (response) {
+					window.location.href = "#/pd";
+				})
+				.catch(function (error) {
+					alert(error.response.data);
+				});
+			//}
+		},
+		
+		/*updateUser : function(user) {
+			alert("dada");
+			user
+			axios
+			.post("rest/registracija/izmena", user)
+			.then(response => toast('Korisnik ' + user.name + " " + user.surname + " uspešno snimljen."));
+			this.mode = 'BROWSE';
+		},*/
+		/*cancelEditing : function() {
+			this.selectedStudent.ime = this.backup[0];
+			this.selectedStudent.prezime = this.backup[1];
+			this.selectedStudent.brojIndeksa = this.backup[2];
+			this.selectedStudent.datumRodjenja = this.backup[3];
+			this.mode = 'BROWSE';
+		}*/
+		
+		
+			logout : function() {
+			alert("radi!");
+		    axios.post('rest/registracija/logout')
+	    	
+	        .then(function (response) {
+	        	//alert("dosao do loogouta");
+				window.location.href = '#/';
+
+	        })
+	        .catch(function (error) {
+	        	alert("usao u exaption!");
+	            alert(error.response.data);
+		});
+		},
+
 	},
 });
 
@@ -174,7 +245,7 @@ Vue.component("pr1", {
 	<a href="#/sb">Apartmani</a>
 	<div class="topnav-right">
 		<a href="#/sd">Moj profil</a>
-		<a href="#/">Odjava</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
 	</div>
 </div>
 	<div class="l">
@@ -262,14 +333,7 @@ Vue.component("pr1", {
 			else return null;
 		},
 	},
-	created : {
-		init : function() {
-			this.sc = {};
-		}, 
-		registracija : function(username, name, surname, password) {
-			
-		} 
-	},
+	
 	mounted(){
 
         alert("Pozvao mounted");
@@ -282,4 +346,23 @@ Vue.component("pr1", {
     	        alert("Doslo je do greske prilikom ucitavanja prijavljenog");
     	    })
 	},
+	
+	methods : {
+		logout : function() {
+		alert("radi!");
+	    axios.post('rest/registracija/logout')
+    	
+        .then(function (response) {
+        	//alert("dosao do loogouta");
+			window.location.href = '#/';
+
+        })
+        .catch(function (error) {
+        	alert("usao u exaption!");
+            alert(error.response.data);
+        });
+	},
+		
+	},
+
 });

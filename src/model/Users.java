@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 
 
 
+
 public class Users {
 	private HashMap<String, User> users;
 	private String path;
@@ -35,6 +36,11 @@ public class Users {
 	public void setUsers(HashMap<String, User> korisnici) {
 		this.users = korisnici;
 	}
+	
+	public User getUser(String name) {
+		return users.get(name);
+	}
+	
 	public void dodaj(User u) {
 		if(!users.containsKey(u.getUsername()))
 			users.put(u.getUsername(), u);
