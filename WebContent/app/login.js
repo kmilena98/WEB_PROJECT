@@ -69,12 +69,18 @@ Vue.component("log", {
 				axios.post('rest/registracija/login', user)
                 .then(function (response) {
     				this.kor = response.data;
-    				if(this.kor.role==="HOST")
-						window.location.href = "#/g";
-                	else if(this.kor.role==="ADMINISTRATOR")
+    				if(this.kor.role == "HOST"){
+    					alert("Usao h " + this.kor.role);
+						window.location.href = "#/h";
+    				}	
+    				else if(this.kor.role == "ADMINISTRATOR"){
+    					alert("Usao a " + this.kor.role);
+                		window.location.href = "#/a";
+    				}
+                	else{
+                		alert("Usao g " + this.kor.role);
                 		window.location.href = "#/g";
-                	else
-                		window.location.href = "#/g";
+                	}
                 			
                 })
                 .catch(function (error) {
