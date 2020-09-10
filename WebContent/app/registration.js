@@ -92,7 +92,7 @@ Vue.component("reg", {
 					'password': this.password,
 					'name': this.name,
 					'surname': this.surname,
-					'role': 'GUEST',
+					'role': "GUEST",
 					'gender': this.gender
 				};
 		    axios.post('rest/registracija/add', u)

@@ -6,7 +6,8 @@ Vue.component("pr", {
 		    	name: '',
 		    	surname:'',
 		    	password:'',
-				gender:''
+				gender:'',
+				role:''
 		    }
 	},
 	mounted(){		
@@ -132,27 +133,7 @@ Vue.component("pr", {
 			else return null;
 		},
 	},
-	/*mounted(){
-		
-        axios
-            .get('rest/registracija/ulogovani')
-            .then(response =>{
-	        	this.user = response.data;
-    	    })
-    	    
-	        .catch(error => {
-    	        alert("Doslo je do greske prilikom ucitavanja prijavljenog");
-    	    })
-        if(this.user.gender=="MALE"){
-			document.getElementByID("gendera").checked= true;
-		}else{
-			document.getElementByID("gendera").checked= true;
-		}
-	},*/
 	methods: {
-		/*odustani: function(){
-			window.location.href = "korisnici.html#/profil/" +  this.$route.params.korisnickoIme;
-	  	},*/
 		izmeni: function(){
 			//if(this.old != this.uloga){
 			if(document.getElementById('gendera').checked){
@@ -223,7 +204,8 @@ Vue.component("pr1", {
 				name: undefined,
 				surname: undefined,
 				password: undefined,
-				gender: undefined	
+				gender: undefined,
+				role: undefined
 		    }
 	},
 	template: ` 
@@ -286,6 +268,15 @@ Vue.component("pr1", {
                     <td align="right">Pol:</td>
                     <td>&nbsp;</td>
                     <td align="left">{{this.user.gender}}</td>
+                    <td>&nbsp;</td>
+                </tr> 
+                 <tr><td>&nbsp;</td><td>&nbsp;</td>
+                    <td align="left" style="color: red">{{prezimeValidacija}}</td>
+				 </tr>
+				 <tr>
+                    <td align="right">Uloga:</td>
+                    <td>&nbsp;</td>
+                    <td align="left">{{this.user.role}}</td>
                     <td>&nbsp;</td>
                 </tr> 
 				

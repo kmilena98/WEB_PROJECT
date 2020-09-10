@@ -1,7 +1,7 @@
 Vue.component("log", {
 	data: function () {
 		    return {
-		      user: null,
+		      kor: null,
 		      username: null,
 		      password: null
 		    }
@@ -47,8 +47,8 @@ Vue.component("log", {
                 'password': this.password,
                 'name': '',
 				'surname': '',
-				'role': 'GUEST',
 				'gender':'MALE',
+				'role':'GUEST',
             };
             
             var ok = true;
@@ -68,7 +68,16 @@ Vue.component("log", {
 			if(ok){
 				axios.post('rest/registracija/login', user)
                 .then(function (response) {
+                	alert("1");
+    				this.kor = response.data;
+    				alert("2");
+    				if(this.kor.role==="HOST")
 						window.location.href = "#/g";
+                	else if(this.kor.role==="ADMINISTRATOR")
+                		window.location.href = "#/g";
+                	else
+                		window.location.href = "#/g";
+                			
                 })
                 .catch(function (error) {
                     alert("exaption"+error.response.data);
