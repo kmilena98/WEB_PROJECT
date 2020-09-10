@@ -157,7 +157,7 @@ Vue.component("pr", {
 					'role': this.role,
 					'gender': this.gender,
 				};
-				alert(user.name);
+
 				axios.post('rest/registracija/izmena', user)
 				.then(function (response) {
 					window.location.href = "#/pd";
@@ -189,7 +189,6 @@ Vue.component("pr", {
 		    axios.post('rest/registracija/logout')
 	    	
 	        .then(function (response) {
-	        	//alert("dosao do loogouta");
 				window.location.href = '#/';
 
 	        })
@@ -343,7 +342,6 @@ Vue.component("pr1", {
 	    axios.post('rest/registracija/logout')
     	
         .then(function (response) {
-        	//alert("dosao do loogouta");
 			window.location.href = '#/';
 
         })

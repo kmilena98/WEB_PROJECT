@@ -68,9 +68,7 @@ Vue.component("log", {
 			if(ok){
 				axios.post('rest/registracija/login', user)
                 .then(function (response) {
-                	alert("1");
     				this.kor = response.data;
-    				alert("2");
     				if(this.kor.role==="HOST")
 						window.location.href = "#/g";
                 	else if(this.kor.role==="ADMINISTRATOR")
