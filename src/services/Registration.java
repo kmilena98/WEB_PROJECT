@@ -82,9 +82,9 @@ public class Registration {
 		public Response registracija(User u) {
 			User ulogovani = (User) request.getSession().getAttribute("ulogovani");
 			System.out.println("GLEDAJ OVO ISPOD!!!!");
-			System.out.println("uloga: "+ulogovani.getRole2());
-			System.out.println(!ulogovani.getRole2().contains("ADMINISTRATOR"));
-			if(ulogovani != null && !ulogovani.getRole2().contains("ADMINISTRATOR") ) {
+			System.out.println("uloga: "+ulogovani.getRole());
+			System.out.println(!ulogovani.getRole().contains("ADMINISTRATOR"));
+			if(ulogovani != null && !ulogovani.getRole().contains("ADMINISTRATOR") ) {
 				return Response.status(400).entity("Ne mozete registrovati novog korisnika dok ste prijavljeni").build();
 			}
 			if(u.getUsername().equals("") || u.getPassword().equals("") || u.getName().equals("") || u.getSurname().equals("")) {

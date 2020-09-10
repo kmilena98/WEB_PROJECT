@@ -81,11 +81,7 @@ public class User {
 		this.gender = gender;
 	}
 
-	public Role getRole() {
-		return role;
-	}
-	
-	public String getRole2() {
+	public String getRole() {
 		if(role.toString().contains("HOST"))
 			return "HOST";
 		else if(role.toString().contains("ADMINISTRATOR"))
@@ -93,6 +89,8 @@ public class User {
 		else
 			return "GUEST";
 	}
+	
+
 
 
 	public void setRole(Role role) {
