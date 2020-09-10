@@ -42,7 +42,6 @@ Vue.component("log", {
 			this.sc = {};
 		}, 
 		 login(){
-			//alert("Hello! !");
             var user = {
                 'username': this.username,
                 'password': this.password,
@@ -66,18 +65,13 @@ Vue.component("log", {
 			else{
 				ok = true;
 			}
-			alert(this.username);
 			if(ok){
-				alert("Dosao do ajax poziva")
-				alert(user.username);
 				axios.post('rest/registracija/login', user)
                 .then(function (response) {
 						window.location.href = "#/g";
                 })
-                alert()
                 .catch(function (error) {
-                	alert("usao u exaption");
-                    alert(error.response.data);
+                    alert("exaption"+error.response.data);
                 });
 			}
         }        

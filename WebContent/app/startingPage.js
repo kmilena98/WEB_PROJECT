@@ -106,11 +106,9 @@ Vue.component("guest", {
 	, 
 	methods : {
 		logout : function() {
-		alert("radi!");
 	    axios.post('rest/registracija/logout')
     	
         .then(function (response) {
-        	//alert("dosao do loogouta");
 			window.location.href = '#/';
 
         })

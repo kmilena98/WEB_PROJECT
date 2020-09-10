@@ -46,9 +46,7 @@ public class Registration {
 		@Consumes(MediaType.APPLICATION_JSON)
 		@Produces(MediaType.APPLICATION_JSON)
 		public User login() {
-			System.out.println("Usao u rest");
 			User u = (User) request.getSession().getAttribute("ulogovani");
-			System.out.println("RESTTTTTTTTTTTTTTTKorisnik koji je ulogovan je :"+ u.getName());
 			return u;
 		}
 		
@@ -162,6 +160,7 @@ public class Registration {
 			users.sacuvajKorisnike(contextPath);
 			
 			users.dodaj(u);
+			request.getSession().setAttribute("ulogovani", u);
 			
 			/*korisnici.sacuvajKorisnike(contextPath);
 			oglasi.sacuvajOglase(contextPath);

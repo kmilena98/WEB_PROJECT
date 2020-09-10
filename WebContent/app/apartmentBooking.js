@@ -137,10 +137,7 @@ Vue.component("ap", {
 			else{
 				ok = true;
 			}
-			alert(this.username);
 			if(ok){
-				//alert("Hello! I am an alert box!!");
-				alert(user.korisnickoIme);
 				axios.post('rest/registracija/login', user)
                 .then(function (response) {
 						window.location.href = "pr.html";

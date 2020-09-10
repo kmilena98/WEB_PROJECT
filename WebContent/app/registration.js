@@ -87,7 +87,6 @@ Vue.component("reg", {
 				}else{
 					this.gender = "FEMALE";
 				}
-				alert(this.gender);
 			var u = {
 					'username': this.username,
 					'password': this.password,
@@ -96,7 +95,6 @@ Vue.component("reg", {
 					'role': 'GUEST',
 					'gender': this.gender
 				};
-			alert("radi!");
 		    axios.post('rest/registracija/add', u)
         	
             .then(function (response) {
@@ -200,7 +198,6 @@ Vue.component("reghost", {
 				}else{
 					this.gender = "FEMALE";
 				}
-				alert(this.gender);
 			var u = {
 					'username': this.username,
 					'password': this.password,
@@ -208,7 +205,6 @@ Vue.component("reghost", {
 					'surname': this.surname,
 					'gender' : this.gender
 				};
-			alert("radi!");
 		    axios.post('rest/registracija/add', u)
         	
             .then(function (response) {

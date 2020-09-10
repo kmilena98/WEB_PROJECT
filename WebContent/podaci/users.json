@@ -2,8 +2,8 @@
   "mix" : {
     "username" : "mix",
     "password" : "mix",
-    "name" : "Mi",
-    "surname" : "Mi",
+    "name" : "Alex",
+    "surname" : "Antunovic",
     "gender" : "FEMALE",
     "role" : null
   }

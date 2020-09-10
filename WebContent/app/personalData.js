@@ -6,23 +6,16 @@ Vue.component("pr", {
 		    	name: '',
 		    	surname:'',
 		    	password:'',
-				gender:'',
-				old:'',
+				gender:''
 		    }
 	},
 	mounted(){		
 		axios
-        .get('rest/registracija/ulogovani' /*+ this.$route.params.username*/)
+        .get('rest/registracija/ulogovani')
         .then(response =>{
-        	//alert("ohohoho");
-        	//alert(username);
         	this.user = response.data;
-        	//this.user = response.data.user;
-        	alert(this.user.username);
 			this.username = this.user.username;
-			alert(this.username);
 			this.name = this.user.name;
-			//this.stara = this.korisnik.uloga;
 			this.surname = this.user.surname;
 			this.password = this.user.password;
 			this.gender = this.user.gender;
@@ -30,9 +23,6 @@ Vue.component("pr", {
         .catch(error => {
             alert("Doslo je do greske prilikom ucitavanja korisnika");
         })
-	},
-	updated() {
-		   console.log(this.$route)
 	},
 	template: ` 
 <div>
@@ -144,7 +134,6 @@ Vue.component("pr", {
 	},
 	/*mounted(){
 		
-        alert("Pozvao mounted");
         axios
             .get('rest/registracija/ulogovani')
             .then(response =>{
@@ -166,6 +155,12 @@ Vue.component("pr", {
 	  	},*/
 		izmeni: function(){
 			//if(this.old != this.uloga){
+			if(document.getElementById('gendera').checked){
+				this.gender = "MALE";
+			}
+			if(document.getElementById('genderb').checked){
+				this.gender = "FEMALE";
+			}
 				var user = {
 					'username': this.username,
 					'name': this.name,
@@ -202,7 +197,6 @@ Vue.component("pr", {
 		
 		
 			logout : function() {
-			alert("radi!");
 		    axios.post('rest/registracija/logout')
 	    	
 	        .then(function (response) {
@@ -335,8 +329,6 @@ Vue.component("pr1", {
 	},
 	
 	mounted(){
-
-        alert("Pozvao mounted");
         axios
             .get('rest/registracija/ulogovani')
             .then(response =>{
@@ -349,7 +341,6 @@ Vue.component("pr1", {
 	
 	methods : {
 		logout : function() {
-		alert("radi!");
 	    axios.post('rest/registracija/logout')
     	
         .then(function (response) {
