@@ -38,7 +38,8 @@ public class Users {
 	}
 	
 	public User getUser(String name) {
-		return users.get(name);
+		User u = users.get(name);
+		return u;
 	}
 	
 	public void dodaj(User u) {

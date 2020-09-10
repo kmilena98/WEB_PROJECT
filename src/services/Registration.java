@@ -1,6 +1,5 @@
 package services;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.annotation.PostConstruct;
@@ -10,6 +9,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -51,6 +51,17 @@ public class Registration {
 		}
 		
 		@GET
+		@Path("/korisnickoIme/{username}")
+		@Consumes(MediaType.APPLICATION_JSON)
+		@Produces(MediaType.APPLICATION_JSON)
+		public User getUserByUsername(@PathParam("username") String username) {	
+			Users users = (Users) ctx.getAttribute("users");
+			HashMap<String, User>  mapa = users.getUsers();
+			User u = mapa.get(username);
+			return u;
+		}
+		
+		@GET
 		@Path("/korisnici")
 		@Produces(MediaType.APPLICATION_JSON)
 		public HashMap<String, User> getKorisnici() {
@@ -58,7 +69,7 @@ public class Registration {
 			if(ulogovani == null) {
 				return null;
 			}		
-			Users users = (Users) ctx.getAttribute("korisnici");
+			Users users = (Users) ctx.getAttribute("users");
 			return users.getUsers();
 		}
 		
@@ -102,7 +113,6 @@ public class Registration {
 		@Consumes(MediaType.APPLICATION_JSON)
 		@Produces(MediaType.APPLICATION_JSON)
 		public Response login(User u) {
-			System.out.println("usao u login");
 			User ulogovani = (User) request.getSession().getAttribute("ulogovani");
 			if(ulogovani != null) {
 				return Response.status(400).entity("Vec ste prijavljeni.").build();
@@ -113,11 +123,9 @@ public class Registration {
 			
 			Users users = (Users) ctx.getAttribute("users");
 			HashMap<String, User> mapa = users.getUsers();
-			System.out.println("uzela korisnike!"+ mapa.size());
 			User postoji = (User)mapa.get(u.getUsername());
 			if(postoji != null && postoji.getPassword().equals(u.getPassword())) {
 				request.getSession().setAttribute("ulogovani", postoji);
-				System.out.println("zavrsio login uspesno");
 				return Response.status(200).build();
 			}
 			else 				
@@ -140,29 +148,24 @@ public class Registration {
 		@Path("/izmena")
 		@Produces(MediaType.APPLICATION_JSON)
 		public Response izmijeni(User u) {
-			System.out.println("IZMENAAAAAAAAAAA");
 			if(u.getUsername().equals("") || u.getPassword().equals("") || u.getName().equals("") || u.getSurname().equals("")) {
-				System.out.println("Izmena 1");
 				return Response.status(400).entity("Niste popunili sva obavezna polja").build();
 			}
 			java.util.regex.Pattern p = java.util.regex.Pattern.compile("[A-Z][a-zA-Z ]*");
 			java.util.regex.Matcher m = p.matcher(u.getName());
 			if(!m.matches()) {
-				System.out.println("Izmena 2");
 				return Response.status(400).entity("Niste ispravno popunili sva polja forme").build();
 			}
 
 			p = java.util.regex.Pattern.compile("[A-Z][a-zA-Z ]*");
 			m = p.matcher(u.getSurname());
 			if(!m.matches()) { 
-				System.out.println("Izmena 3");
 				return Response.status(400).entity("Niste ispravno popunili sva polja forme").build();
 			}
 			
 			Users users = (Users) ctx.getAttribute("users");
 			User user = users.getUser(u.getUsername());
 			users.getUsers().remove(user.getUsername());
-			System.out.println("Usao u izmenu!"+user.getName());
 			
 			
 			String contextPath = ctx.getRealPath("");
@@ -171,10 +174,6 @@ public class Registration {
 			users.dodaj(u);
 			request.getSession().setAttribute("ulogovani", u);
 			
-			/*korisnici.sacuvajKorisnike(contextPath);
-			oglasi.sacuvajOglase(contextPath);
-			kategorije.sacuvajKategorije(contextPath);*/
-			System.out.println("Izmena : Vratio dobro!");
 			return Response.status(200).build();
 		}
 		
