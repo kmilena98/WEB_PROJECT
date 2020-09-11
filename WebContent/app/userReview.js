@@ -25,11 +25,11 @@ Vue.component("pk", {
 
 <div class="topnav">
 	<a href="#/sb">Apartmani</a>
-	<a href="#/pk">Pregled korisnika</a>
+	<a href="#/pk">Korisnici</a>
 	<a href="#/sh">Registracija domacina</a>
 	<div class="topnav-right">
-		<a href="#/sc">Prijava</a>
-		<a href="#/ss">Registracija</a>
+		<a href="#/pd">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
 	</div>
 </div>
 
@@ -62,6 +62,19 @@ Vue.component("pk", {
 `
 	, 
 	methods : {
+		logout : function() {
+	    axios.post('rest/registracija/logout')
+    	
+        .then(function (response) {
+			window.location.href = '#/';
+
+        })
+        .catch(function (error) {
+        	alert("usao u exaption!");
+            alert(error.response.data);
+	});
+	},
+
 		
 	},
 });

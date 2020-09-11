@@ -141,8 +141,8 @@ Vue.component("host", {
 	</div>
 
 <div class="topnav">
-	<a href="#/sa">Proba</a>
 	<a href="#/sb">Apartmani</a>
+	<a href="#/pk">Korisnici</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
@@ -213,7 +213,7 @@ Vue.component("admin", {
 <div class="topnav">
 	<a href="#/sb">Apartmani</a>
 	<a href="#/pk">Korisnici</a>
-	<a href="#/sh">Registracija Domacina</a>
+	<a href="#/sh">Registracija domacina</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
