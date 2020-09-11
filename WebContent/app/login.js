@@ -77,7 +77,7 @@ Vue.component("log", {
                 })
                 .catch(function (error) {
                 	pom = false;
-                    alert("exaption"+error.response.data);
+                    alert("exaption "+error.response.data);
                 });
 			}
 				axios.get('rest/registracija/korisnickoIme/'+ this.username)
@@ -95,9 +95,7 @@ Vue.component("log", {
     				}
                 			
                 	})
-                	.catch(function (error) {
-                		alert("exaption 2"+error.response.data);
-                	});
+                
         }        
 	}
 });

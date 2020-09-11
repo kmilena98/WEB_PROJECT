@@ -72,7 +72,7 @@ public class Users {
 				ObjectMapper mapper = new ObjectMapper();
 				String jsonInString = (String) par.toString();
 				User u = mapper.convertValue(par.getValue(), User.class);
-				System.out.println("pretvorio se u usera!");
+				
 				/*if(jsonInString.contains("role=GUEST,"))
 		            u = mapper.convertValue(par.getValue(), Guest.class);
 				else if(jsonInString.contains("role=HOST,"))
@@ -152,6 +152,28 @@ public class Users {
 			}
 		}
 
+	}
+	
+	public HashMap<String, User> pretraga(String surname, String role, String gender) {
+		HashMap<String, User> rezultat = new HashMap<String, User>();
+		
+		for (Map.Entry<String, User> entry : users.entrySet()) {
+			if(provera(entry.getValue(), surname,  role, gender))
+				rezultat.put(entry.getKey(), entry.getValue());
+		}
+					
+		return rezultat;
+	}
+	
+	public boolean provera(User u, String surname, String role, String gender) {
+		surname.trim();
+		role.trim();
+		gender.trim();
+		if(!surname.equals("") && !u.getName().toLowerCase().contains(surname.toLowerCase())) return false;
+		if(!role.equals("") && !u.getRole().toLowerCase().contains(role.toLowerCase())) return false;
+		if(!gender.equals("") && !u.getGender().toLowerCase().contains(gender.toLowerCase())) return false;
+
+		return true;
 	}
 
 }

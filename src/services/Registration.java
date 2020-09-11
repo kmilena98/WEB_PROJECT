@@ -1,6 +1,7 @@
 package services;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
@@ -14,7 +15,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
 
 import model.User;
 import model.Users;
@@ -81,9 +81,8 @@ public class Registration {
 		@Produces(MediaType.APPLICATION_JSON)
 		public Response registracija(User u) {
 			User ulogovani = (User) request.getSession().getAttribute("ulogovani");
-			System.out.println("GLEDAJ OVO ISPOD!!!!");
-			System.out.println("uloga: "+ulogovani.getRole());
-			System.out.println(!ulogovani.getRole().contains("ADMINISTRATOR"));
+			
+			
 			if(ulogovani != null && !ulogovani.getRole().contains("ADMINISTRATOR") ) {
 				return Response.status(400).entity("Ne mozete registrovati novog korisnika dok ste prijavljeni").build();
 			}
@@ -129,6 +128,7 @@ public class Registration {
 			User postoji = (User)mapa.get(u.getUsername());
 			if(postoji != null && postoji.getPassword().equals(u.getPassword())) {
 				request.getSession().setAttribute("ulogovani", postoji);
+				
 				return Response.status(200).build();
 			}
 			else 				
@@ -178,6 +178,22 @@ public class Registration {
 			request.getSession().setAttribute("ulogovani", u);
 			
 			return Response.status(200).build();
+		}
+		
+		@POST
+		@Path("/parametri")
+		@Consumes(MediaType.APPLICATION_JSON)
+		@Produces(MediaType.APPLICATION_JSON)
+		public HashMap<String, User> pretrazi(User u) {
+			System.out.println("aaaaaaaaaaaaaaa");
+			Users users = (Users) ctx.getAttribute("users");
+			String username = (String) u.getSurname();
+			String role = (String) u.getRole();
+			String gender = (String) u.getGender();
+			System.out.println("ddddddddddddddddddddd");
+			
+			return users.pretraga(username, role, gender);
+		
 		}
 		
 }

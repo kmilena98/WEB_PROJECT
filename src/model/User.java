@@ -73,8 +73,15 @@ public class User {
 		this.surname = surname;
 	}
 
-	public Gender getGender() {
+	/*public Gender getGender() {
 		return gender;
+	}*/
+	
+	public String getGender() {
+		if(gender.toString().equals("MALE"))
+			return "MALE";
+		else
+			return "FEMALE";
 	}
 
 	public void setGender(Gender gender) {
