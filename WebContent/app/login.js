@@ -40,7 +40,9 @@ Vue.component("log", {
 	methods : {
 		init : function() {
 			this.sc = {};
-		}, 
+		}, login2(){
+            
+        },
 		 login(){
             var user = {
                 'username': this.username,
@@ -65,34 +67,37 @@ Vue.component("log", {
 			else{
 				ok = true;
 			}
+			var pom = false;
 			if(ok){
 				axios.post('rest/registracija/login', user)
                 .then(function (response) {
+                	alert("Usao u 1!");
     				this.kor = response.data;
+    				login2()
                 })
                 .catch(function (error) {
+                	pom = false;
                     alert("exaption"+error.response.data);
                 });
+			}
 				axios.get('rest/registracija/korisnickoIme/'+ this.username)
                 .then(function (response) {
+                	alert("Usao u 2!"+response.data);
     				this.kor = response.data;
     				if(this.kor.role == "HOST"){
 						window.location.href = "#/h";
     				}	
-    				else if(this.kor.role == "ADMINISTRATOR"){
+    				if(this.kor.role == "ADMINISTRATOR"){
                 		window.location.href = "#/a";
-    				}
-                	else{
+    				} 
+    				if(this.kor.role == "GUEST"){
                 		window.location.href = "#/g";
-                	}
+    				}
                 			
                 	})
                 	.catch(function (error) {
                 		alert("exaption 2"+error.response.data);
                 	});
-				
-				
-			}
         }        
 	}
 });
