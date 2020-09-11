@@ -130,7 +130,12 @@ Vue.component("us", {
                 <tr>
                     <td align="right">Uloga:</td>
                     <td>&nbsp;</td>
-                    <td align="left"><input type="text" id="ime"/></td>
+                    <td align="left">
+                    	<select class="cb" style="width:208px;height:30px;">
+							<option value="volvo">ADMINISTRATOR</option>
+							<option value="saab">DOMACIN</option>
+							<option value="opel">GOST</option>
+						</select></td>
                     <td>&nbsp;</td>
                 </tr>
 				 	<tr><td>&nbsp;</td><td>&nbsp;</td>
@@ -139,7 +144,12 @@ Vue.component("us", {
                 <tr>
                     <td align="right">Pol:</td>
                     <td>&nbsp;</td>
-                    <td align="left"><input type="text" id="prezime" name="prezime"></input></td>
+                    <td align="left">
+                    	<select class="cb" style="width:208px;height:30px;">
+							<option value="volvo">MUSKO</option>
+							<option value="saab">ZENSKO</option>
+						</select></td>
+                    </td>
                     <td>&nbsp;</td>
                 </tr> 
                 <tr>
