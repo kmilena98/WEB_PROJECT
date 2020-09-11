@@ -154,24 +154,26 @@ public class Users {
 
 	}
 	
-	public HashMap<String, User> pretraga(String surname, String role, String gender) {
-		HashMap<String, User> rezultat = new HashMap<String, User>();
-		
-		for (Map.Entry<String, User> entry : users.entrySet()) {
-			if(provera(entry.getValue(), surname,  role, gender))
-				rezultat.put(entry.getKey(), entry.getValue());
-		}
+	public HashMap<String, User> pretraga(String username, String role, String gender) {
+		HashMap<String, User> rez = new HashMap<String, User>();
+			for (Map.Entry<String, User> entry : users.entrySet()) {
+				if(provera(entry.getValue(), username,  role, gender))
+					rez.put(entry.getKey(), entry.getValue());
+			}
 					
-		return rezultat;
+		return rez;
 	}
 	
-	public boolean provera(User u, String surname, String role, String gender) {
-		surname.trim();
+	public boolean provera(User u, String username, String role, String gender) {
+		username.trim();
 		role.trim();
 		gender.trim();
-		if(!surname.equals("") && !u.getName().toLowerCase().contains(surname.toLowerCase())) return false;
-		if(!role.equals("") && !u.getRole().toLowerCase().contains(role.toLowerCase())) return false;
-		if(!gender.equals("") && !u.getGender().toLowerCase().contains(gender.toLowerCase())) return false;
+		if(!username.equals("") && !u.getUsername().toLowerCase().contains(username.toLowerCase())) 
+			return false;
+		if(!role.equals("") && !u.getRole().toLowerCase().equals(role.toLowerCase())) 
+			return false;
+		if(!gender.equals("") && !u.getGender().toLowerCase().equals(gender.toLowerCase())) 
+			return false;
 
 		return true;
 	}

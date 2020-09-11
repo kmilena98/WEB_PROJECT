@@ -89,16 +89,6 @@ Vue.component("us", {
 		      gender: undefined
 		    }
 	},
-	/*mounted(){
-        axios
-            .get('rest/registracija/korisnici')
-            .then(response =>{
-	        	this.users = response.data;
-    	    })
-	        .catch(error => {
-    	        alert("Doslo je do greske prilikom ucitavanja prijavljenog");
-    	    })
-	},*/
 	template: ` 
 <div>
 	
@@ -136,9 +126,9 @@ Vue.component("us", {
                     <td>&nbsp;</td>
                     <td align="left">
                     	<select class="cb" v-model="role" style="width:208px;height:30px;">
-							<option value="volvo">ADMINISTRATOR</option>
-							<option value="saab">HOST</option>
-							<option value="opel">GUEST</option>
+							<option>ADMINISTRATOR</option>
+							<option>HOST</option>
+							<option>GUEST</option>
 						</select></td>
                     <td>&nbsp;</td>
                 </tr>
@@ -166,7 +156,7 @@ Vue.component("us", {
                 	<td></td>
 					<td>&nbsp;</td>
                     	<td align="left">
-                    	<button v-on:click="pretrazi">Pretrazi</button>
+                    	<button v-on:click.prevent="pretrazi">Pretrazi</button>
                     	
                     	<button onclick="window.location.href='#/pk'">Odustani</button></td>
                 </tr>
@@ -190,15 +180,14 @@ Vue.component("us", {
                 'role': this.role,
                 'gender': this.gender
             }
-            alert(user.username);
-            axios.post('rest/registracija/parametri', user)
+            axios.post('rest/registracija/pretraga', user)
             .then(function (response) {
-            	alert("totototototo")
             	USERS = response.data;
-   				window.location.href = '#/sc';
+   				window.location.href = '#/ush';
             })
             .catch(function (error) {
                   alert("Doslo je do greske prilikom pretrage");
+                  alert(error.response.data);
             });
         },
 		
@@ -210,7 +199,6 @@ Vue.component("us", {
 
         })
         .catch(function (error) {
-        	alert("usao u exaption!");
             alert(error.response.data);
 	});
 	},
@@ -225,16 +213,6 @@ Vue.component("ush", {
 		    	users: USERS
 		    }
 	},
-	/*mounted(){
-        axios
-            .get('rest/registracija/korisnici')
-            .then(response =>{
-	        	this.users = response.data;
-    	    })
-	        .catch(error => {
-    	        alert("Doslo je do greske prilikom ucitavanja prijavljenog");
-    	    })
-	},*/
 	template: ` 
 <div>
 	
@@ -284,10 +262,6 @@ Vue.component("ush", {
 	, 
 	methods : {
 		
-		/*pretrazi: function(){
-				window.location.href = 'korisnici.html#/pretraga';
-        },*/
-		
 		logout : function() {
 	    axios.post('rest/registracija/logout')
     	
@@ -296,7 +270,6 @@ Vue.component("ush", {
 
         })
         .catch(function (error) {
-        	alert("usao u exaption!");
             alert(error.response.data);
 	});
 	},

@@ -38,11 +38,6 @@ Vue.component("log", {
 		
 	},
 	methods : {
-		init : function() {
-			this.sc = {};
-		}, login2(){
-            
-        },
 		 login(){
             var user = {
                 'username': this.username,
@@ -71,18 +66,14 @@ Vue.component("log", {
 			if(ok){
 				axios.post('rest/registracija/login', user)
                 .then(function (response) {
-                	alert("Usao u 1!");
     				this.kor = response.data;
-    				login2()
                 })
                 .catch(function (error) {
-                	pom = false;
                     alert("exaption "+error.response.data);
                 });
 			}
 				axios.get('rest/registracija/korisnickoIme/'+ this.username)
                 .then(function (response) {
-                	alert("Usao u 2!"+response.data);
     				this.kor = response.data;
     				if(this.kor.role == "HOST"){
 						window.location.href = "#/h";

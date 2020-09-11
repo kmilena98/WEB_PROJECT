@@ -181,16 +181,31 @@ public class Registration {
 		}
 		
 		@POST
-		@Path("/parametri")
+		@Path("/pretraga")
 		@Consumes(MediaType.APPLICATION_JSON)
 		@Produces(MediaType.APPLICATION_JSON)
 		public HashMap<String, User> pretrazi(User u) {
-			System.out.println("aaaaaaaaaaaaaaa");
 			Users users = (Users) ctx.getAttribute("users");
-			String username = (String) u.getSurname();
-			String role = (String) u.getRole();
-			String gender = (String) u.getGender();
-			System.out.println("ddddddddddddddddddddd");
+			String username = "";
+			String role = "";
+			String gender = "";
+			try {
+				username = (String) u.getUsername();
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			
+			try {
+				role = (String) u.getRole();
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			
+			try {
+				gender = (String) u.getGender();
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
 			
 			return users.pretraga(username, role, gender);
 		
