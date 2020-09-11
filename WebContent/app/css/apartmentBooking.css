@@ -314,3 +314,15 @@ body{
 .banner-agile-top {
     margin: 1em 0 0 0;
 }
+
+/*Forma dodavanja apartmana*/
+
+.naslov h2{
+	font-size: 25px;
+	font-family: serif;
+	text-align: center;
+}
+
+.dodavanjeApartmana{
+	margin-top: 40px;
+}
