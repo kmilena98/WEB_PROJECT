@@ -10,6 +10,7 @@ const Apartment = { template: '<ap></ap>' }
 const PersonalDataEdit = { template: '<pr></pr>' }
 const PersonalData = { template: '<pr1></pr1>' }
 const UsersReview = { template: '<pk></pk>' }
+const UsersSearch = { template: '<us></us>' }
 const router = new VueRouter({
 	  mode: 'hash',
 	  routes: [
@@ -24,7 +25,8 @@ const router = new VueRouter({
 	    { path: '/sb', component: Apartment },
 	    { path: '/sd', component: PersonalDataEdit },
 	    { path: '/pd', component: PersonalData },
-	    { path: '/pk', component: UsersReview }
+	    { path: '/pk', component: UsersReview },
+	    { path: '/us', component: UsersSearch }
 	  ]
 });
 
