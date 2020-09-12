@@ -48,7 +48,7 @@ Vue.component("pr", {
 	  <form accept-charset="UTF-8">
             <table class="table" id="tabela">
                 <tr>
-                    <td align="right"><label>Korisnicko ime:</label></td>
+                    <td align="left"><label>Korisnicko ime:</label></td>
                      <td>&nbsp;</td>
                     <td align="left">{{username}}</td>
                      <td>&nbsp;</td>
@@ -57,7 +57,7 @@ Vue.component("pr", {
 				<td align="left" style="color: red"> {{korisnickoImeValidacija}}</td>
 				</tr>
                 <tr>
-                    <td align="right">Lozinka:</td>
+                    <td align="left">Lozinka:</td>
                     <td>&nbsp;</td>
                     <td align="left"><input type="password" id="lozinka" v-model="password"/></td>
                     <td>&nbsp;</td>
@@ -66,7 +66,7 @@ Vue.component("pr", {
                     <td align="left" style="color: red"> {{lozinkaValidacija}}</td>
 				 </tr>
                 <tr>
-                    <td align="right">Ime:</td>
+                    <td align="left">Ime:</td>
                     <td>&nbsp;</td>
                     <td align="left"><input type="text" id="ime"  v-model="name" /></td>
                     <td>&nbsp;</td>
@@ -75,7 +75,7 @@ Vue.component("pr", {
 				 <td align="left" style="color: red"> {{imeValidacija}}</td>
                  </tr>
                 <tr>
-                    <td align="right">Prezime:</td>
+                    <td align="left">Prezime:</td>
                     <td>&nbsp;</td>
                     <td align="left"><input type="text" id="prezime" name="prezime" v-model="surname"></input></td>
                     <td>&nbsp;</td>
@@ -84,13 +84,16 @@ Vue.component("pr", {
                     <td align="left" style="color: red">{{prezimeValidacija}}</td>
 				 </tr>
 				 <tr>
-                    <td align="right"><label>Uloga:</label></td>
+                    <td align="left"><label>Uloga:</label></td>
                      <td>&nbsp;</td>
                     <td align="left">{{role}}</td>
                      <td>&nbsp;</td>
                 </tr>
+                <td>&nbsp;</td>
+                <tr>
+                </tr>
 				 <tr class="radioButton">
-				 	<td align="right">Pol:</td>
+				 	<td align="left">Pol:</td>
                     <td>&nbsp;</td>
                     <td align="left">
                     <div class="radio">
@@ -234,10 +237,11 @@ Vue.component("pr1", {
 	<div class="l">
 		<h2>Licni podaci</h2>
 	</div>
+	<div class="pod">
 	  <form accept-charset="UTF-8">
             <table class="table" id="tabela">
                 <tr>
-                    <td align="right"><label>Korisnicko ime:</label></td>
+                    <td align="left"><label>Korisnicko ime:</label></td>
                      <td>&nbsp;</td>
                     <td align="left">{{this.user.username}}</td>
                      <td>&nbsp;</td>
@@ -246,7 +250,7 @@ Vue.component("pr1", {
 				<td align="left" style="color: red"> {{korisnickoImeValidacija}}</td>
 				</tr>
                 <tr>
-                    <td align="right">Lozinka:</td>
+                    <td align="left">Lozinka:</td>
                     <td>&nbsp;</td>
                      <td align="left">{{this.user.password}}</td><td>&nbsp;</td>
                 </tr>
@@ -254,7 +258,7 @@ Vue.component("pr1", {
                     <td align="left" style="color: red"> {{lozinkaValidacija}}</td>
 				 </tr>
                 <tr>
-                    <td align="right">Ime:</td>
+                    <td align="left">Ime:</td>
                     <td>&nbsp;</td>
                     <td align="left">{{this.user.name}}</td>
                     <td>&nbsp;</td>
@@ -263,7 +267,7 @@ Vue.component("pr1", {
 				 <td align="left" style="color: red"> {{imeValidacija}}</td>
                  </tr>
                 <tr>
-                    <td align="right">Prezime:</td>
+                    <td align="left">Prezime:</td>
                     <td>&nbsp;</td>
                     <td align="left">{{this.user.surname}}</td>
                     <td>&nbsp;</td>
@@ -272,7 +276,7 @@ Vue.component("pr1", {
                     <td align="left" style="color: red">{{prezimeValidacija}}</td>
 				 </tr>
 				 <tr>
-                    <td align="right">Pol:</td>
+                    <td align="left">Pol:</td>
                     <td>&nbsp;</td>
                     <td align="left">{{this.user.gender}}</td>
                     <td>&nbsp;</td>
@@ -281,7 +285,7 @@ Vue.component("pr1", {
                     <td align="left" style="color: red">{{prezimeValidacija}}</td>
 				 </tr>
 				 <tr>
-                    <td align="right">Uloga:</td>
+                    <td align="left">Uloga:</td>
                     <td>&nbsp;</td>
                     <td align="left">{{this.user.role}}</td>
                     <td>&nbsp;</td>
@@ -293,7 +297,7 @@ Vue.component("pr1", {
                 </tr>  			   			
             </table>            
         </form>
-       
+       </div>
 </div>			  
 `
 	, 

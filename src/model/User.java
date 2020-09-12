@@ -72,6 +72,22 @@ public class User {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
+	public Gender toEnumGender(String gender) {
+		if(gender.equals("MALE"))
+			return Gender.MALE;
+		else
+			return Gender.FEMALE;
+	}
+	
+	public Role toEnumRole(String gender) {
+		if(gender.equals("ADMINISTRATOR"))
+			return Role.ADMINISTRATOR;
+		else if(gender.equals("GUEST")){
+			return Role.GUEST;
+		}else {
+			return Role.HOST;
+		}
+	}
 
 	/*public Gender getGender() {
 		return gender;

@@ -170,11 +170,10 @@ public class Registration {
 			User user = users.getUser(u.getUsername());
 			users.getUsers().remove(user.getUsername());
 			
-			
+			users.dodaj(u);
 			String contextPath = ctx.getRealPath("");
 			users.sacuvajKorisnike(contextPath);
-			
-			users.dodaj(u);
+
 			request.getSession().setAttribute("ulogovani", u);
 			
 			return Response.status(200).build();
