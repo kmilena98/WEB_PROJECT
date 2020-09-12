@@ -28,6 +28,7 @@ public class Users {
 		this.path = path;
 		loadUsers(path);
 		System.out.println("Ucitao korisnike iz fajla!"+ users.size());
+		//getUser("e").get;
 	}
 	
 	public HashMap<String, User> getUsers() {
@@ -80,6 +81,7 @@ public class Users {
 				else 
 					 u = mapper.convertValue(par.getValue(),User.class);
 				users.put(u.getUsername(), u);
+				
 			}
 
 		} catch (FileNotFoundException fnfe) {

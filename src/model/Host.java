@@ -2,9 +2,11 @@ package model;
 
 import java.util.ArrayList;
 
+
+
 public class Host extends User {
 
-	private ArrayList<Apartment> apartmentsForRent;
+	private ArrayList<Apartment> apartmentsForRent = new ArrayList<Apartment>();
 	
 	public Host() {
 		
@@ -12,9 +14,9 @@ public class Host extends User {
 
 	public Host(String username, String password, String name, String surname, Gender gender, Role role) {
 		super(username, password, name, surname, gender, role);
-		this.apartmentsForRent = new ArrayList<Apartment>();
 	}
 	
+
 	public void addAppartment(Apartment a) {
 		this.apartmentsForRent.add(a);
 		System.out.println("Apartment je dodat u listu i sada ih ima : "+this.apartmentsForRent.size());

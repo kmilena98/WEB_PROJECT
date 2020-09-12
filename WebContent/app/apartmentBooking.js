@@ -477,7 +477,7 @@ Vue.component("aa", {
 		            axios.post('rest/apartmani/add', ap)
                     .then(function (response) {
                     	alert("dovdexxxxxxx");
-                        window.location.href = "#/sh";
+                        /*window.location.href = "#/sh";*/
                     })
                     .catch(function (error) {
                     	alert("exception");

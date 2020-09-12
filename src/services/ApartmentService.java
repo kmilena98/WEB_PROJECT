@@ -72,14 +72,15 @@ public class ApartmentService {
 		if(!mapaApartments.containsKey(a.getId())) {
 			System.out.println("Usao u if, a broj apartmana je "+ apartments.getApartments().size());
 			User us = (User)users.getUser(kor.getUsername());
-			Host host = new Host(us.getUsername(),us.getPassword(),us.getName(),us.getSurname(),us.toEnumGender(us.getGender()),us.toEnumRole(us.getRole()));
+			Host h = (Host) users.getUser(kor.getUsername());
+			//Host host = new Host(us.getUsername(),us.getPassword(),us.getName(),us.getSurname(),us.toEnumGender(us.getGender()),us.toEnumRole(us.getRole()));
 			a.setHost(kor.getUsername());
 			apartments.add(a);
-			host.addAppartment(a);
+			h.addAppartment(a);
 			
-			User user = users.getUser(host.getUsername());
+			User user = users.getUser(h.getUsername());
 			users.getUsers().remove(user.getUsername());
-			users.dodaj(host);
+			users.dodaj(h);
 			users.sacuvajKorisnike(contextPath);
 			apartments.saveApartments(contextPath);
 			return Response.status(200).build();
