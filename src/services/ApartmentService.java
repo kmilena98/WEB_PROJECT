@@ -76,8 +76,6 @@ public class ApartmentService {
 			a.setHost(kor.getUsername());
 			apartments.add(a);
 			host.addAppartment(a);
-			//kategorije.dodajOglas(o.getKategorija(), o);
-			//h.dodajObjavljeni(a);  MORA I OVOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO za domacina
 			
 			User user = users.getUser(host.getUsername());
 			users.getUsers().remove(user.getUsername());
