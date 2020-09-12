@@ -5,6 +5,7 @@ Vue.component("reg", {
 				name: undefined,
 				surname: undefined,
 				password: undefined,
+				potvrda: undefined,
 				role: null,
 				gender: undefined	
 		    }
@@ -33,6 +34,11 @@ Vue.component("reg", {
 			<p class="message4" style="color:red;font-size:12px">{{lozinkaValidacija}}</p>
 			<label>Lozinka:</label>
 		</div>
+		<div class="inputBox">
+			<input type="password" v-model="potvrda">
+			<p class="message4" style="color:red;font-size:12px">{{lozinkaValidacija2}}</p>
+			<label>Potvrdi lozinku:</label>
+		</div>
 		<div class="radioButton">
 			<label class="gender">Pol</label>
 			<label class="radio">
@@ -56,6 +62,11 @@ Vue.component("reg", {
 		},
 		lozinkaValidacija: function(){
 			if(this.password === '') return 'Lozinka je obavezno polje.';
+			else return null;
+		},
+		lozinkaValidacija2: function(){
+			if(this.potvrda === '') return 'Niste potvrdili lozinku.';
+			if(this.potvrda != this.password) return 'Lozinke se ne podudaraju.';
 			else return null;
 		},
 		imeValidacija: function(){
@@ -95,6 +106,9 @@ Vue.component("reg", {
 					'role': "GUEST",
 					'gender': this.gender
 				};
+			if(this.password != this.potvrda){
+				alert("Lozinke se ne podudaraju!");
+			}else{
 		    axios.post('rest/registracija/add', u)
         	
             .then(function (response) {
@@ -106,6 +120,7 @@ Vue.component("reg", {
             	alert("usao u exaption!");
                 alert(error.response.data);
 		});
+			}
 		},
 	}
 });

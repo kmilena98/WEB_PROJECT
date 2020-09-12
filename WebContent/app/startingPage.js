@@ -14,7 +14,6 @@ Vue.component("start", {
 	</div>
 
 <div class="topnav">
-	<a href="#/sa">Proba</a>
 	<a href="#/sb">Apartmani</a>
 	<div class="topnav-right">
 		<a href="#/sc">Prijava</a>

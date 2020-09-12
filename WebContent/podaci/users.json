@@ -15,6 +15,22 @@
     "gender" : "FEMALE",
     "role" : "HOST"
   },
+  "u" : {
+    "username" : "u",
+    "password" : "ulica",
+    "name" : "L",
+    "surname" : "V",
+    "gender" : "FEMALE",
+    "role" : "GUEST"
+  },
+  "w" : {
+    "username" : "w",
+    "password" : "w",
+    "name" : "Ilija",
+    "surname" : "Obrenovic",
+    "gender" : "MALE",
+    "role" : "GUEST"
+  },
   "k" : {
     "username" : "k",
     "password" : "k",
