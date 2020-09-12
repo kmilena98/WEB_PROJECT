@@ -71,14 +71,14 @@ public class Users {
 			for (Map.Entry<String, Object> par : podaci.entrySet()) {
 				ObjectMapper mapper = new ObjectMapper();
 				String jsonInString = (String) par.toString();
-				User u = mapper.convertValue(par.getValue(), User.class);
+				User u;// = mapper.convertValue(par.getValue(), User.class);
 				
-				/*if(jsonInString.contains("role=GUEST,"))
+				if(jsonInString.contains("role=GUEST,"))
 		            u = mapper.convertValue(par.getValue(), Guest.class);
 				else if(jsonInString.contains("role=HOST,"))
 					 u = mapper.convertValue(par.getValue(),Host.class);
 				else 
-					 u = mapper.convertValue(par.getValue(),Administrator.class);*/
+					 u = mapper.convertValue(par.getValue(),User.class);
 				users.put(u.getUsername(), u);
 			}
 
