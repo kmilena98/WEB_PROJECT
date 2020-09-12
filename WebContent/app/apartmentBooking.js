@@ -153,20 +153,21 @@ Vue.component("ap", {
 Vue.component("aa", {
 	data: function(){
 		return {
+		id: undefined,
 		roomType: undefined,
         roomNumber: undefined,
         guestNumber: undefined,
         location: undefined,
         dateOfRentingStart: undefined,
         dateOfRentingEnd: undefined,
-        host: undefined,
-        slika: undefined,
+        hostName: undefined,
+        image: undefined,
         pracePerNight: undefined,
         checkinTime: undefined,
         checkoutTime: undefined,
         status: undefined,
         previewImage: null,
-        comments: null
+        /*comments: null*/
     }},
    /* mounted(){
 		axios
@@ -187,98 +188,110 @@ Vue.component("aa", {
 	</div>
 
    <div class="topnav">
-    	<a href="#/sa">Proba</a>
-    	<a href="#/sb">Apartmani</a>
+    <a href="#/sb">Apartmani</a>
+	<a href="#/pk">Korisnici</a>
+	<a href="#/aa">Dodavanje apartmana</a>
     	<div class="topnav-right">
 			<a href="#/sd">Moj profil</a>
 			<a href="#/" v-on:click.prevent="logout">Odjava</a>
     	</div>
     </div>
     <div class="naslov">
-    	<h2>Dodaj apartmane</h2>
+    	<h2>Dodaj apartman</h2>
     </div>
 
 		    	<div id="forme" class="dodavanjeApartmana">
 		    		<form accept-charset="UTF-8">
             		    <table align="center">
                             <tr>
+                            	 <tr>
+                                <td align="left">ID:</td>
+                                <td align="left"><input type="text" v-model="id"/></td>
+                                <td>&nbsp;&nbsp;</td>
+                            </tr>
                                 <td align="left">Tip apartmana:</td>
                                 <td align="left">
-                                <select class="cb" style="width:208px;height:30px;">
-									<option>SOBA</option>
-									<option>CEO APARTMAN</option>
+                                <select class="cb" v-model="roomType" style="width:208px;height:30px;">
+									<option selected="selected">ROOM</option>
+									<option>WHOLE_APPARTMENT</option>
 								</select>
 								</td>
 							</tr>	
 							 <tr>
                                 <td align="left">Broj soba:</td>
                                 <td align="left">
-                                	<select class="cb" style="width:208px;height:30px;">
-										<option>1</option>
+                                	<select class="cb" v-model="roomNumber" style="width:208px;height:30px;">
+										<option selected="selected">1</option>
 										<option>2</option>
 										<option>3</option>
 										<option>4</option>
+										<option>5</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+                                <td align="left">Broj gostiju:</td>
+                                <td align="left">
+                                	<select class="cb" v-model="guestNumber" style="width:208px;height:30px;">
+										<option selected="selected">1</option>
+										<option>2</option>
+										<option>3</option>
+										<option>4</option>
+										<option>5</option>
 									</select>
 								</td>
 							</tr>
                             <tr>
                                 <td align="left">Lokacija:</td>
-                                <td align="left"><input type="text" /></td>
+                                <td align="left"><input type="text" v-model="location"/></td>
                                 <td>&nbsp;&nbsp;</td>
                             </tr>
                             <tr>
                             	<td>Datum za izdavanje od:</td>
                             	<td><input type="date" id="start" name="trip-start"
     								value="2018-07-22"
-    								min="2018-01-01" max="2018-12-31"/>
+    								min="2018-01-01" max="2040-12-31" v-model="dateOfRentingStart"/>
     							</td>
                             </tr>
                             <tr>
                             	<td>Datum za izdavanje do:</td>
                             	<td><input type="date" id="start" name="trip-start"
     								value="2018-07-22"
-    								min="2018-01-01" max="2018-12-31"/>
+    								min="2018-01-01" max="2040-12-31" v-model="dateOfRentingEnd"/>
     							</td>
                             </tr>
                             <tr>
-                                <td align="left">Domacin:</td>
-                                <td align="left"><input type="text" /></td>
-                                <td>&nbsp;&nbsp;</td>
-                            </tr>
-                            <tr>
                                 <td align="left">Cena:</td>
-                                <td align="left"><input type="text" /></td>
+                                <td align="left"><input type="text" v-model="pracePerNight"/></td>
                                 <td>&nbsp;&nbsp;</td>
                             </tr>
                             <tr>
                                 <td align="left">Vreme za prijavu:</td>
-                                <td align="left"><input type="text"/></td>
+                                <td align="left"><input type="text" v-model="checkinTime"/></td>
                                 <td>&nbsp;&nbsp;</td>
                             </tr>
                              <tr>
                                 <td align="left">Vreme za odjavu:</td>
-                                <td align="left"><input type="text" /></td>
+                                <td align="left"><input type="text" v-model="checkoutTime"/></td>
                                 <td>&nbsp;&nbsp;</td>
                             </tr>
                             <tr>
-                                <td align="left">Status:</td>
-                                <td align="left">
-                                	<select class="cb" style="width:208px;height:30px;">
-										<option>AKTIVAN</option>
-										<option>NEAKTIVAN</option>
-									</select>
-								</td>
-							</tr>
+                             
                             <tr>
                                 <td>&nbsp;</td>
                             </tr>
                             <tr>
-                                <td align="left">Slika:</td>
-                                <td align="left"><input type="file" accept="image/*" @change=uploadImage>
+                             	<td></td>
+                                <td align="left"><input type="file" accept="image/*" @change=uploadImage></td>
 
-                               <img  :src = "previewImage" style = "display:flex" width="150" heigh="100" /></td>
                             </tr>
-                            
+                            <td align="left">Slika:</td>
+                            <td><img  :src = "previewImage" style = "display:flex" width="150" heigh="100" /></td>
+                            <tr>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                            </tr>
                             <tr>
                             	<td>Sadrzaj apartmana:</td>
                             </tr>
@@ -296,49 +309,54 @@ Vue.component("aa", {
                           
                             <tr>
                                 <td align="right" >
-                                <button>Dodaj</button>
-                                <button>Odustani</button></td>
+                                <button v-on:click.prevent="dodajApartman">Dodaj</button>
+                                <button onclick="window.location.href='#/h'">Odustani</button></td>
                             </tr>		   			
                         </table>            
                     </form> 
 			</div>
     </div>`,
 	computed: {
-		nazivOglasaValidacija: function(){
-			if(this.nazivOglasa === '') return 'Niste unijeli naziv oglasa.';
+		locationValidacija: function(){
+			if(this.location === '') return 'Niste unijeli lokaciju.';
 			else return null;
 		},
-		opisValidacija: function(){
+		/*opisValidacija: function(){
 			if(this.opis === '') return 'Opis ne moze biti prazan.';
 			else return null;
-        },
-        cijenaValidacija: function(){
-				if(this.cijena === null || this.cijena === '') return 'Cijena je je obavezno polje.';
-				else if(Number(this.cijena) < 0) return 'Cijena ne moze biti negativan broj.'; 
+        },*/
+        cenaValidacija: function(){
+				if(this.pracePerNight === null || this.pracePerNight === '') return 'Cena je je obavezno polje.';
+				else if(Number(this.pracePerNight) < 0) return 'Cena ne moze biti negativan broj.'; 
 				else return null;
         },
-        datumValidacija: function(){
-				if(this.datumIsticanja === '') return 'Datum isticanja je obavezno polje.';
-				else if(this.manji(this.datumIsticanja)) return 'Datum isticanja ne moze biti manji od danasnjeg';
+        datumValidacija1: function(){
+				if(this.dateOfRentingStart === '') return 'Datum je obavezno polje.';
+				else if(this.manji(this.dateOfRentingStart)) return 'Datum  ne moze biti manji od danasnjeg';
 				else return null;
         },
-        gradValidacija: function(){
-				if(this.grad != undefined && this.grad.length > 0){
-					let gradMatch = this.grad.match('[A-Za-z ]*');
-					if(gradMatch != this.grad) return 'Grad se mora sastojati samo od slova';
-					else if(this.grad[0].match('[A-Z]') === null) return 'Grad mora pocinjati velikim slovom'; 
+        datumValidacija2: function(){
+			if(this.dateOfRentingEnd === '') return 'Datum je obavezno polje.';
+			else if(this.manji(this.dateOfRentingEnd)) return 'Datum  ne moze biti manji od danasnjeg';
+			else return null;
+    },
+        domacinValidacija: function(){
+				if(this.host != undefined && this.host.length > 0){
+					let hostMatch = this.host.match('[A-Za-z ]*');
+					if(hostMatch != this.host) return 'Domacin se mora sastojati samo od slova';
+					else if(this.host[0].match('[A-Z]') === null) return 'Domacin mora pocinjati velikim slovom'; 
 				}
-				else if(this.grad === '') return 'Grad je obavezno polje.';
+				else if(this.host === '') return 'Domacin je obavezno polje.';
 				else return null;
         },
         slikaValidacija: function(){
             if(this.previewImage === '') return 'Slika je obavezno polje.';
             else return null;
         },
-        kategorijaValidacija: function(){
+        /*kategorijaValidacija: function(){
             if(this.kat === '') return 'Kategorija je obavezno polje.'
             else return null;
-        }
+        }*/
     },
     methods: {
     	logout : function() {
@@ -353,18 +371,19 @@ Vue.component("aa", {
 	            alert(error.response.data);
 		});
 		},
-		manji: function(datum){
-            var date = new Date();
-			var mjesec = ('0' + (date.getMonth() + 1)).slice(-2);
-			var dan = ('0' + date.getDate()).slice(-2);
-			var godina = date.getFullYear();
-			if(datum != undefined){
-				datum = datum.split('-');
-				if(datum[0] < godina) return true;
-				if(datum[0] > godina) return false;
-				if(datum[1] < mjesec) return true;
-				if(datum[1] > mjesec) return false;
-				if(datum[2] <= dan) return true;
+		manji: function(datum1, datum2){
+           /* var date = new Date();
+			var month = ('0' + (date.getMonth() + 1)).slice(-2);
+			var day = ('0' + date.getDate()).slice(-2);
+			var year = date.getFullYear();*/
+			if(datum1 != undefined && datum2 != undefined){
+				datum1 = datum.split('-');
+				datum2 = datum.split('-');
+				if(datum2[0] < datum1[0]) return true;
+				if(datum2[0] > datum1[0]) return false;
+				if(datum2[1] < datum1[1]) return true;
+				if(datum2[1] > datum1[1]) return false;
+				if(datum2[2] <= datum1[2]) return true;
 				return false;
 			}
 			return false;
@@ -380,81 +399,91 @@ Vue.component("aa", {
         odustani: function(){
             window.location.href = "oglasi.html";
         },
-    	dodajOglas(){
-            var date = new Date();
-			var mjesec = ('0' + (date.getMonth() + 1)).slice(-2);
-			var dan = ('0' + date.getDate()).slice(-2);
-			var godina = date.getFullYear();
-			var datum = godina + '-' + mjesec + '-' + dan;
+    	dodajApartman(){
+        	alert("tooooooooo");
+            /*var date = new Date();
+			var month = ('0' + (date.getMonth() + 1)).slice(-2);
+			var day = ('0' + date.getDate()).slice(-2);
+			var year = date.getFullYear();
+			var datum = year + '-' + month + '-' + day;*/
 
-            var ok = true;
+           /* var ok = true;
 				
-                let gradMatch = '';
+                let hostMatch = '';
                                       
-                if(this.nazivOglasa != undefined) this.nazivOglasa.trim();
-                else this.nazivOglasa = '';
+                if(this.lokacija != undefined) this.lokacija.trim();
+                else this.lokacija = '';
 
-				if(this.grad != undefined) {
-					this.grad.trim();
-					gradMatch = this.grad.match('[A-Za-z ]*');
+				if(this.hostName != undefined) {
+					this.hostName.trim();
+					hostMatch = this.hostName.match('[A-Za-z ]*');
 				}
-                else this.grad = '';
+                else this.hostName = '';*/
                 
-                if(this.kat === undefined){
+               /* if(this.kat === undefined){
                     this.kat = '';
-                }
-                if(this.opis === undefined){
+                }*/
+                /*if(this.opis === undefined){
                     this.opis = '';
                 }
-                else this.opis.trim();
+                else this.opis.trim();*/
 
-                if(this.cijena === undefined){
-                    this.cijena = null;
+               /* if(this.pracePerNight === undefined){
+                    this.pracePerNight = null;
                 }
 
-                if(this.datumIsticanja === undefined){
-                    this.datumIsticanja = '';
+                if(this.dateOfRentingStart === undefined){
+                    this.dateOfRentingStart = '';
+                }
+                if(this.dateOfRentingEnd === undefined){
+                    this.dateOfRentingEnd = '';
                 }
 
                 if(this.previewImage === null){
                     this.previewImage = '';
                 }
 		
-				if(this.nazivOglasa === undefined || this.nazivOglasa === '' || this.opis === undefined || this.opis === '' ||
-				   this.cijena === undefined || this.cijena === '' || this.datumIsticanja === undefined || this.datumIsticanja === '' ||
-				   this.grad === undefined || this.grad === '' || this.kat === '' || this.kat === undefined || this.previewImage ===''){
+				if(this.location === undefined || this.location === '' ||
+				   this.pracePerNight === undefined || this.pracePerNight === '' || this.dateOfRentingStart === undefined || this.dateOfRentingStart === '' ||
+				   this.dateOfRentingEnd === undefined || this.dateOfRentingEnd === '' || this.hostName === undefined || this.hostName === '' || this.previewImage ===''){
 					ok = false;
 				}
-				else if((gradMatch != this.grad) || (this.grad[0].match('[A-Z]') === null)){
+				else if((hostMatch != this.host) || (this.hostName[0].match('[A-Z]') === null)){
 					ok = false;
 				}
-				else if(this.manji(this.datumIsticanja) || (Number(this.cijena) < 0)){
+				else if(this.manji(this.dateOfRentingStart, this.dateOfRentingEnd) || (Number(this.pracePerNight) < 0)){
 					ok = false;
-				}
+				}*/
 				
-				if(ok){
-                     var oglas = {
-                        'naziv': this.nazivOglasa,
-                        'cijena': this.cijena,
-                        'opis': this.opis,
-                        'datumIsticanja': this.datumIsticanja,
-                        'pozitivneOcjene' : 0,
-                        'kategorija' : this.kat.naziv,
-                        'negativneOcjene' : 0,
-                        'datumPostavljanja' : datum,
-                        'aktivan' : 0,
-                        'obrisan' : false,
-                        'grad' : this.grad,
-                        'nazivSlike' : this.previewImage
+				/*if(ok){*/
+        	alert("ssssssss");
+                     var ap = {
+                    	'id' : this.id,
+                        'roomType': this.roomType,
+                        'roomNumber': this.roomNumber,
+                        'guestNumber': this.guestNumber,
+                        'location': this.location,
+                        'dateOfRentingStart' : this.dateOfRentingStart,
+                        'dateOfRentingEnd' : this.dateOfRentingEnd,
+                        'hostName' : this.hostName,
+                        'image' : this.previewImage,
+                        'pracePerNight' : this.pracePerNight,
+                        'checkinTime' : this.checkinTime,
+                        'checkoutTime' : this.checkoutTime,
+                        'status' : false
+                        
                     };
-		            axios.post('rest/oglasi/dodaj', oglas)
+                    alert("aaaaaaaa");
+		            axios.post('rest/apartmani/add', ap)
                     .then(function (response) {
-                        window.location.href = "oglasi.html";
+                    	alert("dovdexxxxxxx");
+                        window.location.href = "#/sh";
                     })
                     .catch(function (error) {
+                    	alert("exception");
                         alert(error.response.data);
                     });
-				}
+				/*}*/
 			}
 		}
 	});
