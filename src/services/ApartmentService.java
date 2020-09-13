@@ -6,6 +6,7 @@ import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -44,6 +45,20 @@ public class ApartmentService {
 	    	String contextPath = ctx.getRealPath("");
 			ctx.setAttribute("users", new Users(contextPath));
 		}
+	}
+	
+	@GET
+	@Path("/ap")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public HashMap<String, Apartment> getApartmani() {
+		User ulogovani = (User) request.getSession().getAttribute("ulogovani");
+		if(ulogovani == null) {
+			return null;
+		}		
+		Apartments apartmani = (Apartments) ctx.getAttribute("apartments");
+		System.out.println("ucitao apartmane"+apartmani.getApartments().size());
+		return apartmani.getApartments();
 	}
 	
 	@POST

@@ -15,7 +15,6 @@ body{
   background-size: cover;
 }
 
-
 /* Add a black background color to the top navigation */
 .topnav {
     background-color: #333;
@@ -326,3 +325,18 @@ body{
 .dodavanjeApartmana{
 	margin-top: 40px;
 }
+
+
+/* za prikaz slike apartmana*/
+.post-media {
+    padding: 0 !important;
+}
+
+.post-media img {
+    width: 100%;
+}
+.t .granica td{
+	border: none !important;
+	
+} 
+
