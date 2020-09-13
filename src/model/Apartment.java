@@ -14,7 +14,7 @@ public class Apartment {
 	private RoomType roomType;
 	private int roomNumber;
 	private int guestNumber;
-	private String location;
+	private Location location;
 	private String dateOfRentingStart;
 	private String dateOfRentingEnd;
 	//private availability by dates
@@ -43,7 +43,7 @@ public class Apartment {
 //		status = false;
 	}
 	
-	public Apartment(String id, RoomType roomType, int roomNumber, int guestNumber, String location, String dateOfRentingStart,
+	public Apartment(String id, RoomType roomType, int roomNumber, int guestNumber, Location location, String dateOfRentingStart,
 			String dateOfRentingEnd, String hostName, String image, int pracePerNight, String checkinTime, String checkoutTime,
 			boolean status/*, ArrayList<Amenities> amenities*/) {
 		super();
@@ -102,11 +102,11 @@ public class Apartment {
 		this.guestNumber = guestNumber;
 	}
 
-	public String getLocation() {
+	public Location getLocation() {
 		return location;
 	}
 
-	public void setLocation(String location) {
+	public void setLocation(Location location) {
 		this.location = location;
 	}
 

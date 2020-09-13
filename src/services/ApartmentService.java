@@ -71,9 +71,19 @@ public class ApartmentService {
 		System.out.println("Id je : "+a.getId());
 		if(!mapaApartments.containsKey(a.getId())) {
 			System.out.println("Usao u if, a broj apartmana je "+ apartments.getApartments().size());
+			//Host h = users.getHost(kor.getUsername());
+			
+			//Host h = (Host)us;
+			//Host us= host(kor.getUsername());
 			User us = (User)users.getUser(kor.getUsername());
-			Host h = (Host) users.getUser(kor.getUsername());
-			//Host host = new Host(us.getUsername(),us.getPassword(),us.getName(),us.getSurname(),us.toEnumGender(us.getGender()),us.toEnumRole(us.getRole()));
+			Host h;
+			try {
+		      h = (Host) users.getUser(kor.getUsername());
+		      System.out.println("Iz try-a!");
+			}catch(Exception e) {
+			  h = new Host(us.getUsername(),us.getPassword(),us.getName(),us.getSurname(),us.toEnumGender(us.getGender()),us.toEnumRole(us.getRole()));
+			  System.out.println("Iz catch-a!");
+			}	
 			a.setHost(kor.getUsername());
 			apartments.add(a);
 			h.addAppartment(a);

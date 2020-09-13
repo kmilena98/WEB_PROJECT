@@ -158,6 +158,12 @@ Vue.component("aa", {
         roomNumber: undefined,
         guestNumber: undefined,
         location: undefined,
+        latitude: undefined,
+        address: undefined,
+        longitude: undefined,
+        street: undefined,
+        place: undefined,
+        zipCode: undefined,
         dateOfRentingStart: undefined,
         dateOfRentingEnd: undefined,
         hostName: undefined,
@@ -206,12 +212,13 @@ Vue.component("aa", {
                             <tr>
                             	 <tr>
                                 <td align="left">ID:</td>
-                                <td align="left"><input type="text" v-model="id"/></td>
+                                <td align="left"><input type="text" v-model="id" style="width:208px;height:25px;"/></td>
                                 <td>&nbsp;&nbsp;</td>
                             </tr>
+                            
                                 <td align="left">Tip apartmana:</td>
                                 <td align="left">
-                                <select class="cb" v-model="roomType" style="width:208px;height:30px;">
+                                <select class="cb" v-model="roomType" style="width:208px;height:25px;">
 									<option selected="selected">ROOM</option>
 									<option>WHOLE_APPARTMENT</option>
 								</select>
@@ -220,7 +227,7 @@ Vue.component("aa", {
 							 <tr>
                                 <td align="left">Broj soba:</td>
                                 <td align="left">
-                                	<select class="cb" v-model="roomNumber" style="width:208px;height:30px;">
+                                	<select class="cb" v-model="roomNumber" style="width:208px;height:25px;">
 										<option selected="selected">1</option>
 										<option>2</option>
 										<option>3</option>
@@ -232,7 +239,7 @@ Vue.component("aa", {
 							<tr>
                                 <td align="left">Broj gostiju:</td>
                                 <td align="left">
-                                	<select class="cb" v-model="guestNumber" style="width:208px;height:30px;">
+                                	<select class="cb" v-model="guestNumber" style="width:208px;height:25px;">
 										<option selected="selected">1</option>
 										<option>2</option>
 										<option>3</option>
@@ -243,36 +250,76 @@ Vue.component("aa", {
 							</tr>
                             <tr>
                                 <td align="left">Lokacija:</td>
-                                <td align="left"><input type="text" v-model="location"/></td>
+                                <td align="left">
+                                	<tr>
+                                		<td>Geografska sirina:</td>
+                                		<td><input type="text" v-model="latitude" style="width:208px;height:25px;"/></td>
+                                	</tr>
+                                	<tr><td>&nbsp;</td>
+				 						<td align="left" style="color: red;font-size:12px">{{cenaValidacija}}</td>
+                 					</tr>
+                                	<tr>
+                                		<td>Geografska duzina:</td>
+                                		<td><input type="text" v-model="longitude" style="width:208px;height:25px;"/></td>
+                                	</tr>
+                                	<tr><td>&nbsp;</td>
+				 						<td align="left" style="color: red;font-size:12px">{{cenaValidacija}}</td>
+                 					</tr>
+                                	<tr>
+                                		<td>Ulica:</td>
+                                		<td><input type="text" v-model="street" style="width:208px;height:25px;"/></td>
+                                	</tr>
+                                	<tr><td>&nbsp;</td>
+				 						<td align="left" style="color: red;font-size:12px">{{cenaValidacija}}</td>
+                 					</tr>
+                                	<tr>
+                                		<td>Grad:</td>
+                                		<td><input type="text" v-model="place" style="width:208px;height:25px;"/></td>
+                                	</tr>
+                                	<tr><td>&nbsp;</td>
+				 						<td align="left" style="color: red;font-size:12px">{{cenaValidacija}}</td>
+                 					</tr>
+                                	<tr>
+                                		<td>Postanski broj:</td>
+                                		<td><input type="text" v-model="zipCode" style="width:208px;height:25px;"/></td>
+                                	</tr>
+                                	<tr><td>&nbsp;</td>
+				 						<td align="left" style="color: red;font-size:12px">{{cenaValidacija}}</td>
+                 					</tr>
+                                </td>
                                 <td>&nbsp;&nbsp;</td>
                             </tr>
                             <tr>
                             	<td>Datum za izdavanje od:</td>
                             	<td><input type="date" id="start" name="trip-start"
     								value="2018-07-22"
-    								min="2018-01-01" max="2040-12-31" v-model="dateOfRentingStart"/>
+    								min="2018-01-01" max="2040-12-31" v-model="dateOfRentingStart" style="width:208px;height:25px;"/>
     							</td>
                             </tr>
                             <tr>
                             	<td>Datum za izdavanje do:</td>
                             	<td><input type="date" id="start" name="trip-start"
     								value="2018-07-22"
-    								min="2018-01-01" max="2040-12-31" v-model="dateOfRentingEnd"/>
+    								min="2018-01-01" max="2040-12-31" v-model="dateOfRentingEnd" style="width:208px;height:25px;"/>
     							</td>
                             </tr>
                             <tr>
                                 <td align="left">Cena:</td>
-                                <td align="left"><input type="text" v-model="pracePerNight"/></td>
+                                <td align="left"><input type="text" v-model="pracePerNight" style="width:208px;height:25px;"/></td>
                                 <td>&nbsp;&nbsp;</td>
+                                </tr>
+				 			<tr><td>&nbsp;</td>
+				 				<td align="left" style="color: red;font-size:12px">{{cenaValidacija}}</td>
+                 			</tr>
                             </tr>
                             <tr>
                                 <td align="left">Vreme za prijavu:</td>
-                                <td align="left"><input type="text" v-model="checkinTime"/></td>
+                                <td align="left"><input type="time" v-model="checkinTime" style="width:208px;height:25px;"/></td>
                                 <td>&nbsp;&nbsp;</td>
                             </tr>
                              <tr>
                                 <td align="left">Vreme za odjavu:</td>
-                                <td align="left"><input type="text" v-model="checkoutTime"/></td>
+                                <td align="left"><input type="time" v-model="checkoutTime" style="width:208px;height:25px;"/></td>
                                 <td>&nbsp;&nbsp;</td>
                             </tr>
                             <tr>
@@ -317,14 +364,36 @@ Vue.component("aa", {
 			</div>
     </div>`,
 	computed: {
-		locationValidacija: function(){
-			if(this.location === '') return 'Niste unijeli lokaciju.';
+		 cenaValidacija: function(){
+				if(this.id === null || this.pracePerNight === '') return 'Cena je je obavezno polje.';
+				else if(Number(this.id) < 0) return 'Cena ne moze biti negativan broj.'; 
+				else return null;
+     },
+		geografskaSirinaValidacija: function(){
+			if(this.latitude === '') return 'Niste unijeli geografsku sirinu.';
 			else return null;
 		},
-		/*opisValidacija: function(){
-			if(this.opis === '') return 'Opis ne moze biti prazan.';
+		geografskaDuzinaValidacija: function(){
+			if(this.longitude === '') return 'Niste unijeli geografsku duzinu.';
 			else return null;
-        },*/
+		},
+		ulicaValidacija: function(){
+			if(this.street === '') return 'Niste unijeli ulicu.';
+			else return null;
+		},
+		gradValidacija: function(){
+			if(this.place != undefined && this.place.length > 0){
+				let placeMatch = this.place.match('[A-Za-z ]*');
+				if(placeMatch != this.place) return 'Grad se mora sastojati samo od slova';
+				else if(this.place[0].match('[A-Z]') === null) return 'Grad mora pocinjati velikim slovom'; 
+			}
+			else if(this.place === '') return 'Niste unijeli grad.';
+			else return null;
+		},
+		postanskiBrojValidacija: function(){
+			if(this.zipCode === '') return 'Niste unijeli postanski broj.';
+			else return null;
+		},
         cenaValidacija: function(){
 				if(this.pracePerNight === null || this.pracePerNight === '') return 'Cena je je obavezno polje.';
 				else if(Number(this.pracePerNight) < 0) return 'Cena ne moze biti negativan broj.'; 
@@ -332,31 +401,19 @@ Vue.component("aa", {
         },
         datumValidacija1: function(){
 				if(this.dateOfRentingStart === '') return 'Datum je obavezno polje.';
-				else if(this.manji(this.dateOfRentingStart)) return 'Datum  ne moze biti manji od danasnjeg';
+				else if(this.manji1(this.dateOfRentingStart)) return 'Datum  ne moze biti manji od danasnjeg';
 				else return null;
         },
         datumValidacija2: function(){
 			if(this.dateOfRentingEnd === '') return 'Datum je obavezno polje.';
-			else if(this.manji(this.dateOfRentingEnd)) return 'Datum  ne moze biti manji od danasnjeg';
+			else if(this.manji2(this.dateOfRentingStart, this.dateOfRentingEnd)) return 'Ovaj datum ne moze biti manji od datuma pocetka';
 			else return null;
     },
-        domacinValidacija: function(){
-				if(this.host != undefined && this.host.length > 0){
-					let hostMatch = this.host.match('[A-Za-z ]*');
-					if(hostMatch != this.host) return 'Domacin se mora sastojati samo od slova';
-					else if(this.host[0].match('[A-Z]') === null) return 'Domacin mora pocinjati velikim slovom'; 
-				}
-				else if(this.host === '') return 'Domacin je obavezno polje.';
-				else return null;
-        },
+        
         slikaValidacija: function(){
             if(this.previewImage === '') return 'Slika je obavezno polje.';
             else return null;
         },
-        /*kategorijaValidacija: function(){
-            if(this.kat === '') return 'Kategorija je obavezno polje.'
-            else return null;
-        }*/
     },
     methods: {
     	logout : function() {
@@ -371,7 +428,23 @@ Vue.component("aa", {
 	            alert(error.response.data);
 		});
 		},
-		manji: function(datum1, datum2){
+		manji1: function(datum){
+            var date = new Date();
+			var month = ('0' + (date.getMonth() + 1)).slice(-2);
+			var day = ('0' + date.getDate()).slice(-2);
+			var year = date.getFullYear();
+			if(datum != undefined){
+				datum = datum.split('-');
+				if(datum[0] < godina) return true;
+				if(datum[0] > godina) return false;
+				if(datum[1] < mjesec) return true;
+				if(datum[1] > mjesec) return false;
+				if(datum[2] <= dan) return true;
+				return false;
+			}
+			return false;
+		},
+		manji2: function(datum1, datum2){
            /* var date = new Date();
 			var month = ('0' + (date.getMonth() + 1)).slice(-2);
 			var day = ('0' + date.getDate()).slice(-2);
@@ -399,6 +472,7 @@ Vue.component("aa", {
         odustani: function(){
             window.location.href = "oglasi.html";
         },
+        
     	dodajApartman(){
         	alert("tooooooooo");
             /*var date = new Date();
@@ -457,12 +531,24 @@ Vue.component("aa", {
 				
 				/*if(ok){*/
         	alert("ssssssss");
+        	
+        			var adresa = {
+        					 'street': this.street,
+                             'place': this.place,
+                             'zipCode': this.zipCode,	
+        			}
+        			var lokacija = {
+        					
+        					'latitude': this.latitude,
+                            'longitude': this.longitude,
+                            'address': adresa,
+        			}
                      var ap = {
                     	'id' : this.id,
                         'roomType': this.roomType,
                         'roomNumber': this.roomNumber,
                         'guestNumber': this.guestNumber,
-                        'location': this.location,
+                        'location' : lokacija,
                         'dateOfRentingStart' : this.dateOfRentingStart,
                         'dateOfRentingEnd' : this.dateOfRentingEnd,
                         'hostName' : this.hostName,

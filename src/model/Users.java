@@ -22,9 +22,12 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 
 public class Users {
 	private HashMap<String, User> users;
+	private HashMap<String, Host> hosts;
+	//private HashMap<String, Guest> guests;
 	private String path;
 	public Users(String path) {
 		this.users = new HashMap<String, User>();
+		//this.hosts = new HashMap<String, Host>();
 		this.path = path;
 		loadUsers(path);
 		System.out.println("Ucitao korisnike iz fajla!"+ users.size());
@@ -41,6 +44,10 @@ public class Users {
 	public User getUser(String name) {
 		User u = users.get(name);
 		return u;
+	}
+	public User getHost(String name) {
+		Host h = hosts.get(name);
+		return h;
 	}
 	
 	public void dodaj(User u) {
@@ -73,14 +80,20 @@ public class Users {
 				ObjectMapper mapper = new ObjectMapper();
 				String jsonInString = (String) par.toString();
 				User u;// = mapper.convertValue(par.getValue(), User.class);
+				//Host h = new Host();
 				
-				if(jsonInString.contains("role=GUEST,"))
+				if(jsonInString.contains("role=GUEST,")) {
 		            u = mapper.convertValue(par.getValue(), Guest.class);
-				else if(jsonInString.contains("role=HOST,"))
+		           // users.put(u.getUsername(), u);
+				}
+				else if(jsonInString.contains("role=HOST,")) {
 					 u = mapper.convertValue(par.getValue(),Host.class);
+					// hosts.put(h.getUsername(), h);
+				}
 				else 
 					 u = mapper.convertValue(par.getValue(),User.class);
 				users.put(u.getUsername(), u);
+				
 				
 			}
 
@@ -140,7 +153,9 @@ public class Users {
 			objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
 			objectMapper.getFactory().configure(JsonGenerator.Feature.ESCAPE_NON_ASCII, true);
 			String stringUsers = objectMapper.writeValueAsString(users);
+			//String stringHosts = objectMapper.writeValueAsString(hosts);
 			fileWriter.write(stringUsers);
+			//fileWriter.write(stringHosts);
 			fileWriter.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
