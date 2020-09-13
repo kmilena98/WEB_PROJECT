@@ -29,7 +29,7 @@ Vue.component("log", {
 	,
 	computed: {
 		korisnickoImeValidacija: function(){
-			if(this.username === '') return 'Korisnicko ime je obavezno polje 1!';
+			if(this.username === '') return 'Korisnicko ime je obavezno polje!';
 			else return null;
 		},passwordValidacija: function(){
 			if(this.password === '') return 'Lozinka je obavezno polje!';

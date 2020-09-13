@@ -2,20 +2,22 @@ package model;
 
 public class Amenities {
 
-	private int id;
+	private String id;
 	private String name;
 	
-	public Amenities(int id, String name) {
+	public Amenities() {}
+	
+	public Amenities(String id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

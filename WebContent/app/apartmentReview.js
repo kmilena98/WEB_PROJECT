@@ -510,8 +510,8 @@ Vue.component("izmenaApartmana", {
                           
                             <tr>
                                 <td align="right" >
-                                <button v-on:click.prevent="dodajApartman">Dodaj</button>
-                                <button onclick="window.location.href='#/h'">Odustani</button></td>
+                                <button v-on:click.prevent="dodajApartman">Potvrdi</button>
+                                <button onclick="window.location.href='#/prikazApartmana'">Odustani</button></td>
                             </tr>		   			
                         </table>            
                     </form> 
@@ -714,7 +714,7 @@ Vue.component("izmenaApartmana", {
 		            axios.post('rest/apartmani/edit', ap)
                     .then(function (response) {
                     	alert("dovdexxxxxxx");
-                        /*window.location.href = "#/sh";*/
+                        window.location.href = "#/prikazApartmana";
                     })
                     .catch(function (error) {
                     	alert("exception");
