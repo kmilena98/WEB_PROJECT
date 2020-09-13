@@ -21,6 +21,19 @@ public class Host extends User {
 		this.apartmentsForRent.add(a);
 		System.out.println("Apartment je dodat u listu i sada ih ima : "+this.apartmentsForRent.size());
 	}
+	
+	public void removeApartment(Apartment a) {
+		
+		for(Apartment ap : apartmentsForRent) {
+			if(ap.getId().equals(a.getId())) {
+				System.out.println("Objekat je uklonjen! "+ap.getId()+" drugi "+a.getId());
+				this.apartmentsForRent.remove(ap);
+				System.out.println("prosao!");
+				break;
+			}
+		}
+		System.out.println("Apartment je dodat u listu i sada ih ima : "+this.apartmentsForRent.size());
+	}
 
 	public ArrayList<Apartment> getApartmentsForRent() {
 		return apartmentsForRent;

@@ -14,6 +14,8 @@ const UsersSearch = { template: '<us></us>' }
 const UsersShow = { template: '<ush></ush>' }
 const AddApartment = { template: '<aa></aa>'}
 const ApartReview = { template: '<ar></ar>'}
+const PrikazApartmana = { template: '<prikazApartmana></prikazApartmana>'}
+const IzmenaApartmana = { template: '<izmenaApartmana></izmenaApartmana>'}
 const router = new VueRouter({
 	  mode: 'hash',
 	  routes: [
@@ -32,6 +34,8 @@ const router = new VueRouter({
 	    { path: '/aa', component: AddApartment },
 	    { path: '/us', component: UsersSearch },
 	    { path: '/ar', component: ApartReview },
+	    { path: '/prikazApartmana', component: PrikazApartmana },
+	    { path: '/izmenaApartmana', component: IzmenaApartmana },
 	    { path: '/ush', component: UsersShow }
 	  ]
 });
