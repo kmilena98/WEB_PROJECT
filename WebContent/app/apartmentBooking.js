@@ -26,7 +26,7 @@ Vue.component("ap", {
 	</div>
 </div>
 
-	<div class="main" id="main">
+	<div class="marta" id="main">
 		<div class="w3layouts_main_grid">
 		<div class="booking-form-head-agile">
 		<h3>Forma rezervacije smestaja</h3>

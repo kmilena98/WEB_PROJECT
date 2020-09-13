@@ -9,7 +9,7 @@ Vue.component("ar", {
             .get('rest/apartmani/ap')
             .then(response =>{
 	        	this.apartmants = response.data;
-	        	alert("Usao gde treba da udje!");
+	        	/*alert("Usao gde treba da udje!");*/
     	    })
 	        .catch(error => {
     	        alert("Doslo je do greske prilikom ucitavanja apartmana");
@@ -38,34 +38,22 @@ Vue.component("ar", {
 		<button type="button" onclick="window.location.href='#/us';" type="button" class="button" id="t01">Pretrazi</button>
 
 	  <form accept-charset="UTF-8">
-            <table class="t" id="tabela" style="width:80%;">
+            <table class="bla" id="tabela" style="width:25%;">
                 <caption>Pregled apartmana</caption>
-                <tr>
-                	 <td align="right">Slika</td>   
-                 	 <td align="right">Lokacija </td>                    
-                     <td align="right">Domacin</td>
-                     <td align="right">Cena nocenja</td>
-                     <td align="right">Tip apartmana</td>
-                      <td align="right">ID</td>   
-                </tr>
+              
                  <tr v-for="ap in apartmants">
                   <div class="post-media">
                                 <a href="#"><img style="width:150px;height:100px;" v-bind:src="ap.image" alt="" class="img-responsive"></a>
-                            </div><!-- end media -->
+                   </div><!-- end media -->
                             
                 <td>
-					<table class = "granica">
-					<tr>
-					<td>{{ap.location.address.place}}</td>
-					<td>{{ap.location.address.street}}</td>
-					<td>{{ap.location.address.place}}</td>
-					</tr>
-					</table>
+                	<tr><td>{{ap.location.address.street}}</td></tr>
+					<tr><td>{{ap.location.address.place}}</td>
+					<td>{{ap.location.address.zipCode}}</td></tr>
+					<tr><td>{{ap.location.latitude}}</td>
+					<td>{{ap.location.longitude}}</td></tr>
+			
 				</td>
-                <td>{{ap.host}}</td>
-                <td>{{ap.pracePerNight}}</td>
-                <td>{{ap.roomType}}</td>
-                 <td>{{ap.id}}</td>
                 <td>
 					<button type="button" v-on:click.prevent="prikazi(ap.id)">Prikazi</button>
 					</td>
@@ -81,7 +69,7 @@ Vue.component("ar", {
 	, 
 	methods : {
 		prikazi : function(id) {
-			alert("dosao"+id);
+			/*alert("dosao"+id);*/
 		    axios.post('rest/registracija/logout')
 	    	
 	        .then(function (response) {

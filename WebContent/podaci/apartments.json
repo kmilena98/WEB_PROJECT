@@ -22,6 +22,29 @@
     "status" : false,
     "host" : "m"
   },
+  "1" : {
+    "id" : "1",
+    "roomType" : "ROOM",
+    "roomNumber" : 1,
+    "guestNumber" : 1,
+    "location" : {
+      "latitude" : "123",
+      "longitude" : "432",
+      "address" : {
+        "street" : "Glavna 2",
+        "place" : "Ruma",
+        "zipCode" : 12457
+      }
+    },
+    "dateOfRentingStart" : "2020-09-30",
+    "dateOfRentingEnd" : "2020-10-10",
+    "image" : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAQAAADZc7J/AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfkAQQREinUoWwrAAABWUlEQVRIx72UMS8EQRTHf3dsZEUuQsG5SFTkIjQqtdD7BAoVpUrnC1wpkUiQSFSukkhUdERCJZoLCi6bCFtxOctlR2Gdmc2O3afwpnlv9j+/mf+b3YW0KLFHHZ9DJlO1CTGGj4pGwIwcUG0vVyiu5IB7A6DojgvyKQDfqF55kwI2jWqdUGohxxoBCkXINk6SID1GmMblnGt5C/8jOn55lmeQIg4NObaLeao8R3d/w3KmXrVjRXt9v0fFJk4i39GkzjBlbS5klNts++cZirIN4wwLNnk8QrwoOzHmnayAn+gxqkc5oGxUf/iUz7QOeLKLBOjlQwPs2GR2C7N0atWR3MCWtn+LfunyHHUNcGoX2ixMUMpmwAaYM6pjeQf2NQPvuPITjGv5A005oE/LW3IDUDMu8asjA0xlB1RiPxSfJxRL2QEFLmOIBrsUJSZcVrnghQCPAxYpJMs+ATOSj4YgNwgOAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIwLTAxLTA0VDE3OjE4OjQxKzAwOjAwH1fXeQAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMC0wMS0wNFQxNzoxODo0MSswMDowMG4Kb8UAAAAZdEVYdFNvZnR3YXJlAHd3dy5pbmtzY2FwZS5vcmeb7jwaAAAAAElFTkSuQmCC",
+    "pracePerNight" : 123.0,
+    "checkinTime" : "01:49",
+    "checkoutTime" : "13:50",
+    "status" : false,
+    "host" : "m"
+  },
   "drugi" : {
     "id" : "drugi",
     "roomType" : "ROOM",

@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +24,7 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 
 
 
+
 public class Apartments {
 
 	private HashMap<String, Apartment> apartments;
@@ -32,6 +34,10 @@ public class Apartments {
 		putanja = path;
 		this.apartments = new HashMap<String, Apartment>();
 		loadApartments(path);
+	}
+	
+	public Collection<Apartment> findAll() {
+		return apartments.values();
 	}
 	
 	public HashMap<String, Apartment> getApartments() {
@@ -54,7 +60,15 @@ public class Apartments {
 			TypeFactory factory = TypeFactory.defaultInstance();
 			MapType type = factory.constructMapType(HashMap.class, String.class, /*Apartment.class*/ Object.class);
 			objectMapper.getFactory().configure(JsonGenerator.Feature.ESCAPE_NON_ASCII, true);
-			apartments = (HashMap<String, Apartment>) objectMapper.readValue(file, type);
+			HashMap<String, Object> podaci = (HashMap<String, Object>) objectMapper.readValue(file, type);
+			for (Map.Entry<String, Object> ap : podaci.entrySet()) {
+				ObjectMapper mapper = new ObjectMapper();
+				//String jsonInString = (String) ap.toString();
+				Apartment a;
+				 a = mapper.convertValue(ap.getValue(), Apartment.class);
+				 apartments.put(a.getId(), a);
+				
+			}
 		} catch (FileNotFoundException fnfe) {
 			try {
 				file.createNewFile();
@@ -100,6 +114,8 @@ public class Apartments {
 			}
 		}*/
 	}
+	
+	
 	
 	public void saveApartments(String path) {
 		String putanja = path + "podaci\\apartments.json";
