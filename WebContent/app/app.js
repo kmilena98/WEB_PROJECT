@@ -16,10 +16,11 @@ const AddApartment = { template: '<aa></aa>'}
 const ApartReview = { template: '<ar></ar>'}
 const PrikazApartmana = { template: '<prikazApartmana></prikazApartmana>'}
 const IzmenaApartmana = { template: '<izmenaApartmana></izmenaApartmana>'}
+const PrikazApartmanaDomacin = { template: '<prikazApartmanaZaDomacina></prikazApartmanaZaDomacina>'}
 const router = new VueRouter({
 	  mode: 'hash',
 	  routes: [
-	    { path: '/', component: Start},
+	    { path: '/', component: Start}, 
 	    { path: '/sc', component: LogIn },
 	    { path: '/ss', component: Reg },
 	    { path: '/sh', component: RegHost },
@@ -35,6 +36,7 @@ const router = new VueRouter({
 	    { path: '/us', component: UsersSearch },
 	    { path: '/ar', component: ApartReview },
 	    { path: '/prikazApartmana', component: PrikazApartmana },
+	    { path: '/prikazApartmanaDomacin', component: PrikazApartmanaDomacin },
 	    { path: '/izmenaApartmana', component: IzmenaApartmana },
 	    { path: '/ush', component: UsersShow }
 	  ]

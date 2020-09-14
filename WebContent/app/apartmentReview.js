@@ -725,6 +725,191 @@ Vue.component("izmenaApartmana", {
 		}
 	});
 
+Vue.component("prikazApartmanaZaDomacina", {
+	data: function () {
+		    return {
+		      apartmani: null
+		      
+		    }
+	},
+	mounted(){
+        axios
+            .get('rest/apartmani/prikazZaDomacina')
+            .then(response =>{
+	        	this.apartmani = response.data;
+	        	alert("Dobio trazene apartmane");
+    	    })
+	        .catch(error => {
+    	        alert("Doslo je do greske prilikom ucitavanja apartmana");
+    	        alert(error.response.data);
+    	    })
+	},
+	template: ` 
+<div>
+	
+	<div class="header">
+		<img class="image" src="images/l.jpg" style="width:150px;height:100px;">
+		<h1>Rezervacija apartmana </h1>
+		<p>Izaberite svoju najbolju ponudu iz snova!</p>
+	</div>
+
+<div class="topnav">
+	<a href="#/ar">Apartmani</a>
+	<a href="#/pk">Korisnici</a>
+	<a href="#/sh">Registracija domacina</a>
+	<div class="topnav-right">
+		<a href="#/pd">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+</div>
+
+		<button type="button" onclick="window.location.href='#/izmenaApartmana';" type="button" class="button" id="t01">Izmeni</button>
+
+	  <form accept-charset="UTF-8">
+            <table class="bla" id="tabela" style="width:25%;">
+                <caption>Pregled izabranog apartmana</caption>
+              
+                <tr>
+                 <td>
+                  <div class="post-media">
+                                <a href="#"><img style="width:150px;height:100px;" v-bind:src="this.apartman.image" alt="" class="img-responsive"></a>
+                   </div><!-- end media -->
+                 </td>        
+                <td>
+                <tr>
+                	<div id="forme" class="dodavanjeApartmana">
+		    		
+                            <tr>
+                            	 <tr>
+                                <td align="left">ID:</td>
+                                <td align="left">{{this.apartman.id}}</td>
+                                <td>&nbsp;&nbsp;</td>
+                            </tr>
+                            
+                                <td align="left">Tip apartmana:</td>
+                                <td align="left">{{this.apartman.roomType}}</td>
+							</tr>	
+							 <tr>
+                                <td align="left">Broj soba:</td>
+                                <td align="left">{{this.apartman.roomNumber}}</td>
+							</tr>
+							<tr>
+                                <td align="left">Broj gostiju:</td>
+                                <td align="left">{{this.apartman.guestNumber}}</td>
+							</tr>
+                            <tr>
+                                <td align="left">Lokacija:</td>
+                                <td align="left">
+                                	<tr>
+                                		<td>Geografska sirina:</td>
+                                		<td>{{this.apartman.location.latitude}}</td>
+                                	</tr>
+                                	<tr>
+                                		<td>Geografska duzina:</td>
+                                		<td>{{this.apartman.location.longitude}}</td>
+                                	</tr>
+                                	<tr>
+                                		<td>Ulica:</td>
+                                		<td>{{this.apartman.location.address.street}}</td>
+                                	</tr>
+                                	<tr>
+                                		<td>Grad:</td>
+                                		<td>{{this.apartman.location.address.place}}</td>
+                                	</tr>
+                                	<tr>
+                                		<td>Postanski broj:</td>
+                                		<td>{{this.apartman.location.address.zipCode}}</td>
+                                	</tr>
+                                </td>
+                               </tr>
+                            <tr>
+                            	<td>Datum za izdavanje od:</td>
+                            	<td>{{this.apartman.dateOfRentingStart}}</td>
+                            </tr>
+                            <tr>
+                            	<td>Datum za izdavanje do:</td>
+                            	<td>{{this.apartman.dateOfRentingEnd}}</td>
+                            </tr>
+                            <tr>
+                                <td align="left">Cena:</td>
+                                <td align="left">{{this.apartman.pracePerNight}}</td>
+                                <td>&nbsp;&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td align="left">Vreme za prijavu:</td>
+                                <td align="left">{{this.apartman.checkinTime}}</td>
+                                <td>&nbsp;&nbsp;</td>
+                            </tr>
+                             <tr>
+                                <td align="left">Vreme za odjavu:</td>
+                               <td align="left">{{this.apartman.checkoutTime}}</td>
+                               <td>&nbsp;&nbsp;</td>
+                            </tr>
+                           
+                             
+                           
+                           
+                           
+                            <tr>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                            	<td>Sadrzaj apartmana:</td>
+                            </tr>
+                            <tr>
+                            	<td>
+									<input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+    								<label for="vehicle1"> I have a bike</label><br>
+    								<input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
+    								<label for="vehicle2"> I have a car</label><br>
+    								<input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">
+    								<label for="vehicle3"> I have a boat</label><br><br>
+    							</td>
+							</tr>
+                          	   			
+                      </div>
+					</tr>
+				</td>
+               </tr>
+                
+						
+            </table>            
+        </form>
+	
+	
+</div>		  
+`
+	, 
+	methods : {
+		prikazi : function(id) {
+			/*alert("dosao"+id);*/
+		    axios.post('rest/apartmani/prikazApartmana')
+	    	
+	        .then(function (response) {
+				window.location.href = '#/';
+
+	        })
+	        .catch(function (error) {
+	        	alert("usao u exaption!");
+	            alert(error.response.data);
+		});
+		},
+		logout : function() {
+	    axios.post('rest/registracija/logout')
+    	
+        .then(function (response) {
+			window.location.href = '#/';
+
+        })
+        .catch(function (error) {
+        	alert("usao u exaption!");
+            alert(error.response.data);
+	});
+	},
+
+		
+	},
+});
 
 
 

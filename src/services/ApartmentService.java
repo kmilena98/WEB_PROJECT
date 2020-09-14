@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -69,6 +70,20 @@ public class ApartmentService {
 	public void sacuvajSelektovaniApartman(Apartment a) {
 		ctx.setAttribute("izabraniApartman", a);
 	}
+	
+	@GET
+	@Path("/prikazZaDomacina")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public ArrayList<Apartment> prikazApartmanaZaDomacina() {
+		Host h = (Host)request.getSession().getAttribute("ulogovani");;
+		if(h==null) {
+			System.out.println("Ulogovani je null!");
+		}
+		System.out.println("Broj apartmana koje ima ovaj domacin je "+h.getApartmentsForRent().size());
+		return h.getApartmentsForRent(); 
+	}
+	
 	
 	@GET
 	@Path("/prikaz")

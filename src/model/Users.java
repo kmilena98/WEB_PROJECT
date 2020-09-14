@@ -30,7 +30,6 @@ public class Users {
 		//this.hosts = new HashMap<String, Host>();
 		this.path = path;
 		loadUsers(path);
-		System.out.println("Ucitao korisnike iz fajla!"+ users.size());
 		//getUser("e").get;
 	}
 	

@@ -140,7 +140,7 @@ Vue.component("host", {
 	</div>
 
 <div class="topnav">
-	<a href="#/sb">Apartmani</a>
+	<a href="#/prikazApartmanaDomacin">Apartmani</a>
 	<a href="#/pk">Korisnici</a>
 	<a href="#/aa">Dodavanje apartmana</a>
 	<div class="topnav-right">

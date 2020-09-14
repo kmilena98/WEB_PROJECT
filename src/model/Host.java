@@ -19,7 +19,6 @@ public class Host extends User {
 
 	public void addAppartment(Apartment a) {
 		this.apartmentsForRent.add(a);
-		System.out.println("Apartment je dodat u listu i sada ih ima : "+this.apartmentsForRent.size());
 	}
 	
 	public void removeApartment(Apartment a) {
