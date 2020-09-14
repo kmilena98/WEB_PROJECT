@@ -99,11 +99,14 @@
     "checkoutTime" : "13:02",
     "status" : false,
     "amenities" : [ {
-      "id" : "2",
-      "name" : "Televizor"
-    }, {
       "id" : "12",
       "name" : "Garaza"
+    }, {
+      "id" : "100",
+      "name" : "Bazen"
+    }, {
+      "id" : "1",
+      "name" : "Telefon"
     } ],
     "host" : "h"
   },
