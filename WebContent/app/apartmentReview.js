@@ -231,14 +231,11 @@ Vue.component("prikazApartmana", {
                             	<td>Sadrzaj apartmana:</td>
                             </tr>
                             <tr>
-                            	<td>
-									<input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-    								<label for="vehicle1"> I have a bike</label><br>
-    								<input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
-    								<label for="vehicle2"> I have a car</label><br>
-    								<input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">
-    								<label for="vehicle3"> I have a boat</label><br><br>
-    							</td>
+                            <td>
+                            <tr v-for="s in this.apartman.amenities">
+									<label> {{s.name}}</label><br>
+    								</tr>
+                            </td>
 							</tr>
                           	   			
                       </div>
@@ -308,6 +305,7 @@ Vue.component("izmenaApartmana", {
         pracePerNight: undefined,
         checkinTime: undefined,
         checkoutTime: undefined,
+        allAmenities : undefined,
         status: undefined
         /*comments: null*/
     }},
@@ -316,7 +314,6 @@ Vue.component("izmenaApartmana", {
          .get('rest/apartmani/prikaz')
          .then(response =>{
 	        	this.apartman = response.data;
-	        	alert("Dobio trazeni apartman"+this.apartman.id);
 	        	this.id= this.apartman.id,
 	        	this.roomType= this.apartman.roomType,
 	            this.roomNumber= this.apartman.roomNumber,
@@ -333,7 +330,8 @@ Vue.component("izmenaApartmana", {
 	            this.checkinTime= this.apartman.checkinTime,
 	            this.checkoutTime =this.apartman.checkoutTime,
 	            this.status= this.apartman.status,
-	            this.previewImage =this.apartman.image
+	            this.previewImage =this.apartman.image,
+	            this.selectedAmenities = this.apartman.amenities
  	    })
 	        .catch(error => {
  	        alert("Doslo je do greske prilikom ucitavanja apartmana");
@@ -342,12 +340,11 @@ Vue.component("izmenaApartmana", {
     	 axios
          .get('rest/sadrzaj/prikazSadrzaja')
          .then(response =>{
-         	this.amenities = response.data;
+         	this.allAmenities = response.data;
          })
          .catch(error => {
              alert("Doslo je do greske prilikom ucitavanja kategorija");
          })
-    
     },
     template: `
      <div>      
@@ -507,11 +504,13 @@ Vue.component("izmenaApartmana", {
                             </tr>
                             <tr>
                             	<td>
-                            		<tr v-for="s in amenities">
-									<input type="checkbox" id="s.id" name="vehicle1" value="s.name">
-    								<label for="vehicle1"> {{s.name}}</label><br>
+                            		<tr v-for="s in this.allAmenities">
+									<input type="checkbox" id="s.name" name="vehicle1" :value="{id : s.id,
+																								name : s.name}" v-model="selectedAmenities">
+									
+									<span>{{s.name}}</span><br>
+    								
     								</tr>
-    							
     							</td>
 							</tr>
                                    
@@ -716,7 +715,8 @@ Vue.component("izmenaApartmana", {
                         'pracePerNight' : this.pracePerNight,
                         'checkinTime' : this.checkinTime,
                         'checkoutTime' : this.checkoutTime,
-                        'status' : false
+                        'status' : false,
+                        'amenities' : this.selectedAmenities,
                         
                     };
 	        			
