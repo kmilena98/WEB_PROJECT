@@ -115,7 +115,7 @@ public class ApartmentService {
 		if(ulogovani == null /*|| !ulogovani.getRole().equals("HOST")*/) {
 			return Response.status(400).entity("Samo domacini mogu dodavati apartmane").build();
 		}
-		if(a.getRoomType().equals("") || a.getLocation().equals("") || a.getDateOfRentingStart().equals("") || a.getDateOfRentingEnd().equals("") 
+		if(a.getRoomType().equals("") || a.getLocation().equals("")  
 				|| a.getImage().equals("")/* || a.getPracePerNight().equals("")*/) {
 			return Response.status(400).entity("Niste unijeli sva obavezna polja.").build();
 		}

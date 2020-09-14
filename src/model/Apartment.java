@@ -16,9 +16,8 @@ public class Apartment {
 	private int roomNumber;
 	private int guestNumber;
 	private Location location;
-	private String dateOfRentingStart;
-	private String dateOfRentingEnd;
-	//private availability by dates
+	private ArrayList<String> datesForRenting;
+	private ArrayList<String> freeDatesForRenting;
 	private String hostName;
 	private String image;
 	private double pracePerNight;
@@ -44,9 +43,8 @@ public class Apartment {
 //		status = false;
 	}
 	
-	public Apartment(String id, RoomType roomType, int roomNumber, int guestNumber, Location location, String dateOfRentingStart,
-			String dateOfRentingEnd, String hostName, String image, int pracePerNight, String checkinTime, String checkoutTime,
-			boolean status, ArrayList<Amenities> amenities) {
+	public Apartment(String id, RoomType roomType, int roomNumber, int guestNumber, Location location, String hostName, String image, int pracePerNight, String checkinTime, String checkoutTime,
+			boolean status, ArrayList<Amenities> amenities,ArrayList<String> datesForRenting) {
 		super();
 		System.out.println("Konstruktor apartmana "+ id);
 		this.id = id;
@@ -54,8 +52,7 @@ public class Apartment {
 		this.roomNumber = roomNumber;
 		this.guestNumber = guestNumber;
 		this.location = location;
-		this.dateOfRentingStart = dateOfRentingStart;
-		this.dateOfRentingEnd = dateOfRentingEnd;
+		this.datesForRenting = datesForRenting;
 		this.hostName = hostName;
 		this.image = image;
 		this.pracePerNight = pracePerNight;
@@ -112,20 +109,20 @@ public class Apartment {
 		this.location = location;
 	}
 
-	public String getDateOfRentingStart() {
-		return dateOfRentingStart;
+	public ArrayList<String> getDatesForRenting() {
+		return datesForRenting;
 	}
 
-	public void setDateOfRentingStart(String dateOfRentingStart) {
-		this.dateOfRentingStart = dateOfRentingStart;
+	public void setDatesForRenting(ArrayList<String> dateOfRentingStart) {
+		this.datesForRenting = dateOfRentingStart;
 	}
 
-	public String getDateOfRentingEnd() {
-		return dateOfRentingEnd;
+	public ArrayList<String> getFreeDatesForRenting() {
+		return freeDatesForRenting;
 	}
 
-	public void setDateOfRentingEnd(String dateOfRentingEnd) {
-		this.dateOfRentingEnd = dateOfRentingEnd;
+	public void setFreeDatesForRenting(ArrayList<String> dateOfRentingEnd) {
+		this.freeDatesForRenting = dateOfRentingEnd;
 	}
 
 	public String getHost() {

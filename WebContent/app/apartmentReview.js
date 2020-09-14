@@ -197,12 +197,12 @@ Vue.component("prikazApartmana", {
                                 </td>
                                </tr>
                             <tr>
-                            	<td>Datum za izdavanje od:</td>
-                            	<td>{{this.apartman.dateOfRentingStart}}</td>
-                            </tr>
-                            <tr>
-                            	<td>Datum za izdavanje do:</td>
-                            	<td>{{this.apartman.dateOfRentingEnd}}</td>
+                            	<td>Datumi za izdavanje od:</td>
+                            	<td>  <tr v-for="d in this.apartman.datesForRenting">
+									<label> {{d | dateFormat('DD.MM>YYYY')}}</label><br>
+    								</tr>
+    							</td>
+                            	
                             </tr>
                             <tr>
                                 <td align="left">Cena:</td>
@@ -250,7 +250,7 @@ Vue.component("prikazApartmana", {
 	
 </div>		  
 `
-	, 
+	,
 	methods : {
 		prikazi : function(id) {
 			/*alert("dosao"+id);*/

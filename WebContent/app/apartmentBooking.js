@@ -169,8 +169,7 @@ Vue.component("aa", {
         street: undefined,
         place: undefined,
         zipCode: undefined,
-        dateOfRentingStart: undefined,
-        dateOfRentingEnd: undefined,
+        dateForRenting: undefined,
         hostName: undefined,
         image: undefined,
         pracePerNight: undefined,
@@ -178,6 +177,7 @@ Vue.component("aa", {
         checkoutTime: undefined,
         status: undefined,
         previewImage: null,
+        datesForRenting : [],
         selectedAmenities : []
         /*comments: null*/
     }},
@@ -298,17 +298,12 @@ Vue.component("aa", {
                             </tr>
                             <tr>
                             	<td>Datum za izdavanje od:</td>
-                            	<td><input type="date" id="start" name="trip-start"
+                            	<td><tr><td><input type="date" id="start" name="trip-start"
     								value="2018-07-22"
-    								min="2018-01-01" max="2040-12-31" v-model="dateOfRentingStart" style="width:208px;height:25px;"/>
+    								min="2018-01-01" max="2040-12-31" v-model="dateForRenting" style="width:208px;height:25px;"/>
     							</td>
-                            </tr>
-                            <tr>
-                            	<td>Datum za izdavanje do:</td>
-                            	<td><input type="date" id="start" name="trip-start"
-    								value="2018-07-22"
-    								min="2018-01-01" max="2040-12-31" v-model="dateOfRentingEnd" style="width:208px;height:25px;"/>
-    							</td>
+    							<td><button v-on:click.prevent="dodajDatum(dateForRenting)">Dodaj</button></td></tr>
+    							 </td>
                             </tr>
                             <tr>
                                 <td align="left">Cena:</td>
@@ -471,6 +466,13 @@ Vue.component("aa", {
 			}
 			return false;
 		},
+		dodajDatum(dateForRenting){
+			alert("Usao u dodajDatum");
+			this.datesForRenting.push(dateForRenting);
+
+			alert("Usao u dodajDatum2");
+			alert(this.datesForRenting[0]);
+		},
         uploadImage(e){
             const image = e.target.files[0];
             const reader = new FileReader();
@@ -559,8 +561,7 @@ Vue.component("aa", {
                         'roomNumber': this.roomNumber,
                         'guestNumber': this.guestNumber,
                         'location' : lokacija,
-                        'dateOfRentingStart' : this.dateOfRentingStart,
-                        'dateOfRentingEnd' : this.dateOfRentingEnd,
+                        'datesForRenting':this.datesForRenting,
                         'hostName' : this.hostName,
                         'image' : this.previewImage,
                         'pracePerNight' : this.pracePerNight,
