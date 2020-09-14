@@ -76,7 +76,12 @@ public class ApartmentService {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public ArrayList<Apartment> prikazApartmanaZaDomacina() {
-		Host h = (Host)request.getSession().getAttribute("ulogovani");;
+		Host h = new Host();
+		try {
+			h = (Host)request.getSession().getAttribute("ulogovani");
+		}catch(Exception e) {
+			
+		}
 		if(h==null) {
 			System.out.println("Ulogovani je null!");
 		}
@@ -159,8 +164,7 @@ public class ApartmentService {
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public Response editApartman(Apartment a) {
-	System.out.println("udjeeeeeeeeeeeeeeeeeeee" + a.getHost());
-	
+	ctx.setAttribute("izabraniApartman", a);
 	User ulogovani = (User) request.getSession().getAttribute("ulogovani");
 	if(ulogovani == null /*|| !ulogovani.getRole().equals("HOST")*/) {
 		return Response.status(400).entity("Samo domacini mogu dodavati apartmane").build();

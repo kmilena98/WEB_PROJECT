@@ -763,7 +763,7 @@ Vue.component("prikazApartmanaZaDomacina", {
 	</div>
 </div>
 
-		<button type="button" onclick="window.location.href='#/izmenaApartmana';" type="button" class="button" id="t01">Izmeni</button>
+		<button type="button" onclick="window.location.href='#/izmenaApartmana';" class="button" id="t01">Izmeni</button>
 
 	   <form accept-charset="UTF-8">
             <table class="bla" id="tabela" style="width:25%;">
@@ -784,7 +784,7 @@ Vue.component("prikazApartmanaZaDomacina", {
 				</td>
                 <td>
 					<button type="button" v-on:click.prevent="prikazi(ap)">Prikazi</button>
-					</td>
+				</td>
                 </tr>
                 
 						
@@ -796,12 +796,12 @@ Vue.component("prikazApartmanaZaDomacina", {
 `
 	, 
 	methods : {
-		prikazi : function(id) {
+		prikazi : function(a) {
 			/*alert("dosao"+id);*/
-		    axios.post('rest/apartmani/prikazApartmana')
+		    axios.post('rest/apartmani/prikazApartmana',a)
 	    	
 	        .then(function (response) {
-				window.location.href = '#/';
+				window.location.href = '#/prikazApartmana';
 
 	        })
 	        .catch(function (error) {
