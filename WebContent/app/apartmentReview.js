@@ -510,8 +510,8 @@ Vue.component("izmenaApartmana", {
                           
                             <tr>
                                 <td align="right" >
-                                <button v-on:click.prevent="dodajApartman">Dodaj</button>
-                                <button onclick="window.location.href='#/h'">Odustani</button></td>
+                                <button v-on:click.prevent="dodajApartman">Potvrdi</button>
+                                <button onclick="window.location.href='#/prikazApartmana'">Odustani</button></td>
                             </tr>		   			
                         </table>            
                     </form> 
@@ -714,7 +714,7 @@ Vue.component("izmenaApartmana", {
 		            axios.post('rest/apartmani/edit', ap)
                     .then(function (response) {
                     	alert("dovdexxxxxxx");
-                        /*window.location.href = "#/sh";*/
+                        window.location.href = "#/prikazApartmana";
                     })
                     .catch(function (error) {
                     	alert("exception");
@@ -765,112 +765,27 @@ Vue.component("prikazApartmanaZaDomacina", {
 
 		<button type="button" onclick="window.location.href='#/izmenaApartmana';" type="button" class="button" id="t01">Izmeni</button>
 
-	  <form accept-charset="UTF-8">
+	   <form accept-charset="UTF-8">
             <table class="bla" id="tabela" style="width:25%;">
-                <caption>Pregled izabranog apartmana</caption>
+                <caption>Pregled apartmana</caption>
               
-                <tr>
-                 <td>
+                 <tr v-for="ap in apartmani">
                   <div class="post-media">
-                                <a href="#"><img style="width:150px;height:100px;" v-bind:src="this.apartman.image" alt="" class="img-responsive"></a>
+                                <a href="#"><img style="width:150px;height:100px;" v-bind:src="ap.image" alt="" class="img-responsive"></a>
                    </div><!-- end media -->
-                 </td>        
-                <td>
-                <tr>
-                	<div id="forme" class="dodavanjeApartmana">
-		    		
-                            <tr>
-                            	 <tr>
-                                <td align="left">ID:</td>
-                                <td align="left">{{this.apartman.id}}</td>
-                                <td>&nbsp;&nbsp;</td>
-                            </tr>
                             
-                                <td align="left">Tip apartmana:</td>
-                                <td align="left">{{this.apartman.roomType}}</td>
-							</tr>	
-							 <tr>
-                                <td align="left">Broj soba:</td>
-                                <td align="left">{{this.apartman.roomNumber}}</td>
-							</tr>
-							<tr>
-                                <td align="left">Broj gostiju:</td>
-                                <td align="left">{{this.apartman.guestNumber}}</td>
-							</tr>
-                            <tr>
-                                <td align="left">Lokacija:</td>
-                                <td align="left">
-                                	<tr>
-                                		<td>Geografska sirina:</td>
-                                		<td>{{this.apartman.location.latitude}}</td>
-                                	</tr>
-                                	<tr>
-                                		<td>Geografska duzina:</td>
-                                		<td>{{this.apartman.location.longitude}}</td>
-                                	</tr>
-                                	<tr>
-                                		<td>Ulica:</td>
-                                		<td>{{this.apartman.location.address.street}}</td>
-                                	</tr>
-                                	<tr>
-                                		<td>Grad:</td>
-                                		<td>{{this.apartman.location.address.place}}</td>
-                                	</tr>
-                                	<tr>
-                                		<td>Postanski broj:</td>
-                                		<td>{{this.apartman.location.address.zipCode}}</td>
-                                	</tr>
-                                </td>
-                               </tr>
-                            <tr>
-                            	<td>Datum za izdavanje od:</td>
-                            	<td>{{this.apartman.dateOfRentingStart}}</td>
-                            </tr>
-                            <tr>
-                            	<td>Datum za izdavanje do:</td>
-                            	<td>{{this.apartman.dateOfRentingEnd}}</td>
-                            </tr>
-                            <tr>
-                                <td align="left">Cena:</td>
-                                <td align="left">{{this.apartman.pracePerNight}}</td>
-                                <td>&nbsp;&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td align="left">Vreme za prijavu:</td>
-                                <td align="left">{{this.apartman.checkinTime}}</td>
-                                <td>&nbsp;&nbsp;</td>
-                            </tr>
-                             <tr>
-                                <td align="left">Vreme za odjavu:</td>
-                               <td align="left">{{this.apartman.checkoutTime}}</td>
-                               <td>&nbsp;&nbsp;</td>
-                            </tr>
-                           
-                             
-                           
-                           
-                           
-                            <tr>
-                                <td>&nbsp;</td>
-                            </tr>
-                            <tr>
-                            	<td>Sadrzaj apartmana:</td>
-                            </tr>
-                            <tr>
-                            	<td>
-									<input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-    								<label for="vehicle1"> I have a bike</label><br>
-    								<input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
-    								<label for="vehicle2"> I have a car</label><br>
-    								<input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">
-    								<label for="vehicle3"> I have a boat</label><br><br>
-    							</td>
-							</tr>
-                          	   			
-                      </div>
-					</tr>
+                <td>
+                	<tr><td>{{ap.location.address.street}}</td></tr>
+					<tr><td>{{ap.location.address.place}}</td>
+					<td>{{ap.location.address.zipCode}}</td></tr>
+					<tr><td>{{ap.location.latitude}}</td>
+					<td>{{ap.location.longitude}}</td></tr>
+			
 				</td>
-               </tr>
+                <td>
+					<button type="button" v-on:click.prevent="prikazi(ap)">Prikazi</button>
+					</td>
+                </tr>
                 
 						
             </table>            

@@ -89,9 +89,6 @@ Vue.component("reg", {
 		},
 	},
 	methods : {
-		init : function() {
-			this.sc = {};
-		}, 
 		registration : function() {
 				if(document.getElementById('radio1').checked){
 					this.gender = "MALE";

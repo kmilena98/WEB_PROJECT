@@ -17,6 +17,8 @@ const ApartReview = { template: '<ar></ar>'}
 const PrikazApartmana = { template: '<prikazApartmana></prikazApartmana>'}
 const IzmenaApartmana = { template: '<izmenaApartmana></izmenaApartmana>'}
 const PrikazApartmanaDomacin = { template: '<prikazApartmanaZaDomacina></prikazApartmanaZaDomacina>'}
+const SadrzajApartmanaPrikaz = { template: '<sadrzajApartmanaPrikaz></sadrzajApartmanaPrikaz>'}
+const DodajSadrzajApartmana = { template: '<dodajsadrzajApartmana></dodajsadrzajApartmana>'}
 const router = new VueRouter({
 	  mode: 'hash',
 	  routes: [
