@@ -1,0 +1,26 @@
+{
+  "1" : {
+    "id" : "1",
+    "name" : "Telefon"
+  },
+  "100" : {
+    "id" : "100",
+    "name" : "Bazen"
+  },
+  "12" : {
+    "id" : "12",
+    "name" : "Garaza"
+  },
+  "2" : {
+    "id" : "2",
+    "name" : "Televizor"
+  },
+  "3" : {
+    "id" : "3",
+    "name" : "Lampa"
+  },
+  "15" : {
+    "id" : "15",
+    "name" : "Ormar"
+  }
+}

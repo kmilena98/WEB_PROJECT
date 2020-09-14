@@ -41,7 +41,7 @@ public class Amenitiess {
 	
 	@SuppressWarnings("unchecked")
 	public void loadAmenities(String path) {
-		String putanja = path + "podaci\\amenitiess.json";
+		String putanja = path + "datoteka\\amenities.json";
 		FileWriter fileWriter = null;
 		BufferedReader in = null;
 		File file = null;
@@ -111,7 +111,7 @@ public class Amenitiess {
 	}
 	
 	public void saveAmenities(String path) {
-		String putanja = path + "podaci\\amenitiess.json";
+		String putanja = path + "datoteka\\amenities.json";
 		File f = new File(putanja);
 		FileWriter fileWriter = null;
 		try {
