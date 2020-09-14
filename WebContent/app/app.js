@@ -40,6 +40,7 @@ const router = new VueRouter({
 	    { path: '/prikazApartmana', component: PrikazApartmana },
 	    { path: '/prikazApartmanaDomacin', component: PrikazApartmanaDomacin },
 	    { path: '/sadrzajApartmanaPrikaz', component: SadrzajApartmanaPrikaz },
+	    { path: '/dodajsadrzajApartmana', component: DodajSadrzajApartmana },
 	    { path: '/izmenaApartmana', component: IzmenaApartmana },
 	    { path: '/ush', component: UsersShow }
 	  ]

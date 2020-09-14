@@ -149,7 +149,8 @@ Vue.component("dodajsadrzajApartmana", {
 		<table>
 		<tr>
 			<td><input type="button" value="Potvrdi" v-on:click.prevent="dodajSadrzaj"><td>
-			<td><input type="button" value="Odustani"></td>
+			<td><input type="button" onclick="window.location.href='#/sadrzajApartmanaPrikaz';" value="Odustani"></td>
+			
 		</tr>
 		</div>
 	</div>
@@ -184,7 +185,7 @@ Vue.component("dodajsadrzajApartmana", {
             axios.post('rest/sadrzaj/add', sadrzaj)
             .then(function (response) {
             	alert("dovdexxxxxxx");
-                /*window.location.href = "#/sh";*/
+                window.location.href = "#/sadrzajApartmanaPrikaz";
             })
             .catch(function (error) {
             	alert("exception");
