@@ -33,7 +33,7 @@
     "apartmentsForRent" : [ {
       "id" : "20",
       "roomType" : "WHOLE_APPARTMENT",
-      "roomNumber" : 2,
+      "roomNumber" : 4,
       "guestNumber" : 3,
       "location" : {
         "latitude" : "1234",
