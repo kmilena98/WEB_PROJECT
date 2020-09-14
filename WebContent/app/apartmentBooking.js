@@ -153,6 +153,11 @@ Vue.component("ap", {
 Vue.component("aa", {
 	data: function(){
 		return {
+		amenities:null,	
+		am : {
+			id:'',
+			name:'',
+		},
 		id: undefined,
 		roomType: undefined,
         roomNumber: undefined,
@@ -173,18 +178,20 @@ Vue.component("aa", {
         checkoutTime: undefined,
         status: undefined,
         previewImage: null,
+        selectedAmenities : []
         /*comments: null*/
     }},
-   /* mounted(){
+    mounted(){
 		axios
-        .get('rest/kategorije')
+        .get('rest/sadrzaj/prikazSadrzaja')
         .then(response =>{
-        	this.kategorije = response.data;
+        	this.amenities = response.data;
+        	
         })
         .catch(error => {
             alert("Doslo je do greske prilikom ucitavanja kategorija");
         })
-    },*/
+    },
     template: `
      <div>      
     <div class="header">
@@ -344,12 +351,15 @@ Vue.component("aa", {
                             </tr>
                             <tr>
                             	<td>
-									<input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-    								<label for="vehicle1"> I have a bike</label><br>
-    								<input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
-    								<label for="vehicle2"> I have a car</label><br>
-    								<input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">
-    								<label for="vehicle3"> I have a boat</label><br><br>
+                            		<tr v-for="s in amenities">
+									<input type="checkbox" id="s.name" name="vehicle1" :value="{id : s.id,
+																								name : s.name}" v-model="selectedAmenities">
+									
+									<span>{{s.name}}</span><br>
+    								
+    								</tr>
+    								
+    							<span>Selektovane aktivnosti: {{selectedAmenities}}</span>
     							</td>
 							</tr>
                                    
@@ -556,9 +566,18 @@ Vue.component("aa", {
                         'pracePerNight' : this.pracePerNight,
                         'checkinTime' : this.checkinTime,
                         'checkoutTime' : this.checkoutTime,
-                        'status' : false
+                        'status' : false,
+                        'amenities' : this.selectedAmenities
                         
                     };
+        			var i;
+        			alert("Selektovani amenities"+this.selectedAmenities[0]);
+        			/*for (i = 0; i < amenities.length; i++) {
+        				alert("Usao u for");
+        				var el = document.getElementById('this.amanities[i].id');
+        				alert(el);
+        			  
+        			}*/
                     alert("aaaaaaaa");
 		            axios.post('rest/apartmani/add', ap)
                     .then(function (response) {

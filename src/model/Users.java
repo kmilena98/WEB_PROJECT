@@ -56,8 +56,7 @@ public class Users {
 	}
 	
 	public void loadUsers(String path) {
-		String putanja = path + "podaci\\users.json";
-		System.out.println("putanja za citanje je : "+putanja);
+		String putanja = path + "datoteka\\users.json";
 		FileWriter fileWriter = null;
 		BufferedReader in = null;
 		File file = null;
@@ -141,9 +140,8 @@ public class Users {
 			e1.printStackTrace();
 		}
         
-		String putanja = path + "podaci\\users.json";
+		String putanja = path + "datoteka\\users.json";
 
-		System.out.println("putanja za upis je : "+putanja);
 		File f = new File(putanja);
 		FileWriter fileWriter = null;
 		try {

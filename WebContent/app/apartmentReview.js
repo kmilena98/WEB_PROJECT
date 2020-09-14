@@ -288,6 +288,7 @@ Vue.component("prikazApartmana", {
 Vue.component("izmenaApartmana", {
 	data: function(){
 		return {
+		amenities: null,
 		apartman: undefined,
 		id: undefined,
 		roomType: undefined,
@@ -338,6 +339,14 @@ Vue.component("izmenaApartmana", {
  	        alert("Doslo je do greske prilikom ucitavanja apartmana");
  	        alert(error.response.data);
  	    })
+    	 axios
+         .get('rest/sadrzaj/prikazSadrzaja')
+         .then(response =>{
+         	this.amenities = response.data;
+         })
+         .catch(error => {
+             alert("Doslo je do greske prilikom ucitavanja kategorija");
+         })
     
     },
     template: `
@@ -498,12 +507,11 @@ Vue.component("izmenaApartmana", {
                             </tr>
                             <tr>
                             	<td>
-									<input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-    								<label for="vehicle1"> I have a bike</label><br>
-    								<input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
-    								<label for="vehicle2"> I have a car</label><br>
-    								<input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">
-    								<label for="vehicle3"> I have a boat</label><br><br>
+                            		<tr v-for="s in amenities">
+									<input type="checkbox" id="s.id" name="vehicle1" value="s.name">
+    								<label for="vehicle1"> {{s.name}}</label><br>
+    								</tr>
+    							
     							</td>
 							</tr>
                                    
@@ -711,6 +719,7 @@ Vue.component("izmenaApartmana", {
                         'status' : false
                         
                     };
+	        			
 		            axios.post('rest/apartmani/edit', ap)
                     .then(function (response) {
                     	alert("dovdexxxxxxx");

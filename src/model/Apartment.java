@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import org.omg.PortableInterceptor.ACTIVE;
 
@@ -25,7 +26,7 @@ public class Apartment {
 	private String checkoutTime;
 	private boolean status;
 	//private ArrayList<Comment> coments;
-	//private ArrayList<Amenities> amenities;
+	private ArrayList<Amenities> amenities = new ArrayList<Amenities>();
 //	private ArrayList<Reservation> bookingList;
 	
 	public Apartment() {
@@ -45,7 +46,7 @@ public class Apartment {
 	
 	public Apartment(String id, RoomType roomType, int roomNumber, int guestNumber, Location location, String dateOfRentingStart,
 			String dateOfRentingEnd, String hostName, String image, int pracePerNight, String checkinTime, String checkoutTime,
-			boolean status/*, ArrayList<Amenities> amenities*/) {
+			boolean status, ArrayList<Amenities> amenities) {
 		super();
 		System.out.println("Konstruktor apartmana "+ id);
 		this.id = id;
@@ -61,8 +62,9 @@ public class Apartment {
 		this.checkinTime = checkinTime;
 		this.checkoutTime = checkoutTime;
 		this.status = status;
-		/*this.coments = new ArrayList<Comment>();
 		this.amenities = amenities;
+		/*this.coments = new ArrayList<Comment>();
+		
 		this.bookingList = new ArrayList<Reservation>();*/
 	}
 	
@@ -173,6 +175,13 @@ public class Apartment {
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
+	public  ArrayList<Amenities> getAmenities() {
+		return amenities;
+	}
+
+	public void setAmenities( ArrayList<Amenities> amenities) {
+		this.amenities = amenities;
+	}
 
 	/*public ArrayList<Comment> getComents() {
 		return coments;
@@ -182,13 +191,7 @@ public class Apartment {
 		this.coments = coments;
 	}
 
-	public ArrayList<Amenities> getAmenities() {
-		return amenities;
-	}
-
-	public void setAmenities(ArrayList<Amenities> amenities) {
-		this.amenities = amenities;
-	}
+	
 
 	public ArrayList<Reservation> getBookingList() {
 		return bookingList;
