@@ -6,15 +6,14 @@ Vue.component("sadrzajApartmanaPrikaz", {
 		    }
 	},
 	mounted(){
+		alert("Pozvao je dobar prozor");
         axios
             .get('rest/sadrzaj/prikazSadrzaja')
             .then(response =>{
-            	alert(response.data.id);
 	        	this.sadrzajiApartmana = response.data;
-	        	alert("Dobio trazeni sadrzaj "+this.sadrzajApartmana.id);
     	    })
 	        .catch(error => {
-    	       /* alert("Doslo je do greske prilikom ucitavanja sadrzaja");*/
+    	        alert("Doslo je do greske prilikom ucitavanja sadrzaja");
     	        alert(error.response.data);
     	    })
 	},
@@ -38,7 +37,7 @@ Vue.component("sadrzajApartmanaPrikaz", {
 	</div>
 </div>
 
-		<button type="button" onclick="window.location.href='#/dodajsadrzajApartmana';" type="button" class="button" id="t01">Dodaj</button>
+		<button type="button" onclick="window.location.href='#/dodajsadrzajApartmana';"class="button" id="t01">Dodaj</button>
 		
 		<div class="sadrzaj">
 		<p>Sadrzaj apartmana</p>
@@ -54,6 +53,7 @@ Vue.component("sadrzajApartmanaPrikaz", {
 				<td><label>{{s.name}}</label></td>
 			</tr>
 		</table>
+		</div>
 	
 </div>		  
 `

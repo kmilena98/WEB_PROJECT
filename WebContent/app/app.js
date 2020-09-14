@@ -39,6 +39,7 @@ const router = new VueRouter({
 	    { path: '/ar', component: ApartReview },
 	    { path: '/prikazApartmana', component: PrikazApartmana },
 	    { path: '/prikazApartmanaDomacin', component: PrikazApartmanaDomacin },
+	    { path: '/sadrzajApartmanaPrikaz', component: SadrzajApartmanaPrikaz },
 	    { path: '/izmenaApartmana', component: IzmenaApartmana },
 	    { path: '/ush', component: UsersShow }
 	  ]
