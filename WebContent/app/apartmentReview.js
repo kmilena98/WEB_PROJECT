@@ -325,15 +325,15 @@ Vue.component("izmenaApartmana", {
         street: undefined,
         place: undefined,
         zipCode: undefined,
-        dateOfRentingStart: undefined,
-        dateOfRentingEnd: undefined,
+        datesForRenting: undefined,
         host: undefined,
         previewImage: undefined,
         pracePerNight: undefined,
         checkinTime: undefined,
         checkoutTime: undefined,
         allAmenities : undefined,
-        status: undefined
+        status: undefined,
+        dateForRenting: undefined
         /*comments: null*/
     }},
     mounted(){
@@ -350,8 +350,8 @@ Vue.component("izmenaApartmana", {
 	            this.street= this.apartman.location.address.street,
 	            this.place= this.apartman.location.address.place,
 	            this.zipCode =this.apartman.location.address.zipCode,
-	            this.dateOfRentingStart =this.apartman.dateOfRentingStart,
-	            this.dateOfRentingEnd= this.apartman.dateOfRentingEnd,
+	            this.datesForRenting = this.apartman.datesForRenting,
+	            alert(this.apartman.datesForRenting);
 	            this.host= this.apartman.host,
 	            this.pracePerNight= this.apartman.pracePerNight,
 	            this.checkinTime= this.apartman.checkinTime,
@@ -478,20 +478,34 @@ Vue.component("izmenaApartmana", {
                                 </td>
                                 <td>&nbsp;&nbsp;</td>
                             </tr>
+                             <tr>
+                            	<td>Sadrzaj apartmana:</td>
+                            </tr>
                             <tr>
+                           
                             	<td>Datum za izdavanje od:</td>
-                            	<td><input type="date" id="start" name="trip-start"
+                            	<td><tr><td><input type="date" id="start" name="trip-start"
     								value="2018-07-22"
-    								min="2018-01-01" max="2040-12-31" v-model="dateOfRentingStart" style="width:208px;height:25px;"/>
+    								min="2018-01-01" max="2040-12-31" v-model="dateForRenting" style="width:208px;height:25px;"/>
+    							</td>
+    							<td><button v-on:click.prevent="dodajDatum(dateForRenting)">Dodaj</button></td></tr>
+    							
+    						</tr>
+    						<tr>	
+    							
+    								<td>Izbrisi vec postojece:</td>
+    							<td>
+                            		<tr v-for="a in  this.datesForRenting">
+									<input type="checkbox" id="s" name="vehicle1" :value="a" v-model="datesForRenting">
+									
+									<span>{{a}}</span><br>
+    								
+    								</tr>
+   
+    						
     							</td>
                             </tr>
-                            <tr>
-                            	<td>Datum za izdavanje do:</td>
-                            	<td><input type="date" id="start" name="trip-start"
-    								value="2018-07-22"
-    								min="2018-01-01" max="2040-12-31" v-model="dateOfRentingEnd" style="width:208px;height:25px;"/>
-    							</td>
-                            </tr>
+                           
                             <tr>
                                 <td align="left">Cena:</td>
                                 <td align="left"><input type="text" v-model="pracePerNight" style="width:208px;height:25px;"/></td>
@@ -660,6 +674,14 @@ Vue.component("izmenaApartmana", {
 			}
 			return false;
 		},
+		dodajDatum(dateForRenting){
+			alert("Usao u dodajDatum");
+			alert(dateForRenting);
+			this.datesForRenting.push(dateForRenting);
+
+			alert("Usao u dodajDatum2");
+			alert(this.datesForRenting[0]);
+		},
         uploadImage(e){
             const im = e.target.files[0];
             const reader = new FileReader();
@@ -747,8 +769,7 @@ Vue.component("izmenaApartmana", {
                         'roomNumber': this.roomNumber,
                         'guestNumber': this.guestNumber,
                         'location' : lokacija,
-                        'dateOfRentingStart' : this.dateOfRentingStart,
-                        'dateOfRentingEnd' : this.dateOfRentingEnd,
+                        'datesForRenting' : this.datesForRenting,
                         'host' : this.host,
                         'image' : this.previewImage,
                         'pracePerNight' : this.pracePerNight,
