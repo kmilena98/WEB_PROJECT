@@ -11,6 +11,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -116,7 +117,7 @@ public class ReservationService {
 					rez.add(r);
 				}
 			}
-			System.out.println("Broj rezervacija koji je vracen je "+rez.size());
+			//System.out.println("Broj rezervacija koji je vracen je "+rez.size());
 			return rez;
 	}
 	
@@ -132,6 +133,29 @@ public class ReservationService {
 			Reservations rezervacije = (Reservations) ctx.getAttribute("reservations");
 			//System.out.println("Broj rezervacija koji je vracen je "+rezervacije.getReservations().size());
 			return rezervacije.getReservations();
+	}
+	
+	
+	
+	@GET
+	@Path("/pretragaRezervacija/{username}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Reservation> pretrazi(@PathParam("username") String username) {
+		System.out.println("Udjeeeeee");
+		User ulogovani = (User) request.getSession().getAttribute("ulogovani");
+		if(ulogovani == null) {
+			return null;
+		}		
+		Reservations reservations = (Reservations) ctx.getAttribute("reservations");
+		
+			//System.out.println("Username " + r.getGuest().getUsername() + "username ulogovanog: " + ulogovani.getUsername());
+			if(ulogovani.getRole().equals("HOST")) {
+				return reservations.pretragaForHost(username, ulogovani.getUsername());
+			}else {
+		
+				return reservations.pretraga(username);
+			}
 	}
 }
 	

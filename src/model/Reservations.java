@@ -39,6 +39,33 @@ public class Reservations {
 			reservations.add(r);
 		saveReservations(putanja);
 	}
+	public ArrayList<Reservation> pretragaForHost(String username, String usernameHost){
+		ArrayList<Reservation> rez = new ArrayList<Reservation>();
+		for(Reservation reservation : reservations) {
+			if(reservation.getApartment().getHost().equals(usernameHost)) {
+				if(provera(reservation, username))
+					rez.add(reservation);
+			}
+		}
+		return rez;
+	}
+	public ArrayList<Reservation> pretraga(String username) {
+		ArrayList<Reservation> rez = new ArrayList<Reservation>();
+			for (Reservation reservation : reservations) {
+				if(provera(reservation, username))
+					rez.add(reservation);
+			}
+					
+		return rez;
+	}
+	
+	public boolean provera(Reservation r, String username) {
+		username.trim();
+		if(!username.equals("") && !r.getGuest().getUsername().toLowerCase().equals(username.toLowerCase())) 
+			return false;
+
+		return true;
+	}
 
 	
 	public void loadReservations(String path) {
