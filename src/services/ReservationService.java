@@ -2,11 +2,13 @@ package services;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -97,14 +99,20 @@ public class ReservationService {
 			return Response.status(200).build();
 		
 	}
-	@POST
-	@Path("/add")
+	@GET
+	@Path("/rezervacijeDomacin")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response sacuvajSelektovaniApartman(Reservation r) {
-		System.out.println("Dosao do ADD!");
-		return Response.status(200).build();
+	public ArrayList<Reservation> getReservationsForHost() {
+			User ulogovani = (User) request.getSession().getAttribute("ulogovani");
+			if(ulogovani == null) {
+				return null;
+			}		
+			Reservations rezervacije = (Reservations) ctx.getAttribute("reservations");
+			System.out.println("Broj rezervacija koji je vracen je "+rezervacije.getReservations().size());
+			return rezervacije.getReservations();
 	}
-	
-	
 }
+	
+	
+

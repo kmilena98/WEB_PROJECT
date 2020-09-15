@@ -141,6 +141,7 @@ Vue.component("host", {
 <div class="topnav">
 	<a href="#/prikazApartmanaDomacin">Apartmani</a>
 	<a href="#/pk">Korisnici</a>
+	<a href="#/prikazRezervacijaDomacin">Rezervacije korisnika</a>
 	<a href="#/aa">Dodavanje apartmana</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
