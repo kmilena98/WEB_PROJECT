@@ -11,6 +11,10 @@ public class Guest extends User {
 		
 	}
 	
+	public void addReservation(Reservation r) {
+		this.bookingList.add(r);
+	}
+	
 	public Guest(String username, String password, String name, String surname, Gender gender, Role role) {
 		super(username, password, name, surname, gender, role);
 	}

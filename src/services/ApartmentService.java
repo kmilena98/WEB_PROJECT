@@ -20,7 +20,10 @@ import javax.ws.rs.core.Response;
 
 import model.Apartment;
 import model.Apartments;
+import model.Guest;
 import model.Host;
+import model.Reservation;
+import model.Reservations;
 import model.User;
 import model.Users;
 
@@ -78,12 +81,9 @@ public class ApartmentService {
 		for(Entry<String, Apartment> a : apartmani.getApartments().entrySet() ) {
 			if(a.getValue().getStatus().equals("ACTIVE")) {
 				aktivniApartmani.put(a.getKey(),a.getValue());
-				System.out.println("Dodao apartman jer mu je status "+a.getValue().getStatus());
 			}else {
-				System.out.println("Nije usao u for");
 			}
 		}
-		System.out.println("Broj vracenih apartmana je "+aktivniApartmani.size());
 		return aktivniApartmani;
 	}
 	
@@ -147,7 +147,6 @@ public class ApartmentService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response dodajApartman(Apartment a) {
-		
 		User ulogovani = (User) request.getSession().getAttribute("ulogovani");
 		if(ulogovani == null /*|| !ulogovani.getRole().equals("HOST")*/) {
 			return Response.status(400).entity("Samo domacini mogu dodavati apartmane").build();
@@ -241,4 +240,7 @@ public Response editApartman(Apartment a) {
 		return Response.status(200).build();
 	}
 }
+
+
+
 }

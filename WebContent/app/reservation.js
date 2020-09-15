@@ -72,10 +72,8 @@ Vue.component("reservation", {
 		prikazi : function(a) {
 			/*alert("dosao"+id);*/
 		    axios.post('rest/apartmani/prikazApartmana',a)
-	    	
 	        .then(function (response) {
 				window.location.href = '#/prikazApartmanaZaGosta';
-
 	        })
 	        .catch(function (error) {
 	        	alert("usao u exaption!");

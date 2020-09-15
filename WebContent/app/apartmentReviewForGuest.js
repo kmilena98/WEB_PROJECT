@@ -2,7 +2,11 @@ Vue.component("prikazApartmanaZaGosta", {
 	data: function () {
 		    return {
 		      apartman: null,
-		      user:null
+		      user:null,
+		      pocetniDatumRezervacije:null,
+		      brojNocenja:null,
+		      ukupnaCena : null,
+		      poruka:null
 		    }
 	},
 	mounted(){
@@ -26,6 +30,7 @@ Vue.component("prikazApartmanaZaGosta", {
 	        alert("Doslo je do greske prilikom ucitavanja korisnika");
 	        alert(error.response.data);
 	    })
+      
 	},
 	template: ` 
 <div>
@@ -45,8 +50,7 @@ Vue.component("prikazApartmanaZaGosta", {
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
 	</div>
 </div>
-		<button type="button" onclick="window.location.href='#/izmenaApartmana';" type="button" class="button" id="t01">Rezervisi</button>
-		
+			
 	  <form accept-charset="UTF-8">
             <table class="bu" id="tabela" style="width:25%;margin-left: 50px;">
                 <caption  style="font-size:25px;font-family: serif;">Pregled izabranog apartmana</caption>
@@ -57,6 +61,11 @@ Vue.component("prikazApartmanaZaGosta", {
                                 <a href="#"><img style="width:150px;height:100px;" v-bind:src="this.apartman.image" alt="" class="img-responsive"></a>
                    </div><!-- end media -->
                  </td> 
+                    
+                        
+                        
+                 <td>&nbsp;</td>
+                        
                         
              	<td>
                 <tr>
@@ -146,10 +155,49 @@ Vue.component("prikazApartmanaZaGosta", {
                       </div>
 					</tr>
 				</td>
-               </tr>
-                
+				
+				
+				<td>&nbsp;</td>
+				
+				
+				<td>
+					<tr>
+						<td>
+						 <tr>
+                               <td>Pocetni datum rezervacije:</td>
+                            	<td>
+                            		<tr>
+                            			<td><input type="date" id="start" name="trip-start"
+    										value="2018-07-22"
+    										min="2018-01-01" max="2040-12-31" v-model="pocetniDatumRezervacije" style="width:208px;height:25px;"/>
+    									</td>
+    									
+                                   </tr>
+				 					
+                           
+									<tr>
+                                		<td align="left">Broj nocenja :</td>
+										 <td align="left"><input type="number" step="1" id="cijenaMin" name="cijenaMax" v-model="brojNocenja" /></td>
+                                              
+									</tr>
+									<tr>
+										<td align="left">Poruka :</td>
+										<td align="left"><input  v-model="poruka" style="width:208px;height:25px;"/></td>
+										
+                            		</tr>
+                            		<tr>
+                            		<td>&nbsp;</td>
+										<td> <button v-on:click="rezervisi">Rezervisi</button></td>
+										
+                            		</tr>
+									
 						
-            </table>            
+						</td>
+					<tr>
+				</td>
+               </tr>	
+            </table>
+               
         </form>
 	
 	
@@ -169,6 +217,40 @@ Vue.component("prikazApartmanaZaGosta", {
 	        	alert("usao u exaption!");
 	            alert(error.response.data);
 		});
+		},
+		rezervisi : function(){
+			alert("REZERVACIJA");
+			this.ukupnaCena = this.brojNocenja*this.apartman.pracePerNight;
+			alert("REZERVACIJA");
+			
+			var u={
+					
+					
+					
+					
+			}
+			var rezervacija = {
+                	'apartment' : this.apartman,
+                	'bookingStartDate':this.pocetniDatumRezervacije,
+                	'numberOfNights':this.brojNocenja,
+                	'totalPrice': this.ukupnaCena,
+                	'bookingMessage': this.poruka,
+                    'guest': this.user,
+                    'status' : "CREATED",
+                    
+                };
+			alert("Dosao do slanja zahteva");
+	            axios.post('rest/reservation/addReservation',rezervacija)
+                .then(function (response) {
+                	alert("Uspesno ste izvrsili rezervaciju.");
+                    window.location.href = "#/prikazApartmanaZaGosta";
+                })
+                .catch(function (error) {
+                	alert("exception");
+                    alert(error.response.data);
+                });
+			
+			
 		},
 		logout : function() {
 	    axios.post('rest/registracija/logout')

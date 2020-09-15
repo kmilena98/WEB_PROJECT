@@ -17,8 +17,6 @@ public class User {
 		this.password = "";
 		this.name = "";
 		this.surname = "";
-		
-		
 	}
 	public User(String username, String password, String name, String surname) {
 		//super();

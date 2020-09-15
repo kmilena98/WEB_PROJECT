@@ -7,14 +7,18 @@ enum Status{CREATED, REJECTED, CANCELED, ACCEPTED, COMPLETED}
 public class Reservation {
 
 	private Apartment apartment;
-	private Date bookingStartDate;
+	private String bookingStartDate;
 	private int numberOfNights;
 	private int totalPrice;
 	private String bookingMessage;
-	private Guest guest;
+	private User guest;
 	private Status status;
 	
-	public Reservation(Apartment apartment, Date bookingStartDate, int numberOfNights, int totalPrice,
+	public Reservation() {
+		
+	}
+	
+	public Reservation(Apartment apartment, String bookingStartDate, int numberOfNights, int totalPrice,
 			String bookingMessage, Guest guest, Status status) {
 		super();
 		this.apartment = apartment;
@@ -25,16 +29,29 @@ public class Reservation {
 		this.guest = guest;
 		this.status = status;
 	}
+	
+	public Reservation(Apartment apartment, String bookingStartDate, String numberOfNights, String totalPrice,
+			String bookingMessage, User guest, Status status) {
+		super();
+		this.apartment = apartment;
+		this.bookingStartDate = bookingStartDate;
+		this.numberOfNights = Integer.parseInt(numberOfNights);
+		this.totalPrice = Integer.parseInt(totalPrice);
+		this.bookingMessage = bookingMessage;
+		this.guest = guest;
+		this.status = status;
+	}
+	
 	public Apartment getApartment() {
 		return apartment;
 	}
 	public void setApartment(Apartment apartment) {
 		this.apartment = apartment;
 	}
-	public Date getBookingStartDate() {
+	public String getBookingStartDate() {
 		return bookingStartDate;
 	}
-	public void setBookingStartDate(Date bookingStartDate) {
+	public void setBookingStartDate(String bookingStartDate) {
 		this.bookingStartDate = bookingStartDate;
 	}
 	public int getNumberOfNights() {
@@ -55,7 +72,7 @@ public class Reservation {
 	public void setBookingMessage(String bookingMessage) {
 		this.bookingMessage = bookingMessage;
 	}
-	public Guest getGuest() {
+	public User getGuest() {
 		return guest;
 	}
 	public void setGuest(Guest guest) {
