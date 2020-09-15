@@ -70,7 +70,6 @@ Vue.component("guest", {
 	</div>
 
 <div class="topnav">
-	<a href="#/sa">Proba</a>
 	<a href="#/reservation">Apartmani</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>

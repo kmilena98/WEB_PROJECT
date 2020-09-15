@@ -6,7 +6,7 @@ Vue.component("reservation", {
 	},
 	mounted(){
         axios
-            .get('rest/apartmani/ap')
+            .get('rest/apartmani/aktivniApartmani')
             .then(response =>{
 	        	this.apartmants = response.data;
 	        	/*alert("Usao gde treba da udje!");*/
@@ -15,6 +15,7 @@ Vue.component("reservation", {
     	        alert("Doslo je do greske prilikom ucitavanja apartmana");
     	        alert(error.response.data);
     	    })
+       
 	},
 	template: ` 
 <div>
@@ -26,7 +27,7 @@ Vue.component("reservation", {
 	</div>
 
 <div class="topnav">
-	<a href="#/ar">Apartmani</a>
+	<a href="#/reservation">Apartmani</a>
 	<a href="#/pk">Korisnici</a>
 	<a href="#/sh">Registracija domacina</a>
 	<div class="topnav-right">
@@ -39,7 +40,7 @@ Vue.component("reservation", {
 
 	  <form accept-charset="UTF-8">
             <table class="bla" id="tabela" style="width:25%;">
-                <caption>Pregled apartmana</caption>
+                <caption>Rezervacija apartmana</caption>
               
                  <tr v-for="ap in apartmants">
                   <div class="post-media">
@@ -55,9 +56,9 @@ Vue.component("reservation", {
 			
 				</td>
                 <td>
-					<button type="button" v-on:click.prevent="prikazi(ap)">Prikazi</button>
-					</td>
-                </tr>
+               
+					<button type="button" v-on:click="prikazi(ap)">PrikaziZaRezervaciju</button>
+				</tr>
                 
 						
             </table>            
@@ -73,7 +74,7 @@ Vue.component("reservation", {
 		    axios.post('rest/apartmani/prikazApartmana',a)
 	    	
 	        .then(function (response) {
-				window.location.href = '#/prikazApartmana';
+				window.location.href = '#/prikazApartmanaZaGosta';
 
 	        })
 	        .catch(function (error) {

@@ -1,7 +1,9 @@
+
 Vue.component("ar", {
 	data: function () {
 		    return {
-		      apartmants: null
+		      apartmants: null,
+		      user:null
 		    }
 	},
 	mounted(){
@@ -15,6 +17,16 @@ Vue.component("ar", {
     	        alert("Doslo je do greske prilikom ucitavanja apartmana");
     	        alert(error.response.data);
     	    })
+        axios
+        .get('rest/registracija/ulogovani')
+        .then(response =>{
+        	this.user = response.data;
+        	/*alert("Usao gde treba da udje!");*/
+	    })
+        .catch(error => {
+	        alert("Doslo je do greske prilikom ucitavanja apartmana");
+	        alert(error.response.data);
+	    })
 	},
 	template: ` 
 <div>
@@ -55,7 +67,9 @@ Vue.component("ar", {
 			
 				</td>
                 <td>
+               
 					<button type="button" v-on:click.prevent="prikazi(ap)">Prikazi</button>
+				
 					</td>
                 </tr>
                 
@@ -102,8 +116,8 @@ Vue.component("ar", {
 Vue.component("prikazApartmana", {
 	data: function () {
 		    return {
-		      apartman: null
-		      
+		      apartman: null,
+		      user:null
 		    }
 	},
 	mounted(){
@@ -117,6 +131,16 @@ Vue.component("prikazApartmana", {
     	        alert("Doslo je do greske prilikom ucitavanja apartmana");
     	        alert(error.response.data);
     	    })
+        axios
+        .get('rest/registracija/ulogovani')
+        .then(response =>{
+        	this.user = response.data;
+        	alert("Dobio korisnika"+this.user.username);
+	    })
+        .catch(error => {
+	        alert("Doslo je do greske prilikom ucitavanja korisnika");
+	        alert(error.response.data);
+	    })
 	},
 	template: ` 
 <div>
@@ -136,9 +160,12 @@ Vue.component("prikazApartmana", {
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
 	</div>
 </div>
-
+		<div v-if="this.user.role==='GUEST'">
+		<button type="button" onclick="window.location.href='#/izmenaApartmana';" type="button" class="button" id="t01">Rezervisi</button>
+		</div>
+		<div v-else>
 		<button type="button" onclick="window.location.href='#/izmenaApartmana';" type="button" class="button" id="t01">Izmeni</button>
-
+		</div>
 	  <form accept-charset="UTF-8">
             <table class="bla" id="tabela" style="width:25%;">
                 <caption>Pregled izabranog apartmana</caption>
@@ -331,7 +358,8 @@ Vue.component("izmenaApartmana", {
 	            this.checkoutTime =this.apartman.checkoutTime,
 	            this.status= this.apartman.status,
 	            this.previewImage =this.apartman.image,
-	            this.selectedAmenities = this.apartman.amenities
+	            this.selectedAmenities = this.apartman.amenities,
+	            this.status = this.apartman.status
  	    })
 	        .catch(error => {
  	        alert("Doslo je do greske prilikom ucitavanja apartmana");
@@ -376,7 +404,7 @@ Vue.component("izmenaApartmana", {
                                 <td align="left">{{this.id}}</td>
                                 <td>&nbsp;&nbsp;</td>
                             </tr>
-                            
+                            <tr>
                                 <td align="left">Tip apartmana:</td>
                                 <td align="left">
                                 <select class="cb" v-model="roomType"  style="width:208px;height:25px;">
@@ -497,8 +525,18 @@ Vue.component("izmenaApartmana", {
                             <tr>
                             </tr>
                             <tr>
+                                <td align="left">Status apartmana:</td>
+                                <td align="left">
+                                <select class="cb" v-model="status"  style="width:208px;height:25px;">
+									<option selected="selected">ACTIVE</option>
+									<option>INACTIVE</option>
+								</select>
+								</td>
+							</tr>	
+                            <tr>
                                 <td>&nbsp;</td>
                             </tr>
+                            
                             <tr>
                             	<td>Sadrzaj apartmana:</td>
                             </tr>
@@ -631,7 +669,7 @@ Vue.component("izmenaApartmana", {
             };
         },
         odustani: function(){
-            window.location.href = "oglasi.html";
+            window.location.href = "#/";
         },
         
     	dodajApartman(){
@@ -702,6 +740,7 @@ Vue.component("izmenaApartmana", {
                             'longitude': this.longitude,
                             'address': adresa,
         			}
+        			
                      var ap = {
                     	'id' : this.id,
                         'roomType': this.roomType,
@@ -715,11 +754,12 @@ Vue.component("izmenaApartmana", {
                         'pracePerNight' : this.pracePerNight,
                         'checkinTime' : this.checkinTime,
                         'checkoutTime' : this.checkoutTime,
-                        'status' : false,
+                        'status' : this.status,
                         'amenities' : this.selectedAmenities,
                         
                     };
-	        			
+        			alert("Status apartmana je"+this.status);
+        			alert("Status u samom apartmanu je "+ ap.status);
 		            axios.post('rest/apartmani/edit', ap)
                     .then(function (response) {
                     	alert("dovdexxxxxxx");

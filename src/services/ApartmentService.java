@@ -3,6 +3,8 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
@@ -59,8 +61,49 @@ public class ApartmentService {
 			return null;
 		}		
 		Apartments apartmani = (Apartments) ctx.getAttribute("apartments");
-		System.out.println("ucitao apartmane"+apartmani.getApartments().size());
 		return apartmani.getApartments();
+	}
+	
+	@GET
+	@Path("/aktivniApartmani")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public HashMap<String, Apartment> getAktivniApartmani() {
+		User ulogovani = (User) request.getSession().getAttribute("ulogovani");
+		if(ulogovani == null) {
+			return null;
+		}		
+		HashMap<String,Apartment> aktivniApartmani = new HashMap<String,Apartment>();
+		Apartments apartmani = (Apartments) ctx.getAttribute("apartments");
+		for(Entry<String, Apartment> a : apartmani.getApartments().entrySet() ) {
+			if(a.getValue().getStatus().equals("ACTIVE")) {
+				aktivniApartmani.put(a.getKey(),a.getValue());
+				System.out.println("Dodao apartman jer mu je status "+a.getValue().getStatus());
+			}else {
+				System.out.println("Nije usao u for");
+			}
+		}
+		System.out.println("Broj vracenih apartmana je "+aktivniApartmani.size());
+		return aktivniApartmani;
+	}
+	
+	@GET
+	@Path("/neaktivniApartmani")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public HashMap<String, Apartment> getNeaktivniApartmani() {
+		User ulogovani = (User) request.getSession().getAttribute("ulogovani");
+		if(ulogovani == null) {
+			return null;
+		}		
+		HashMap<String,Apartment> neaktivniApartmani = new HashMap<String,Apartment>();
+		Apartments apartmani = (Apartments) ctx.getAttribute("apartments");
+		for(Entry<String, Apartment> a : apartmani.getApartments().entrySet() ) {
+			if(a.getValue().getStatus().toString().equals("INACTIVE")) {
+				neaktivniApartmani.put(a.getKey(),a.getValue());
+			}
+		}
+		return neaktivniApartmani;
 	}
 	
 	@POST
@@ -82,10 +125,7 @@ public class ApartmentService {
 		}catch(Exception e) {
 			
 		}
-		if(h==null) {
-			System.out.println("Ulogovani je null!");
-		}
-		System.out.println("Broj apartmana koje ima ovaj domacin je "+h.getApartmentsForRent().size());
+
 		return h.getApartmentsForRent(); 
 	}
 	
@@ -97,10 +137,8 @@ public class ApartmentService {
 	public Apartment prikaziIzabrani() {
 		Apartment a = (Apartment) ctx.getAttribute("izabraniApartman");
 		if(a==null) {
-			System.out.println("Nema izabranih apartmana!");
 			return null;
 		}
-		System.out.println("Vrati apartman: "+a.getId());
 		return a;
 	}
 	
@@ -109,7 +147,6 @@ public class ApartmentService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response dodajApartman(Apartment a) {
-		System.out.println("udjeeeeeeeeeeeeeeeeeeee" + a.getId());
 		
 		User ulogovani = (User) request.getSession().getAttribute("ulogovani");
 		if(ulogovani == null /*|| !ulogovani.getRole().equals("HOST")*/) {
@@ -126,9 +163,7 @@ public class ApartmentService {
 		Users users = (Users) ctx.getAttribute("users");
 		String contextPath = ctx.getRealPath("");
 		User kor = (User) request.getSession().getAttribute("ulogovani");
-		System.out.println("Id je : "+a.getId());
 		if(!mapaApartments.containsKey(a.getId())) {
-			System.out.println("Usao u if, a broj apartmana je "+ apartments.getApartments().size());
 			//Host h = users.getHost(kor.getUsername());
 			
 			//Host h = (Host)us;
@@ -137,10 +172,9 @@ public class ApartmentService {
 			Host h;
 			try {
 		      h = (Host) users.getUser(kor.getUsername());
-		      System.out.println("Iz try-a!");
 			}catch(Exception e) {
 			  h = new Host(us.getUsername(),us.getPassword(),us.getName(),us.getSurname(),us.toEnumGender(us.getGender()),us.toEnumRole(us.getRole()));
-			  System.out.println("Iz catch-a!");
+			 
 			}	
 			a.setHost(kor.getUsername());
 			apartments.add(a);
@@ -180,14 +214,10 @@ public Response editApartman(Apartment a) {
 	Users users = (Users) ctx.getAttribute("users");
 	String contextPath = ctx.getRealPath("");
 	User kor = (User) request.getSession().getAttribute("ulogovani");
-	System.out.println("Id je : "+a.getId());
 	if(!mapaApartments.containsKey(a.getId())) {
 		return Response.status(400).entity("Apartman sa id koji ste unijeline postoji!").build();
-		
-		
 	}
 	else {
-		System.out.println("Apartman postoji, a ukupno ih je :  "+ apartments.getApartments().size());
 		//Host h = users.getHost(kor.getUsername());
 		
 		//Host h = (Host)us;
@@ -196,12 +226,9 @@ public Response editApartman(Apartment a) {
 		Host h;
 		try {
 	      h = (Host) users.getUser(a.getHost());
-	      System.out.println("Iz try-a!");
 		}catch(Exception e) {
 		  h = new Host(us.getUsername(),us.getPassword(),us.getName(),us.getSurname(),us.toEnumGender(us.getGender()),us.toEnumRole(us.getRole()));
-		  System.out.println("Iz catch-a!");
 		}	
-		System.out.println("Apartman koji zelim da izbrisem je "+a.toString());
 		apartments.add(a);
 		h.removeApartment(a);
 		h.addAppartment(a);

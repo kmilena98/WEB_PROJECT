@@ -19,6 +19,7 @@ const PrikazApartmana = { template: '<prikazApartmana></prikazApartmana>'}
 const IzmenaApartmana = { template: '<izmenaApartmana></izmenaApartmana>'}
 const PrikazApartmanaDomacin = { template: '<prikazApartmanaZaDomacina></prikazApartmanaZaDomacina>'}
 const SadrzajApartmanaPrikaz = { template: '<sadrzajApartmanaPrikaz></sadrzajApartmanaPrikaz>'}
+const PrikazApartmanaZaGosta = { template : '<prikazApartmanaZaGosta></prikazApartmanaZaGosta>'}
 const DodajSadrzajApartmana = { template: '<dodajsadrzajApartmana></dodajsadrzajApartmana>'}
 const router = new VueRouter({
 	  mode: 'hash',
@@ -39,6 +40,7 @@ const router = new VueRouter({
 	    { path: '/us', component: UsersSearch },
 	    { path: '/ar', component: ApartReview },
 	    { path: '/prikazApartmana', component: PrikazApartmana },
+	    { path: '/prikazApartmanaZaGosta', component: PrikazApartmanaZaGosta },
 	    { path: '/prikazApartmanaDomacin', component: PrikazApartmanaDomacin },
 	    { path: '/sadrzajApartmanaPrikaz', component: SadrzajApartmanaPrikaz },
 	    { path: '/dodajsadrzajApartmana', component: DodajSadrzajApartmana },

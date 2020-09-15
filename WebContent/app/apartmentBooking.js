@@ -567,7 +567,7 @@ Vue.component("aa", {
                         'pracePerNight' : this.pracePerNight,
                         'checkinTime' : this.checkinTime,
                         'checkoutTime' : this.checkoutTime,
-                        'status' : false,
+                        'status' : "INACTIVE",
                         'amenities' : this.selectedAmenities
                         
                     };

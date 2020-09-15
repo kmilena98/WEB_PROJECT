@@ -7,7 +7,7 @@ import java.util.HashMap;
 import org.omg.PortableInterceptor.ACTIVE;
 
 enum RoomType{ROOM, WHOLE_APPARTMENT}
-//enum Statuss{ACTIVE, INACTIVE}
+enum StatusApartmana{ACTIVE, INACTIVE}
 
 public class Apartment {
 
@@ -23,7 +23,7 @@ public class Apartment {
 	private double pracePerNight;
 	private String checkinTime;
 	private String checkoutTime;
-	private boolean status;
+	private StatusApartmana status;
 	//private ArrayList<Comment> coments;
 	private ArrayList<Amenities> amenities = new ArrayList<Amenities>();
 //	private ArrayList<Reservation> bookingList;
@@ -44,9 +44,8 @@ public class Apartment {
 	}
 	
 	public Apartment(String id, RoomType roomType, int roomNumber, int guestNumber, Location location, String hostName, String image, int pracePerNight, String checkinTime, String checkoutTime,
-			boolean status, ArrayList<Amenities> amenities,ArrayList<String> datesForRenting) {
+			StatusApartmana status, ArrayList<Amenities> amenities,ArrayList<String> datesForRenting) {
 		super();
-		System.out.println("Konstruktor apartmana "+ id);
 		this.id = id;
 		this.roomType = roomType;
 		this.roomNumber = roomNumber;
@@ -165,11 +164,16 @@ public class Apartment {
 		this.checkoutTime = checkoutTime;
 	}
 
-	public boolean getStatus() {
-		return status;
+	public String getStatus() {
+		if(this.status.toString().equals("ACTIVE")) {
+			return "ACTIVE";
+		}
+		else {
+			return "INACTIVE";
+		}
 	}
 
-	public void setStatus(boolean status) {
+	public void setStatus(StatusApartmana status) {
 		this.status = status;
 	}
 	public  ArrayList<Amenities> getAmenities() {
