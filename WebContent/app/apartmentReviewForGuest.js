@@ -156,42 +156,49 @@ Vue.component("prikazApartmanaZaGosta", {
 					</tr>
 				</td>
 				
-				
-				<td>&nbsp;</td>
+			
 				
 				
 				<td>
 					<tr>
 						<td>
 						 <tr>
-                               <td>Pocetni datum rezervacije:</td>
-                            	<td>
+						 <td>
+                            	<tr>
+                            	<td>&nbsp;</td>
+                            		<td style="font-size:18px;font-family:serif;">Rezervisi:</td>
+                            	</tr>
                             		<tr>
+                            			<td>&nbsp;</td>
+                            			<td>Pocetni datum rezervacije:</td>
                             			<td><input type="date" id="start" name="trip-start"
     										value="2018-07-22"
-    										min="2018-01-01" max="2040-12-31" v-model="pocetniDatumRezervacije" style="width:208px;height:25px;"/>
-    									</td>
-    									
-                                   </tr>
+    										min="2018-01-01" max="2040-12-31" v-model="pocetniDatumRezervacije" style="width:208px;height:25px;"/></td>
+    								</tr>
 				 					
                            
 									<tr>
+										<td>&nbsp;</td>
                                 		<td align="left">Broj nocenja :</td>
-										 <td align="left"><input type="number" step="1" id="cijenaMin" name="cijenaMax" v-model="brojNocenja" /></td>
+										 <td align="left"><input type="number" step="1" id="cijenaMin" name="cijenaMax" v-model="brojNocenja" style="width:210px;height:23px;"/></td>
                                               
 									</tr>
 									<tr>
+								
+									</tr>
+									<tr>
+										<td>&nbsp;</td>
 										<td align="left">Poruka :</td>
 										<td align="left"><input  v-model="poruka" style="width:208px;height:25px;"/></td>
 										
                             		</tr>
                             		<tr>
-                            		<td>&nbsp;</td>
+                            			<td>&nbsp;</td>
 										<td> <button v-on:click="rezervisi">Rezervisi</button></td>
 										
                             		</tr>
 									
-						
+							
 						</td>
 					<tr>
 				</td>

@@ -107,9 +107,30 @@ public class ReservationService {
 			User ulogovani = (User) request.getSession().getAttribute("ulogovani");
 			if(ulogovani == null) {
 				return null;
+			}	
+			ArrayList<Reservation> rez = new ArrayList<Reservation>();
+			Reservations rezervacije = (Reservations) ctx.getAttribute("reservations");
+			for(Reservation r : rezervacije.getReservations()) {
+				//System.out.println("Username " + r.getGuest().getUsername() + "username ulogovanog: " + ulogovani.getUsername());
+				if(r.getApartment().getHost().equals(ulogovani.getUsername())) {
+					rez.add(r);
+				}
+			}
+			System.out.println("Broj rezervacija koji je vracen je "+rez.size());
+			return rez;
+	}
+	
+	@GET
+	@Path("/rezervacijeAdministrator")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public ArrayList<Reservation> getReservationsForAdministrator() {
+			User ulogovani = (User) request.getSession().getAttribute("ulogovani");
+			if(ulogovani == null) {
+				return null;
 			}		
 			Reservations rezervacije = (Reservations) ctx.getAttribute("reservations");
-			System.out.println("Broj rezervacija koji je vracen je "+rezervacije.getReservations().size());
+			//System.out.println("Broj rezervacija koji je vracen je "+rezervacije.getReservations().size());
 			return rezervacije.getReservations();
 	}
 }

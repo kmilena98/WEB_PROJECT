@@ -17,6 +17,7 @@ const ApartReview = { template: '<ar></ar>'}
 const Reservation = { template: '<reservation></reservation>'}
 const PrikazApartmana = { template: '<prikazApartmana></prikazApartmana>'}
 const PrikazRezervacijaDomacin = { template: '<prikazRezervacijaDomacin></prikazRezervacijaDomacin>'}
+const PrikazRezervacijaAdministrator = { template: '<prikazRezervacijaAdministrator></prikazRezervacijaAdministrator>'}
 const IzmenaApartmana = { template: '<izmenaApartmana></izmenaApartmana>'}
 const PrikazApartmanaDomacin = { template: '<prikazApartmanaZaDomacina></prikazApartmanaZaDomacina>'}
 const SadrzajApartmanaPrikaz = { template: '<sadrzajApartmanaPrikaz></sadrzajApartmanaPrikaz>'}
@@ -46,6 +47,7 @@ const router = new VueRouter({
 	    { path: '/sadrzajApartmanaPrikaz', component: SadrzajApartmanaPrikaz },
 	    { path: '/dodajsadrzajApartmana', component: DodajSadrzajApartmana },
 	    { path: '/prikazRezervacijaDomacin', component: PrikazRezervacijaDomacin },
+	    { path: '/prikazRezervacijaAdministrator', component: PrikazRezervacijaAdministrator },
 	    { path: '/izmenaApartmana', component: IzmenaApartmana },
 	    { path: '/reservation', component: Reservation },
 	    { path: '/ush', component: UsersShow }
