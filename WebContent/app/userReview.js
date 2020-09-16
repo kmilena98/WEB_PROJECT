@@ -1,7 +1,8 @@
 Vue.component("pk", {
 	data: function () {
 		    return {
-		      users: null
+		      users: null,
+		      user:null
 		    }
 	},
 	mounted(){
@@ -11,8 +12,16 @@ Vue.component("pk", {
 	        	this.users = response.data;
     	    })
 	        .catch(error => {
-    	        alert("Doslo je do greske prilikom ucitavanja prijavljenog");
-    	    })
+    	        alert("Doslo je do greske prilikom ucitavanja korisnika");
+    	    });
+        axios
+        .get('rest/registracija/ulogovani')
+        .then(response =>{
+        	this.user = response.data;
+	    })
+        .catch(error => {
+	        alert("Doslo je do greske prilikom ucitavanja korisnika");
+	    })
 	},
 	template: ` 
 <div>
@@ -23,16 +32,36 @@ Vue.component("pk", {
 		<p>Izaberite svoju najbolju ponudu iz snova!</p>
 	</div>
 
-<div class="topnav">
-	<a href="#/sb">Apartmani</a>
+<<div class="topnav">
+	<div v-if="user.role==='HOST'" >
+	<a href="#/prikazApartmanaDomacin">Apartmani</a>
+	<a href="#/pk">Korisnici</a>
+	<a href="#/prikazRezervacijaDomacin">Rezervacije korisnika</a>
+	<a href="#/aa">Dodavanje apartmana</a>
+	<div class="topnav-right">
+		<a href="#/pr">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+	</div>
+	<div v-else-if="user.role==='ADMINISTRATOR'" >
+	<a href="#/ar">Apartmani</a>
 	<a href="#/pk">Korisnici</a>
 	<a href="#/sh">Registracija domacina</a>
+	<a href="#/prikazRezervacijaAdministrator">Rezervacije korisnika</a>
+	<a href="#/sadrzajApartmanaPrikaz">SadrzajApartmana</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
 	</div>
+	</div>
+	<div v-else>
+	<a href="#/reservation">Apartmani</a>
+	<div class="topnav-right">
+		<a href="#/pd">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+	</div>
 </div>
-
 		<button type="button" onclick="window.location.href='#/us';" type="button" class="button" id="t01">Pretrazi</button>
 
 	  <form accept-charset="UTF-8">
@@ -71,7 +100,6 @@ Vue.component("pk", {
         })
         .catch(function (error) {
         	alert("usao u exaption!");
-            alert(error.response.data);
 	});
 	},
 
@@ -86,7 +114,8 @@ Vue.component("us", {
 		    return {
 		      username: undefined,
 		      role: undefined,
-		      gender: undefined
+		      gender: undefined,
+		      user:undefined
 		    }
 	},
 	template: ` 
@@ -99,14 +128,37 @@ Vue.component("us", {
 	</div>
 
 <div class="topnav">
-	<a href="#/sb">Apartmani</a>
+	<div v-if="user.role==='HOST'" >
+	<a href="#/prikazApartmanaDomacin">Apartmani</a>
+	<a href="#/pk">Korisnici</a>
+	<a href="#/prikazRezervacijaDomacin">Rezervacije korisnika</a>
+	<a href="#/aa">Dodavanje apartmana</a>
+	<div class="topnav-right">
+		<a href="#/pr">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+	</div>
+	<div v-else-if="user.role==='ADMINISTRATOR'" >
+	<a href="#/ar">Apartmani</a>
 	<a href="#/pk">Korisnici</a>
 	<a href="#/sh">Registracija domacina</a>
+	<a href="#/prikazRezervacijaAdministrator">Rezervacije korisnika</a>
+	<a href="#/sadrzajApartmanaPrikaz">SadrzajApartmana</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
 	</div>
+	</div>
+	<div v-else>
+	<a href="#/reservation">Apartmani</a>
+	<div class="topnav-right">
+		<a href="#/pd">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+	</div>
 </div>
+
+
 
 
 	  <form accept-charset="UTF-8">
@@ -169,6 +221,19 @@ Vue.component("us", {
 </div>		  
 `
 	, 
+	mounted(){
+		 axios
+	        .get('rest/registracija/ulogovani')
+	        .then(response =>{
+	        	this.user = response.data;
+	        	alert("Dobio korisnika : "+this.user.username);
+		    })
+	        .catch(error => {
+		        alert("Doslo je do greske prilikom ucitavanja korisnika");
+		        alert(error.response.data);
+		    })
+		
+	},
 	methods : {
 		
 		pretrazi: function(){
@@ -187,7 +252,6 @@ Vue.component("us", {
             })
             .catch(function (error) {
                   alert("Doslo je do greske prilikom pretrage");
-                  alert(error.response.data);
             });
         },
 		
@@ -223,14 +287,38 @@ Vue.component("ush", {
 	</div>
 
 <div class="topnav">
-	<a href="#/sb">Apartmani</a>
+	<div v-if="user.role==='HOST'" >
+	<a href="#/prikazApartmanaDomacin">Apartmani</a>
+	<a href="#/pk">Korisnici</a>
+	<a href="#/prikazRezervacijaDomacin">Rezervacije korisnika</a>
+	<a href="#/aa">Dodavanje apartmana</a>
+	<div class="topnav-right">
+		<a href="#/pr">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+	</div>
+	<div v-else-if="user.role==='ADMINISTRATOR'" >
+	<a href="#/ar">Apartmani</a>
 	<a href="#/pk">Korisnici</a>
 	<a href="#/sh">Registracija domacina</a>
+	<a href="#/prikazRezervacijaAdministrator">Rezervacije korisnika</a>
+	<a href="#/sadrzajApartmanaPrikaz">SadrzajApartmana</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
 	</div>
+	</div>
+	<div v-else>
+	<a href="#/reservation">Apartmani</a>
+	<div class="topnav-right">
+		<a href="#/pd">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+	</div>
 </div>
+
+
+
 
 		<button type="button" onclick="window.location.href='#/us';" type="button" class="button" id="t01">Pretrazi</button>
 
@@ -260,6 +348,16 @@ Vue.component("ush", {
 </div>		  
 `
 	, 
+	mounted(){
+		axios
+        .get('rest/registracija/ulogovani')
+        .then(response =>{
+        	this.user = response.data;
+	    })
+        .catch(error => {
+	        alert("Doslo je do greske prilikom ucitavanja korisnika");
+	    })
+	},
 	methods : {
 		
 		logout : function() {

@@ -5,7 +5,6 @@ const Admin = { template: '<admin></admin>' }
 const LogIn = { template: '<log></log>' }
 const Reg = { template: '<reg></reg>' }
 const RegHost = { template: '<reghost></reghost>' }
-const Logged = { template: '<logged></logged>' }
 const Apartment = { template: '<ap></ap>' }
 const PersonalDataEdit = { template: '<pr></pr>' }
 const PersonalData = { template: '<pr1></pr1>' }
@@ -15,6 +14,7 @@ const UsersShow = { template: '<ush></ush>' }
 const AddApartment = { template: '<aa></aa>'}
 const ApartReview = { template: '<ar></ar>'}
 const Reservation = { template: '<reservation></reservation>'}
+const SamoApartmani = { template: '<samoApartmani></samoApartmani>'}
 const PrikazApartmana = { template: '<prikazApartmana></prikazApartmana>'}
 const PrikazRezervacijaDomacin = { template: '<prikazRezervacijaDomacin></prikazRezervacijaDomacin>'}
 const PrikazRezervacijaAdministrator = { template: '<prikazRezervacijaAdministrator></prikazRezervacijaAdministrator>'}
@@ -32,7 +32,6 @@ const router = new VueRouter({
 	    { path: '/sc', component: LogIn },
 	    { path: '/ss', component: Reg },
 	    { path: '/sh', component: RegHost },
-	    { path: '/sa', component: Logged },
 	    { path: '/g', component: Guest },
 	    { path: '/h', component: Host },
 	    { path: '/a', component: Admin },
@@ -43,6 +42,7 @@ const router = new VueRouter({
 	    { path: '/aa', component: AddApartment },
 	    { path: '/us', component: UsersSearch },
 	    { path: '/ar', component: ApartReview },
+	    { path: '/samoApartmani', component: SamoApartmani },
 	    { path: '/prikazApartmana', component: PrikazApartmana },
 	    { path: '/prikazApartmanaZaGosta', component: PrikazApartmanaZaGosta },
 	    { path: '/prikazApartmanaDomacin', component: PrikazApartmanaDomacin },

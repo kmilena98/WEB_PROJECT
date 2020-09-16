@@ -77,10 +77,8 @@ public class ApartmentService {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public HashMap<String, Apartment> getAktivniApartmani() {
-		User ulogovani = (User) request.getSession().getAttribute("ulogovani");
-		if(ulogovani == null) {
-			return null;
-		}		
+
+				
 		HashMap<String,Apartment> aktivniApartmani = new HashMap<String,Apartment>();
 		Apartments apartmani = (Apartments) ctx.getAttribute("apartments");
 		for(Entry<String, Apartment> a : apartmani.getApartments().entrySet() ) {
@@ -124,20 +122,18 @@ public class ApartmentService {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public ArrayList<Apartment> prikazApartmanaZaDomacina() {
+		System.out.println("Usao ovde!");
 		Apartments postojeciApartmani = (Apartments) ctx.getAttribute("apartments");
-		Host h = new Host();
-		try {
-			h = (Host)request.getSession().getAttribute("ulogovani");
-		}catch(Exception e) {
-			
-		} 
+		User u = (User)request.getSession().getAttribute("ulogovani");
+		
+		 
 		ArrayList<Apartment> ap = new ArrayList<Apartment>();
-		for(Apartment a : h.getApartmentsForRent()) {
+		
 			for(Entry<String, Apartment> pa : postojeciApartmani.getApartments().entrySet()) {
-				if(pa.getValue().getId().equals(a.getId())&& !pa.getValue().getObrisan()) {
-					ap.add(a);
+				if(pa.getValue().getHost().equals(u.getUsername())&& !pa.getValue().getObrisan()) {
+					ap.add(pa.getValue());
 				}
-			}
+			
 		}
 		return ap; 
 	}

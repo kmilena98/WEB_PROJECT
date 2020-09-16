@@ -7,7 +7,7 @@ Vue.component("reg", {
 				password: undefined,
 				potvrda: undefined,
 				role: null,
-				gender: undefined	
+				gender: undefined
 		    }
 	},
 	template: ` 
@@ -273,14 +273,36 @@ Vue.component("prikazRezervacijaDomacin", {
 	</div>
 
 <div class="topnav">
+	<div v-if="user.role==='HOST'" >
+	<a href="#/prikazApartmanaDomacin">Apartmani</a>
+	<a href="#/pk">Korisnici</a>
+	<a href="#/prikazRezervacijaDomacin">Rezervacije korisnika</a>
+	<a href="#/aa">Dodavanje apartmana</a>
+	<div class="topnav-right">
+		<a href="#/pr">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+	</div>
+	<div v-else-if="user.role==='ADMINISTRATOR'" >
 	<a href="#/ar">Apartmani</a>
 	<a href="#/pk">Korisnici</a>
 	<a href="#/sh">Registracija domacina</a>
+	<a href="#/prikazRezervacijaAdministrator">Rezervacije korisnika</a>
+	<a href="#/sadrzajApartmanaPrikaz">SadrzajApartmana</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
 	</div>
+	</div>
+	<div v-else>
+	<a href="#/reservation">Apartmani</a>
+	<div class="topnav-right">
+		<a href="#/pd">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+	</div>
 </div>
+
 
 		<button type="button" onclick="window.location.href='#/us';" type="button" class="button" id="t01">Pretrazi</button>
 

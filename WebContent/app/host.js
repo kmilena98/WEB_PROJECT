@@ -1,7 +1,7 @@
 Vue.component("da", {
 	data: function () {
 		    return {
-		      products: null
+		    	user:null
 		    }
 	},
 	template: ` 
@@ -14,14 +14,36 @@ Vue.component("da", {
 	</div>
 
 <div class="topnav">
-	<a href="#/sb">Apartmani</a>
+	<div v-if="user.role==='HOST'" >
+	<a href="#/prikazApartmanaDomacin">Apartmani</a>
 	<a href="#/pk">Korisnici</a>
-	<a href="#/da">Dodavanje apartmana</a>
+	<a href="#/prikazRezervacijaDomacin">Rezervacije korisnika</a>
+	<a href="#/aa">Dodavanje apartmana</a>
+	<div class="topnav-right">
+		<a href="#/pr">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+	</div>
+	<div v-else-if="user.role==='ADMINISTRATOR'" >
+	<a href="#/ar">Apartmani</a>
+	<a href="#/pk">Korisnici</a>
+	<a href="#/sh">Registracija domacina</a>
+	<a href="#/prikazRezervacijaAdministrator">Rezervacije korisnika</a>
+	<a href="#/sadrzajApartmanaPrikaz">SadrzajApartmana</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
 	</div>
+	</div>
+	<div v-else>
+	<a href="#/reservation">Apartmani</a>
+	<div class="topnav-right">
+		<a href="#/pd">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+	</div>
 </div>
+
 
 <div class="row">
   <div class="column side">
@@ -47,7 +69,17 @@ Vue.component("da", {
 	
 </div>		  
 `
-	, 
+	,
+	mounted(){
+		axios
+        .get('rest/registracija/ulogovani')
+        .then(response =>{
+        	this.user = response.data;
+	    })
+        .catch(error => {
+	        alert("Doslo je do greske prilikom ucitavanja korisnika");
+	    })
+	},
 	methods : {
 		logout : function() {
 	    axios.post('rest/registracija/logout')
@@ -58,7 +90,6 @@ Vue.component("da", {
         })
         .catch(function (error) {
         	alert("usao u exaption!");
-            alert(error.response.data);
 	});
 	},
 

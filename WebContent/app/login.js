@@ -47,7 +47,7 @@ Vue.component("log", {
 				'gender':'MALE',
 				'role':'GUEST',
             };
-            
+            var s = this.username+"."+this.password;
             var ok = true;
             
             if(this.username != undefined) this.username.trim();
@@ -67,26 +67,17 @@ Vue.component("log", {
 				axios.post('rest/registracija/login', user)
                 .then(function (response) {
     				this.kor = response.data;
+    				window.location.href = "#/h";
                 })
                 .catch(function (error) {
                     alert("exaption "+error.response.data);
                 });
 			}
-				axios.get('rest/registracija/korisnickoIme/'+ this.username)
-                .then(function (response) {
-    				this.kor = response.data;
-    				if(this.kor.role == "HOST"){
-						window.location.href = "#/h";
-    				}	
-    				if(this.kor.role == "ADMINISTRATOR"){
-                		window.location.href = "#/a";
-    				} 
-    				if(this.kor.role == "GUEST"){
-                		window.location.href = "#/g";
-    				}
-                			
-                	})
+				
                 
         }        
 	}
 });
+
+
+

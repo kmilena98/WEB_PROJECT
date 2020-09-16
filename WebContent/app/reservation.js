@@ -1,7 +1,8 @@
 Vue.component("reservation", {
 	data: function () {
 		    return {
-		      apartmants: null
+		      apartmants: null,
+		      user:null
 		    }
 	},
 	mounted(){
@@ -14,7 +15,17 @@ Vue.component("reservation", {
 	        .catch(error => {
     	        alert("Doslo je do greske prilikom ucitavanja apartmana");
     	        alert(error.response.data);
-    	    })
+    	    });
+        axios
+        .get('rest/registracija/ulogovani')
+        .then(response =>{
+        	this.user = response.data;
+        	alert("Dobio korisnika : "+this.user.username);
+	    })
+        .catch(error => {
+	        alert("Doslo je do greske prilikom ucitavanja korisnika");
+	        alert(error.response.data);
+	    })
        
 	},
 	template: ` 
@@ -27,14 +38,37 @@ Vue.component("reservation", {
 	</div>
 
 <div class="topnav">
-	<a href="#/reservation">Apartmani</a>
+	<div v-if="user.role==='HOST'" >
+	<a href="#/prikazApartmanaDomacin">Apartmani</a>
+	<a href="#/pk">Korisnici</a>
+	<a href="#/prikazRezervacijaDomacin">Rezervacije korisnika</a>
+	<a href="#/aa">Dodavanje apartmana</a>
+	<div class="topnav-right">
+		<a href="#/pr">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+	</div>
+	<div v-else-if="user.role==='ADMINISTRATOR'" >
+	<a href="#/ar">Apartmani</a>
 	<a href="#/pk">Korisnici</a>
 	<a href="#/sh">Registracija domacina</a>
+	<a href="#/prikazRezervacijaAdministrator">Rezervacije korisnika</a>
+	<a href="#/sadrzajApartmanaPrikaz">SadrzajApartmana</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
 	</div>
+	</div>
+	<div v-else>
+	<a href="#/reservation">Apartmani</a>
+	<div class="topnav-right">
+		<a href="#/pd">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+	</div>
 </div>
+
+
 
 		<button type="button" onclick="window.location.href='#/us';" class="button" id="t01">Pretrazi</button>
 
@@ -140,14 +174,37 @@ Vue.component("prikazRezervacijaDomacin", {
 	</div>
 
 <div class="topnav">
+	<div v-if="user.role==='HOST'" >
+	<a href="#/prikazApartmanaDomacin">Apartmani</a>
+	<a href="#/pk">Korisnici</a>
+	<a href="#/prikazRezervacijaDomacin">Rezervacije korisnika</a>
+	<a href="#/aa">Dodavanje apartmana</a>
+	<div class="topnav-right">
+		<a href="#/pr">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+	</div>
+	<div v-else-if="user.role==='ADMINISTRATOR'" >
 	<a href="#/ar">Apartmani</a>
 	<a href="#/pk">Korisnici</a>
 	<a href="#/sh">Registracija domacina</a>
+	<a href="#/prikazRezervacijaAdministrator">Rezervacije korisnika</a>
+	<a href="#/sadrzajApartmanaPrikaz">SadrzajApartmana</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
 	</div>
+	</div>
+	<div v-else>
+	<a href="#/reservation">Apartmani</a>
+	<div class="topnav-right">
+		<a href="#/pd">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+	</div>
 </div>
+
+
 
 		<button type="button" onclick="window.location.href='#/pretragaRezervacijaDA';" class="button" id="t01">Pretrazi</button>
 
@@ -271,14 +328,37 @@ Vue.component("prikazRezervacijaAdministrator", {
 	</div>
 
 <div class="topnav">
+	<div v-if="user.role==='HOST'" >
+	<a href="#/prikazApartmanaDomacin">Apartmani</a>
+	<a href="#/pk">Korisnici</a>
+	<a href="#/prikazRezervacijaDomacin">Rezervacije korisnika</a>
+	<a href="#/aa">Dodavanje apartmana</a>
+	<div class="topnav-right">
+		<a href="#/pr">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+	</div>
+	<div v-else-if="user.role==='ADMINISTRATOR'" >
 	<a href="#/ar">Apartmani</a>
 	<a href="#/pk">Korisnici</a>
 	<a href="#/sh">Registracija domacina</a>
+	<a href="#/prikazRezervacijaAdministrator">Rezervacije korisnika</a>
+	<a href="#/sadrzajApartmanaPrikaz">SadrzajApartmana</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
 	</div>
+	</div>
+	<div v-else>
+	<a href="#/reservation">Apartmani</a>
+	<div class="topnav-right">
+		<a href="#/pd">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+	</div>
 </div>
+
+
 
 		<button type="button" onclick="window.location.href='#/pretragaRezervacijaDA';" class="button" id="t01">Pretrazi</button>
 
@@ -405,14 +485,37 @@ Vue.component("pretragaRezervacijaDA", {
 	</div>
 
 <div class="topnav">
-	<a href="#/sb">Apartmani</a>
+	<div v-if="user.role==='HOST'" >
+	<a href="#/prikazApartmanaDomacin">Apartmani</a>
+	<a href="#/pk">Korisnici</a>
+	<a href="#/prikazRezervacijaDomacin">Rezervacije korisnika</a>
+	<a href="#/aa">Dodavanje apartmana</a>
+	<div class="topnav-right">
+		<a href="#/pr">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+	</div>
+	<div v-else-if="user.role==='ADMINISTRATOR'" >
+	<a href="#/ar">Apartmani</a>
 	<a href="#/pk">Korisnici</a>
 	<a href="#/sh">Registracija domacina</a>
+	<a href="#/prikazRezervacijaAdministrator">Rezervacije korisnika</a>
+	<a href="#/sadrzajApartmanaPrikaz">SadrzajApartmana</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
 	</div>
+	</div>
+	<div v-else>
+	<a href="#/reservation">Apartmani</a>
+	<div class="topnav-right">
+		<a href="#/pd">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+	</div>
 </div>
+
+
 
 
 	  <form accept-charset="UTF-8">
@@ -492,6 +595,7 @@ Vue.component("pretragaRezervacijaDA", {
 Vue.component("prikazPretrageRezervacijaDA", {
 	data: function () {
 		    return {
+		    	user:null,
 		    	reservations: RESERVATIONS
 		    }
 	},
@@ -505,14 +609,37 @@ Vue.component("prikazPretrageRezervacijaDA", {
 	</div>
 
 <div class="topnav">
+	<div v-if="user.role==='HOST'" >
+	<a href="#/prikazApartmanaDomacin">Apartmani</a>
+	<a href="#/pk">Korisnici</a>
+	<a href="#/prikazRezervacijaDomacin">Rezervacije korisnika</a>
+	<a href="#/aa">Dodavanje apartmana</a>
+	<div class="topnav-right">
+		<a href="#/pr">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+	</div>
+	<div v-else-if="user.role==='ADMINISTRATOR'" >
 	<a href="#/ar">Apartmani</a>
 	<a href="#/pk">Korisnici</a>
 	<a href="#/sh">Registracija domacina</a>
+	<a href="#/prikazRezervacijaAdministrator">Rezervacije korisnika</a>
+	<a href="#/sadrzajApartmanaPrikaz">SadrzajApartmana</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
 	</div>
+	</div>
+	<div v-else>
+	<a href="#/reservation">Apartmani</a>
+	<div class="topnav-right">
+		<a href="#/pd">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+	</div>
 </div>
+
+
 
 		<button type="button" onclick="window.location.href='#/pretragaRezervacijaDA';" class="button" id="t01">Pretrazi</button>
 
@@ -556,7 +683,19 @@ Vue.component("prikazPretrageRezervacijaDA", {
 	
 </div>			  
 `
-	, 
+	,
+	mounted(){
+		 axios
+	        .get('rest/registracija/ulogovani')
+	        .then(response =>{
+	        	this.user = response.data;
+	        	alert("Dobio korisnika : "+this.user.username);
+		    })
+	        .catch(error => {
+		        alert("Doslo je do greske prilikom ucitavanja korisnika");
+		        alert(error.response.data);
+		    })
+	},
 	methods : {
 		
 		logout : function() {

@@ -51,14 +51,29 @@ public class Registration {
 		}
 		
 		@GET
-		@Path("/korisnickoIme/{username}")
+		@Path("/korisnickoIme/{s}")
 		@Consumes(MediaType.APPLICATION_JSON)
 		@Produces(MediaType.APPLICATION_JSON)
-		public User getUserByUsername(@PathParam("username") String username) {	
+		public User getUserByUsername(@PathParam("s") String s) {	
+			System.out.println("DOSAOO");
+			String[] delovi =s.split("\\.");
+			String username = delovi[0].trim();
+			String password = delovi[1].trim();
+			System.out.println("DOSAOO   :  "+username+"  "+password);
 			Users users = (Users) ctx.getAttribute("users");
+			User ulogovanKorisnik = (User) ctx.getAttribute("ulogovani");
+			if(ulogovanKorisnik!=null)
+				return null;
 			HashMap<String, User>  mapa = users.getUsers();
 			User u = mapa.get(username);
-			return u;
+			System.out.println("User "+u.getName());
+			if(u.getPassword().equals(password)) {
+				System.out.println("Vratio sam pravog");
+				return u;
+			}else {
+				System.out.println("Vratio null");
+				return null;
+			}
 		}
 		
 		@GET
@@ -117,7 +132,7 @@ public class Registration {
 		public Response login(User u) {
 			User ulogovani = (User) request.getSession().getAttribute("ulogovani");
 			if(ulogovani != null) {
-				return Response.status(400).entity("Vec ste prijavljeni.").build();
+				return Response.status(400).entity("Ulogovani ste.").build();
 			}
 			
 			if(u.getUsername().equals("") || u.getPassword().equals(""))
