@@ -199,4 +199,19 @@ public class Apartment {
 		this.bookingList = bookingList;
 	}
 	
+	public void addAppartment(Amenities a) {
+		this.amenities.add(a);
+	}
+	
+	public void izmeniAmenitie(Amenities a) {
+		
+		for(Amenities ap : amenities) {
+			if(ap.getId().equals(a.getId())) {
+				this.amenities.remove(ap);
+				this.amenities.add(a);
+				break;
+			}
+		}
+	}
+	
 }

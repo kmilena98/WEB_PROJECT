@@ -24,6 +24,7 @@ const PrikazPretrageRezervacijaDA = { template: '<prikazPretrageRezervacijaDA></
 const IzmenaApartmana = { template: '<izmenaApartmana></izmenaApartmana>'}
 const PrikazApartmanaDomacin = { template: '<prikazApartmanaZaDomacina></prikazApartmanaZaDomacina>'}
 const SadrzajApartmanaPrikaz = { template: '<sadrzajApartmanaPrikaz></sadrzajApartmanaPrikaz>'}
+const IzmenaNazivaSadrzajaApartmana = { template: '<izmenaNazivaSadrzajaApartmana></izmenaNazivaSadrzajaApartmana>'}
 const PrikazApartmanaZaGosta = { template : '<prikazApartmanaZaGosta></prikazApartmanaZaGosta>'}
 const DodajSadrzajApartmana = { template: '<dodajsadrzajApartmana></dodajsadrzajApartmana>'}
 const router = new VueRouter({
@@ -49,6 +50,7 @@ const router = new VueRouter({
 	    { path: '/prikazApartmanaDomacin', component: PrikazApartmanaDomacin },
 	    { path: '/sadrzajApartmanaPrikaz', component: SadrzajApartmanaPrikaz },
 	    { path: '/dodajsadrzajApartmana', component: DodajSadrzajApartmana },
+	    { path: '/izmenaNazivaSadrzajaApartmana', component: IzmenaNazivaSadrzajaApartmana },
 	    { path: '/prikazRezervacijaDomacin', component: PrikazRezervacijaDomacin },
 	    { path: '/prikazRezervacijaAdministrator', component: PrikazRezervacijaAdministrator },
 	    { path: '/izmenaApartmana', component: IzmenaApartmana },

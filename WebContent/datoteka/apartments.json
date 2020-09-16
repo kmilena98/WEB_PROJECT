@@ -149,11 +149,11 @@
     "obrisan" : true,
     "coments" : [ ],
     "amenities" : [ {
-      "id" : "1",
-      "name" : "Telefon"
-    }, {
       "id" : "12",
       "name" : "Garaza"
+    }, {
+      "id" : "1",
+      "name" : "Krevet"
     } ],
     "bookingList" : [ ],
     "host" : "h"

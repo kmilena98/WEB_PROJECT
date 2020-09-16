@@ -40,6 +40,12 @@ public class Apartments {
 		return apartments;
 	}
 	
+	public void izmeni(Amenities a) {
+		for(Map.Entry<String, Apartment> ap : apartments.entrySet()) {
+			ap.getValue().izmeniAmenitie(a);
+		}
+	}
+		
 	@SuppressWarnings("unchecked")
 	public void loadApartments(String path) {
 		String putanja = path + "datoteka\\apartments.json";

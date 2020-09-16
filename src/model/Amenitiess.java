@@ -38,6 +38,9 @@ public class Amenitiess {
 			amenitiess.put(a.getId(), a);
 		saveAmenities(putanja);
 	}
+	public void obrisi(Amenities a) {
+		amenitiess.remove(a.getId());
+	}
 	
 	@SuppressWarnings("unchecked")
 	public void loadAmenities(String path) {
