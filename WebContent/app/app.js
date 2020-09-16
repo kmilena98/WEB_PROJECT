@@ -27,6 +27,7 @@ const SadrzajApartmanaPrikaz = { template: '<sadrzajApartmanaPrikaz></sadrzajApa
 const IzmenaNazivaSadrzajaApartmana = { template: '<izmenaNazivaSadrzajaApartmana></izmenaNazivaSadrzajaApartmana>'}
 const PrikazApartmanaZaGosta = { template : '<prikazApartmanaZaGosta></prikazApartmanaZaGosta>'}
 const DodajSadrzajApartmana = { template: '<dodajsadrzajApartmana></dodajsadrzajApartmana>'}
+const WriteComment = { template: '<writeComment></writeComment>'}
 const router = new VueRouter({
 	  mode: 'hash',
 	  routes: [
@@ -58,7 +59,8 @@ const router = new VueRouter({
 	    { path: '/pretragaRezervacijaDA', component: PretragaRezervacijaDA },
 	    { path: '/prikazPretrageRezervacijaDA', component: PrikazPretrageRezervacijaDA },
 	    { path: '/prikazRezervacijaGost', component: PrikazRezervacijaGost },
-	    { path: '/ush', component: UsersShow }
+	    { path: '/ush', component: UsersShow },
+	    { path: '/writeComment', component: WriteComment }
 	  ]
 });
 

@@ -40,6 +40,14 @@ public class Guest extends User {
 	}
 	
 	
-	
+	public void izmeniStatus(String s, Reservation res) {
+		for(Reservation r : bookingList) {
+			if(r.getGuest().getUsername().equals(res.getGuest().getUsername()) && r.getApartment().getId().equals(res.getApartment().getId()) && 
+					r.getBookingStartDate().equals(res.getBookingStartDate())) {
+				System.out.println("Usao u gosta");
+				r.izmeniStatus(s);
+			}
+		}
+	}
 	
 }

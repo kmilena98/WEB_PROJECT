@@ -202,7 +202,7 @@ public class ReservationService {
 		Users users = (Users) ctx.getAttribute("users");
 		String contextPath = ctx.getRealPath("");
 		
-		User us = (User)users.getUser(ulogovani.getUsername());
+		/*User us = (User)users.getUser(ulogovani.getUsername());
 		Guest g;
 		String usernameHosta= r.getApartment().getHost();
 		try {
@@ -210,7 +210,7 @@ public class ReservationService {
 		}catch(Exception e) {
 		  g = new Guest(us.getUsername(),us.getPassword(),us.getName(),us.getSurname(),us.toEnumGender(us.getGender()),us.toEnumRole(us.getRole()));
 		 
-		}
+		}*/
 
 		
 		Reservations reservations = (Reservations) ctx.getAttribute("reservations");
@@ -242,25 +242,29 @@ public class ReservationService {
 		String contextPath = ctx.getRealPath("");
 		
 		User us = (User)users.getUser(ulogovani.getUsername());
-		Guest g;
+		/*Host h;
 		String usernameHosta= r.getApartment().getHost();
 		try {
-	      g = (Guest) users.getUser(ulogovani.getUsername());
+	      h = (Host) users.getUser(ulogovani.getUsername());
 		}catch(Exception e) {
 		  g = new Guest(us.getUsername(),us.getPassword(),us.getName(),us.getSurname(),us.toEnumGender(us.getGender()),us.toEnumRole(us.getRole()));
 		 
-		}
+		}*/
 
 		
 		Reservations reservations = (Reservations) ctx.getAttribute("reservations");
 		for(Reservation res : reservations.getReservations()) {
 			if(res.getApartment().getId().equals(r.getApartment().getId()) && res.getBookingStartDate().equals(r.getBookingStartDate())) {
 				res.izmeniStatus("REJECTED");
+				//g.izmeniStatus("REJECTED", r);
 				//res.getGuest()
 				break;
 			}
 		}
-	
+		
+		//User user = users.getUser(g.getUsername());
+		//users.getUsers().remove(user.getUsername());
+		//users.dodaj(g);
 		reservations.saveReservations(contextPath);
 		users.sacuvajKorisnike(contextPath);
 		//ctx.setAttribute("reservations", reservations);

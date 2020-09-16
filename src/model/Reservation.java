@@ -99,11 +99,13 @@ public class Reservation {
 	}
 	
 	public void izmeniStatus(String status) {
+		System.out.println("Usao u izmeni");
 		if(status.equals("ACCEPTED")) {
 			this.status = Status.ACCEPTED;
 		}else if(status.equals("CANCELED")){
 			this.status = Status.CANCELED;
 		}else if(status.equals("REJECTED")){
+			System.out.println("Usao u REJECTED");
 			this.status = Status.REJECTED;
 		}
 	}

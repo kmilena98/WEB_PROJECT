@@ -428,6 +428,9 @@ Vue.component("prikazRezervacijaGost", {
 					<div v-else-if="ap.status === 'ACCEPTED'">
 						<tr><td><button type="button" v-on:click.prevent="odustani(ap)">Odustani</button></td>
 					</div>
+					<div v-else-if="ap.status === 'COMPLETED' || ap.status === 'REJECTED'">
+						<tr><td><button type="button" onclick="window.location.href='#/writeComment';">Napisi komentar</button></td>
+					</div>
 				</td>
 					
       </tr>
@@ -441,11 +444,11 @@ Vue.component("prikazRezervacijaGost", {
 `
 	, 
 	methods : {
-		odustani : function(ap){
+		posalji : function(ap){
 			axios.post('rest/reservation/odgovorGostaZaRezervacije', ap)
 			.then(function (response) {
-				window.location.reload();
-
+				window.location.href = '#/writeComment';
+				/*v-on:click.prevent="posalji(ap)"*/
 	        })
 	        .catch(function (error) {
 	        	alert("usao u exaption!");
@@ -907,6 +910,175 @@ Vue.component("prikazPretrageRezervacijaDA", {
 
         })
         .catch(function (error) {
+            alert(error.response.data);
+	});
+	},
+
+		
+	},
+});
+
+Vue.component("writeComment", {
+	data: function () {
+		    return {
+		      user:null,
+		      text: null,
+		      grade: null
+		      
+		    }
+	},
+	mounted(){
+        axios
+            .get('rest/apartmani/prikaz')
+            .then(response =>{
+	        	this.apartman = response.data;
+	        	
+    	    })
+	        .catch(error => {
+    	        alert("Doslo je do greske prilikom ucitavanja apartmana");
+    	        alert(error.response.data);
+    	    });
+        axios
+        .get('rest/registracija/ulogovani')
+        .then(response =>{
+        	this.user = response.data;
+	    })
+        .catch(error => {
+	        alert("Doslo je do greske prilikom ucitavanja korisnika");
+	    })
+	},
+	template: ` 
+<div>
+	
+	<div class="header">
+		<img class="image" src="images/l.jpg" style="width:150px;height:100px;">
+		<h1>Rezervacija apartmana </h1>
+		<p>Izaberite svoju najbolju ponudu iz snova!</p>
+	</div>
+
+<div class="topnav">
+	<div v-if="user.role==='HOST'" >
+	<a href="#/prikazApartmanaDomacin">Apartmani</a>
+	<a href="#/pk">Korisnici</a>
+	<a href="#/prikazRezervacijaDomacin">Rezervacije korisnika</a>
+	<a href="#/aa">Dodavanje apartmana</a>
+	<div class="topnav-right">
+		<a href="#/pd">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+	</div>
+	<div v-else-if="user.role==='ADMINISTRATOR'" >
+	<a href="#/ar">Apartmani</a>
+	<a href="#/pk">Korisnici</a>
+	<a href="#/sh">Registracija domacina</a>
+	<a href="#/prikazRezervacijaAdministrator">Rezervacije korisnika</a>
+	<a href="#/sadrzajApartmanaPrikaz">SadrzajApartmana</a>
+	<div class="topnav-right">
+		<a href="#/pd">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+	</div>
+	<div v-else>
+	<a href="#/reservation">Apartmani</a>
+	<a href="#/prikazRezervacijaGost">Moje rezervacije</a>
+	<div class="topnav-right">
+		<a href="#/pd">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+	</div>
+</div>
+
+	<div class="sadrzaj">
+		<p>Sadrzaj:</p>
+
+		<table class="to">
+			<tr>
+				<td><label>Sadrzaj:</label></td>
+				<td><input type="text" v-model="id"/><td>
+			</tr>
+			<tr>
+				<td><label>Ocena:</label></td>
+				<td><select class="c" v-model="grade" style="width:208px;height:30px;">
+							<option>1</option>
+							<option>2</option>
+							<option>3</option>
+							<option>4</option>
+							<option>5</option>
+					</select></td>
+			</tr>
+			<tr><td>&nbsp;</td>
+				 <td align="left" style="color: red;font-size:14px">{{nazivValidacija}}</td>
+            </tr>
+		</table>
+		<div class="b">
+		<table>
+		<tr>
+			<td><input type="button" value="Potvrdi" v-on:click.prevent="posaljiPoruku"><td>
+			<td><input type="button" onclick="window.location.href='#/sadrzajApartmanaPrikaz';" value="Odustani"></td>
+			
+		</tr>
+		</div>
+	</div>
+
+	
+	
+</div>		  
+`
+	, 
+	
+	computed: {
+		nazivValidacija: function(){
+			if(this.name != undefined && this.name.length > 0){
+				let imeMatch = this.name.match('[A-Za-z ]*');
+				if(imeMatch != this.name) return 'Ime u sebi moze sadrzati iskljucivo slova.';
+				else if(this.name[0].match('[A-Z]') === null) return 'Ime mora pocinjati velikim slovom.'; 
+			}
+			else if(this.name === '') return 'Ime je obavezno polje.';
+			else return null;
+		}
+},
+	methods : {
+		
+		dodajSadrzaj(){
+			
+			var sadrzaj= {
+				'id': this.id,
+				'name': this.name,
+			}
+			
+            axios.post('rest/sadrzaj/add', sadrzaj)
+            .then(function (response) {
+            	
+                window.location.href = "#/sadrzajApartmanaPrikaz";
+            })
+            .catch(function (error) {
+            	alert("exception");
+                alert(error.response.data);
+            });
+		},
+		
+		prikazi : function(id) {
+		
+		    axios.post('rest/apartmani/prikazApartmana')
+	    	
+	        .then(function (response) {
+				window.location.href = '#/';
+
+	        })
+	        .catch(function (error) {
+	        	alert("usao u exaption!");
+	            alert(error.response.data);
+		});
+		},
+		logout : function() {
+	    axios.post('rest/registracija/logout')
+    	
+        .then(function (response) {
+			window.location.href = '#/';
+
+        })
+        .catch(function (error) {
+        	alert("usao u exaption!");
             alert(error.response.data);
 	});
 	},
