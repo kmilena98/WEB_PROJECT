@@ -61,6 +61,7 @@ Vue.component("reservation", {
 	</div>
 	<div v-else>
 	<a href="#/reservation">Apartmani</a>
+	<a href="#/prikazRezervacijaGost">Moje rezervacije</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
@@ -204,6 +205,7 @@ Vue.component("prikazRezervacijaDomacin", {
 	</div>
 	<div v-else>
 	<a href="#/reservation">Apartmani</a>
+	<a href="#/prikazRezervacijaGost">Moje rezervacije</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
@@ -247,9 +249,9 @@ Vue.component("prikazRezervacijaDomacin", {
               
                		<div v-if="ap.status ==='CREATED'">
 						<tr><td><button type="button" v-on:click.prevent="odobri(ap)">Odobri</button></td></tr>
-						<tr><td><button type="button" v-on:click.prevent="prikazi(ap)">Ponisti</button></td></tr>
+						<tr><td><button type="button" v-on:click.prevent="odbi(ap)">Odbi</button></td></tr>
 					</div>
-					<div v-else>
+					<div v-else-if="ap.status ==='ACCEPTED'">
 						<tr><td><button type="button" v-on:click.prevent="prikazi(ap)">Ponisti</button></td></tr>
 						<tr><td><button type="button" v-on:click.prevent="prikazi(ap)">Zavrsi</button></td>
 					</div>
@@ -266,6 +268,193 @@ Vue.component("prikazRezervacijaDomacin", {
 `
 	, 
 	methods : {
+		odbi : function(ap){
+			axios.post('rest/reservation/odgovorDomacinaZaRezervacijeReject', ap)
+			.then(function (response) {
+				window.location.reload();
+
+	        })
+	        .catch(function (error) {
+	        	alert("usao u exaption!");
+	            alert(error.response.data);
+		});
+		},
+		odobri : function(ap){
+			axios.post('rest/reservation/odgovorDomacinaZaRezervacije', ap)
+			.then(function (response) {
+				window.location.reload();
+
+	        })
+	        .catch(function (error) {
+	        	alert("usao u exaption!");
+	            alert(error.response.data);
+		});
+		},
+		prikazi : function(a) {
+			/*alert("dosao"+id);*/
+		    axios.post('rest/apartmani/prikazApartmana',a)
+	    	
+	        .then(function (response) {
+				/*window.location.href = '#/prikazRezervacijaDomacin';*/
+
+	        })
+	        .catch(function (error) {
+	        	alert("usao u exaption!");
+	            alert(error.response.data);
+		});
+		},
+		logout : function() {
+	    axios.post('rest/registracija/logout')
+    	
+        .then(function (response) {
+			window.location.href = '#/';
+
+        })
+        .catch(function (error) {
+        	alert("usao u exaption!");
+            alert(error.response.data);
+	});
+	},
+
+		
+	},
+});
+
+Vue.component("prikazRezervacijaGost", {
+	data: function () {
+		    return {
+		      reservations: null,
+		      user:null
+		    }
+	},
+	mounted(){
+        axios
+            .get('rest/reservation/rezervacijeGost')
+            .then(response =>{
+            	alert("Uslo uspesno");
+	        	this.reservations = response.data;
+    	    })
+	        .catch(error => {
+    	        alert("Doslo je do greske prilikom ucitavanja rezervacija");
+    	        alert(error.response.data);
+    	    })
+        axios
+        .get('rest/registracija/ulogovani')
+        .then(response =>{
+        	this.user = response.data;
+        	
+        	/*alert("Usao gde treba da udje!");*/
+	    })
+        .catch(error => {
+	        alert("Doslo je do greske prilikom ucitavanja korisnika");
+	        alert(error.response.data);
+	    })
+	},
+	template: ` 
+<div>
+	
+	<div class="header">
+		<img class="image" src="images/l.jpg" style="width:150px;height:100px;">
+		<h1>Rezervacija apartmana </h1>
+		<p>Izaberite svoju najbolju ponudu iz snova!</p>
+	</div>
+
+<div class="topnav">
+	<div v-if="user.role==='HOST'" >
+	<a href="#/prikazApartmanaDomacin">Apartmani</a>
+	<a href="#/pk">Korisnici</a>
+	<a href="#/prikazRezervacijaDomacin">Rezervacije korisnika</a>
+	<a href="#/aa">Dodavanje apartmana</a>
+	<div class="topnav-right">
+		<a href="#/pd">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+	</div>
+	<div v-else-if="user.role==='ADMINISTRATOR'" >
+	<a href="#/ar">Apartmani</a>
+	<a href="#/pk">Korisnici</a>
+	<a href="#/sh">Registracija domacina</a>
+	<a href="#/prikazRezervacijaAdministrator">Rezervacije korisnika</a>
+	<a href="#/sadrzajApartmanaPrikaz">SadrzajApartmana</a>
+	<div class="topnav-right">
+		<a href="#/pd">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+	</div>
+	<div v-else>
+	<a href="#/reservation">Apartmani</a>
+	<a href="#/prikazRezervacijaGost">Moje rezervacije</a>
+	<div class="topnav-right">
+		<a href="#/pd">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+	</div>
+</div>
+
+		<button type="button" onclick="window.location.href='#/pretragaRezervacijaDA';" class="button" id="t01">Pretrazi</button>
+
+	  <form accept-charset="UTF-8">
+            <table class="t" id="tabela" style="width:80%;height:20%;">
+                <caption>Pregled rezervacija</caption>
+                
+                <tr>
+                	<td></td>
+                	<td>ID:</td>
+                	<td>Pocetak rezervacije</td>
+                	<td>Broj nocenja</td>
+                	<td>Ukupna cena</td>
+                	<td>Ime klijenta</td>
+                	<td>Prezime klijenta</td>
+                	<td>Status rezervacije</td>
+              	</tr>
+                 <tr v-for="ap in this.reservations">
+                  	<div class="post-media">
+                        <a href="#"><img style="width:150px;height:100px;" v-bind:src="ap.apartment.image" alt="" class="img-responsive"></a>
+                   </div><!-- end media -->
+                            
+                
+					<td>{{ap.apartment.id}}</td>
+                	<td>{{ap.bookingStartDate}}</td>
+					<td>{{ap.numberOfNights}}</td>
+					<td>{{ap.totalPrice}}</td>
+					<td>{{ap.guest.name}}</td>
+					<td>{{ap.guest.surname}}</td>
+					<td>{{ap.status}}</td>
+					
+			
+				
+               <td> 
+              
+               		<div v-if="ap.status ==='CREATED'">
+						<tr><td><button type="button" v-on:click.prevent="odustani(ap)">Odustani</button></td>
+					</div>
+					<div v-else-if="ap.status === 'ACCEPTED'">
+						<tr><td><button type="button" v-on:click.prevent="odustani(ap)">Odustani</button></td>
+					</div>
+				</td>
+					
+      </tr>
+                
+						
+    </table>            
+   </form>
+	
+	
+</div>		  
+`
+	, 
+	methods : {
+		odustani : function(ap){
+			axios.post('rest/reservation/odgovorGostaZaRezervacije', ap)
+			.then(function (response) {
+				window.location.reload();
+
+	        })
+	        .catch(function (error) {
+	        	alert("usao u exaption!");
+	            alert(error.response.data);
+		});
+		},
 		odobri : function(ap){
 			axios.post('rest/reservation/odgovorDomacinaZaRezervacije', ap)
 			.then(function (response) {
@@ -372,6 +561,7 @@ Vue.component("prikazRezervacijaAdministrator", {
 	</div>
 	<div v-else>
 	<a href="#/reservation">Apartmani</a>
+	<a href="#/prikazRezervacijaGost">Moje rezervacije</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
@@ -411,15 +601,6 @@ Vue.component("prikazRezervacijaAdministrator", {
 					<td>{{ap.guest.surname}}</td>
 					<td>{{ap.status}}</td>
 					
-			
-				
-               <td> 
-               <tr>
-					<td><button type="button" v-on:click.prevent="prikazi(ap)">Odobri</button></td></tr>
-					<tr><td><button type="button" v-on:click.prevent="prikazi(ap)">Ponisti</button></td></tr>
-					<tr><td><button type="button" v-on:click.prevent="prikazi(ap)">Zavrsi</button></td>
-				</tr>
-				</td>
 					
                 </tr>
                 
@@ -529,6 +710,7 @@ Vue.component("pretragaRezervacijaDA", {
 	</div>
 	<div v-else>
 	<a href="#/reservation">Apartmani</a>
+	<a href="#/prikazRezervacijaGost">Moje rezervacije</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
@@ -653,6 +835,7 @@ Vue.component("prikazPretrageRezervacijaDA", {
 	</div>
 	<div v-else>
 	<a href="#/reservation">Apartmani</a>
+	<a href="#/prikazRezervacijaGost">Moje rezervacije</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>

@@ -65,6 +65,7 @@ Vue.component("prikazApartmanaZaGosta", {
 	</div>
 	<div v-else>
 	<a href="#/reservation">Apartmani</a>
+	<a href="#/prikazRezervacijaGost">Moje rezervacije</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>

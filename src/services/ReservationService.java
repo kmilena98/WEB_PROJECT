@@ -2,6 +2,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.annotation.PostConstruct;
@@ -122,6 +123,28 @@ public class ReservationService {
 	}
 	
 	@GET
+	@Path("/rezervacijeGost")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public ArrayList<Reservation> getReservationsForGest() {
+			System.out.println("Uslo u prikaz rezervacija za gosta");
+			User ulogovani = (User) request.getSession().getAttribute("ulogovani");
+			if(ulogovani == null) {
+				return null;
+			}	
+			ArrayList<Reservation> rez = new ArrayList<Reservation>();
+			Reservations rezervacije = (Reservations) ctx.getAttribute("reservations");
+			for(Reservation r : rezervacije.getReservations()) {
+				//System.out.println("Username " + r.getGuest().getUsername() + "username ulogovanog: " + ulogovani.getUsername());
+				if(r.getGuest().getUsername().equals(ulogovani.getUsername())) {
+					rez.add(r);
+				}
+			}
+			//System.out.println("Broj rezervacija koji je vracen je "+rez.size());
+			return rez;
+	}
+	
+	@GET
 	@Path("/rezervacijeAdministrator")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -163,27 +186,121 @@ public class ReservationService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response odgovorDomacina(Reservation r) {
-		System.out.println("Udjeeeeee");
 		User ulogovani = (User) request.getSession().getAttribute("ulogovani");
 		if(ulogovani == null) {
 			return null;
-		}		
+		}	
+		Users users = (Users) ctx.getAttribute("users");
+		String contextPath = ctx.getRealPath("");
+		
+		User us = (User)users.getUser(ulogovani.getUsername());
+		Guest g;
+		String usernameHosta= r.getApartment().getHost();
+		try {
+	      g = (Guest) users.getUser(ulogovani.getUsername());
+		}catch(Exception e) {
+		  g = new Guest(us.getUsername(),us.getPassword(),us.getName(),us.getSurname(),us.toEnumGender(us.getGender()),us.toEnumRole(us.getRole()));
+		 
+		}
+
 		
 		Reservations reservations = (Reservations) ctx.getAttribute("reservations");
 		for(Reservation res : reservations.getReservations()) {
 			if(res.getApartment().getId().equals(r.getApartment().getId()) && res.getBookingStartDate().equals(r.getBookingStartDate())) {
 				res.izmeniStatus("ACCEPTED");
+				//res.getGuest()
 				break;
 			}
 		}
-		String contextPath = ctx.getRealPath("");
+	
 		reservations.saveReservations(contextPath);
-		
-		ctx.setAttribute("reservations", reservations);
+		users.sacuvajKorisnike(contextPath);
+		//ctx.setAttribute("reservations", reservations);
 		
 		return Response.status(200).build();
 	}
+	
+	@POST
+	@Path("/odgovorDomacinaZaRezervacijeReject")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response odgovorDomacinaOdbijeno(Reservation r) {
+		User ulogovani = (User) request.getSession().getAttribute("ulogovani");
+		if(ulogovani == null) {
+			return null;
+		}	
+		Users users = (Users) ctx.getAttribute("users");
+		String contextPath = ctx.getRealPath("");
+		
+		User us = (User)users.getUser(ulogovani.getUsername());
+		Guest g;
+		String usernameHosta= r.getApartment().getHost();
+		try {
+	      g = (Guest) users.getUser(ulogovani.getUsername());
+		}catch(Exception e) {
+		  g = new Guest(us.getUsername(),us.getPassword(),us.getName(),us.getSurname(),us.toEnumGender(us.getGender()),us.toEnumRole(us.getRole()));
+		 
+		}
+
+		
+		Reservations reservations = (Reservations) ctx.getAttribute("reservations");
+		for(Reservation res : reservations.getReservations()) {
+			if(res.getApartment().getId().equals(r.getApartment().getId()) && res.getBookingStartDate().equals(r.getBookingStartDate())) {
+				res.izmeniStatus("REJECTED");
+				//res.getGuest()
+				break;
+			}
+		}
+	
+		reservations.saveReservations(contextPath);
+		users.sacuvajKorisnike(contextPath);
+		//ctx.setAttribute("reservations", reservations);
+		
+		return Response.status(200).build();
+	}
+	
+	
+	@POST
+	@Path("/odgovorGostaZaRezervacije")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response odgovorGosta(Reservation r) {
+		User ulogovani = (User) request.getSession().getAttribute("ulogovani");
+		if(ulogovani == null) {
+			return null;
+		}	
+		Users users = (Users) ctx.getAttribute("users");
+		String contextPath = ctx.getRealPath("");
+		
+		User us = (User)users.getUser(ulogovani.getUsername());
+		Guest g;
+		String usernameHosta= r.getApartment().getHost();
+		try {
+	      g = (Guest) users.getUser(ulogovani.getUsername());
+		}catch(Exception e) {
+		  g = new Guest(us.getUsername(),us.getPassword(),us.getName(),us.getSurname(),us.toEnumGender(us.getGender()),us.toEnumRole(us.getRole()));
+		 
+		}
+
+		
+		Reservations reservations = (Reservations) ctx.getAttribute("reservations");
+		for(Reservation res : reservations.getReservations()) {
+			if(res.getApartment().getId().equals(r.getApartment().getId()) && res.getBookingStartDate().equals(r.getBookingStartDate())) {
+				res.izmeniStatus("CANCELED");
+				//res.getGuest()
+				break;
+			}
+		}
+
+		reservations.saveReservations(contextPath);
+		users.sacuvajKorisnike(contextPath);
+		//ctx.setAttribute("reservations", reservations);
+		
+		return Response.status(200).build();
+	}
+	
 }
 	
-	
+
+
 

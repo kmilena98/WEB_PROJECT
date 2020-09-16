@@ -43,7 +43,7 @@
     "rentedApartments" : [ ],
     "bookingList" : [ ]
   },
-  "status" : "ACCEPTED"
+  "status" : "REJECTED"
 }, {
   "apartment" : {
     "id" : "44",

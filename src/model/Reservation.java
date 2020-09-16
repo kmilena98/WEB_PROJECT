@@ -86,9 +86,13 @@ public class Reservation {
 	}
 	
 	public void izmeniStatus(String status) {
-		System.out.println("Udje u imeni status");
-		this.status = Status.ACCEPTED;
-		System.out.println(this.status);
+		if(status.equals("ACCEPTED")) {
+			this.status = Status.ACCEPTED;
+		}else if(status.equals("CANCELED")){
+			this.status = Status.CANCELED;
+		}else if(status.equals("REJECTED")){
+			this.status = Status.REJECTED;
+		}
 	}
 	
 }
