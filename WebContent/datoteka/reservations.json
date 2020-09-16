@@ -20,10 +20,13 @@
     "checkinTime" : "10:07",
     "checkoutTime" : "12:04",
     "status" : "ACTIVE",
+    "obrisan" : false,
+    "coments" : [ ],
     "amenities" : [ {
       "id" : "3",
       "name" : "Lampa"
     } ],
+    "bookingList" : [ ],
     "host" : "h"
   },
   "bookingStartDate" : "2020-09-18",
@@ -40,7 +43,7 @@
     "rentedApartments" : [ ],
     "bookingList" : [ ]
   },
-  "status" : "CREATED"
+  "status" : "ACCEPTED"
 }, {
   "apartment" : {
     "id" : "44",
@@ -63,6 +66,8 @@
     "checkinTime" : "07:50",
     "checkoutTime" : "19:52",
     "status" : "ACTIVE",
+    "obrisan" : false,
+    "coments" : [ ],
     "amenities" : [ {
       "id" : "2",
       "name" : "Televizor"
@@ -70,6 +75,7 @@
       "id" : "15",
       "name" : "Ormar"
     } ],
+    "bookingList" : [ ],
     "host" : "m"
   },
   "bookingStartDate" : "2020-09-24",

@@ -157,6 +157,32 @@ public class ReservationService {
 				return reservations.pretraga(username);
 			}
 	}
+	
+	@POST
+	@Path("/odgovorDomacinaZaRezervacije")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response odgovorDomacina(Reservation r) {
+		System.out.println("Udjeeeeee");
+		User ulogovani = (User) request.getSession().getAttribute("ulogovani");
+		if(ulogovani == null) {
+			return null;
+		}		
+		
+		Reservations reservations = (Reservations) ctx.getAttribute("reservations");
+		for(Reservation res : reservations.getReservations()) {
+			if(res.getApartment().getId().equals(r.getApartment().getId()) && res.getBookingStartDate().equals(r.getBookingStartDate())) {
+				res.izmeniStatus("ACCEPTED");
+				break;
+			}
+		}
+		String contextPath = ctx.getRealPath("");
+		reservations.saveReservations(contextPath);
+		
+		ctx.setAttribute("reservations", reservations);
+		
+		return Response.status(200).build();
+	}
 }
 	
 	

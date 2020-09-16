@@ -131,8 +131,6 @@ Vue.component("reservation", {
 	},
 });
 
-
-
 Vue.component("prikazRezervacijaDomacin", {
 	data: function () {
 		    return {
@@ -145,8 +143,6 @@ Vue.component("prikazRezervacijaDomacin", {
             .get('rest/reservation/rezervacijeDomacin')
             .then(response =>{
 	        	this.reservations = response.data;
-	        	alert("Preuzeo "+this.reservations);
-	        	/*alert("Usao gde treba da udje!");*/
     	    })
 	        .catch(error => {
     	        alert("Doslo je do greske prilikom ucitavanja rezervacija");
@@ -161,6 +157,17 @@ Vue.component("prikazRezervacijaDomacin", {
 	    })
         .catch(error => {
 	        alert("Doslo je do greske prilikom ucitavanja korisnika");
+	        alert(error.response.data);
+	    })
+	},
+	computed(){
+		axios
+        .get('rest/reservation/rezervacijeDomacin')
+        .then(response =>{
+        	this.reservations = response.data;
+	    })
+        .catch(error => {
+	        alert("Doslo je do greske prilikom ucitavanja rezervacija");
 	        alert(error.response.data);
 	    })
 	},
@@ -204,8 +211,6 @@ Vue.component("prikazRezervacijaDomacin", {
 	</div>
 </div>
 
-
-
 		<button type="button" onclick="window.location.href='#/pretragaRezervacijaDA';" class="button" id="t01">Pretrazi</button>
 
 	  <form accept-charset="UTF-8">
@@ -213,18 +218,18 @@ Vue.component("prikazRezervacijaDomacin", {
                 <caption>Pregled rezervacija</caption>
                 
                 <tr>
-                <td></td>
-                <td>ID:</td>
-                <td>Pocetak rezervacije</td>
-                <td>Broj nocenja</td>
-                <td>Ukupna cena</td>
-                <td>Ime klijenta</td>
-                <td>Prezime klijenta</td>
-                <td>Status rezervacije</td>
+                	<td></td>
+                	<td>ID:</td>
+                	<td>Pocetak rezervacije</td>
+                	<td>Broj nocenja</td>
+                	<td>Ukupna cena</td>
+                	<td>Ime klijenta</td>
+                	<td>Prezime klijenta</td>
+                	<td>Status rezervacije</td>
               	</tr>
                  <tr v-for="ap in this.reservations">
-                  <div class="post-media">
-                                <a href="#"><img style="width:150px;height:100px;" v-bind:src="ap.apartment.image" alt="" class="img-responsive"></a>
+                  	<div class="post-media">
+                        <a href="#"><img style="width:150px;height:100px;" v-bind:src="ap.apartment.image" alt="" class="img-responsive"></a>
                    </div><!-- end media -->
                             
                 
@@ -233,36 +238,51 @@ Vue.component("prikazRezervacijaDomacin", {
 					<td>{{ap.numberOfNights}}</td>
 					<td>{{ap.totalPrice}}</td>
 					<td>{{ap.guest.name}}</td>
-					<td>{{ap.guest.name}}</td>
+					<td>{{ap.guest.surname}}</td>
 					<td>{{ap.status}}</td>
 					
 			
 				
                <td> 
-               <tr>
-					<td><button type="button" v-on:click.prevent="prikazi(ap)">Odobri</button></td></tr>
-					<tr><td><button type="button" v-on:click.prevent="prikazi(ap)">Ponisti</button></td></tr>
-					<tr><td><button type="button" v-on:click.prevent="prikazi(ap)">Zavrsi</button></td>
-				</tr>
+              
+               		<div v-if="ap.status ==='CREATED'">
+						<tr><td><button type="button" v-on:click.prevent="odobri(ap)">Odobri</button></td></tr>
+						<tr><td><button type="button" v-on:click.prevent="prikazi(ap)">Ponisti</button></td></tr>
+					</div>
+					<div v-else>
+						<tr><td><button type="button" v-on:click.prevent="prikazi(ap)">Ponisti</button></td></tr>
+						<tr><td><button type="button" v-on:click.prevent="prikazi(ap)">Zavrsi</button></td>
+					</div>
 				</td>
 					
-                </tr>
+      </tr>
                 
 						
-            </table>            
-        </form>
+    </table>            
+   </form>
 	
 	
 </div>		  
 `
 	, 
 	methods : {
+		odobri : function(ap){
+			axios.post('rest/reservation/odgovorDomacinaZaRezervacije', ap)
+			.then(function (response) {
+				window.location.reload();
+
+	        })
+	        .catch(function (error) {
+	        	alert("usao u exaption!");
+	            alert(error.response.data);
+		});
+		},
 		prikazi : function(a) {
 			/*alert("dosao"+id);*/
 		    axios.post('rest/apartmani/prikazApartmana',a)
 	    	
 	        .then(function (response) {
-				window.location.href = '#/prikazApartmana';
+				/*window.location.href = '#/prikazRezervacijaDomacin';*/
 
 	        })
 	        .catch(function (error) {
@@ -286,6 +306,7 @@ Vue.component("prikazRezervacijaDomacin", {
 		
 	},
 });
+
 
 Vue.component("prikazRezervacijaAdministrator", {
 	data: function () {

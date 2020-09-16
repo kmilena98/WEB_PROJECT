@@ -85,4 +85,10 @@ public class Reservation {
 		this.status = status;
 	}
 	
+	public void izmeniStatus(String status) {
+		System.out.println("Udje u imeni status");
+		this.status = Status.ACCEPTED;
+		System.out.println(this.status);
+	}
+	
 }
