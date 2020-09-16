@@ -157,13 +157,11 @@ public class Apartments {
 	}
 	
 	public void add(Apartment a) {
-		//if(!apartments.containsKey(a.getId()))
-		if(true)
-			apartments.put(a.getId(), a);
-		else {
-			//if(apartments.get(a.getId()).isObrisan())
-			apartments.replace(a.getId(), a);
-		}
+		apartments.put(a.getId(), a);
+		saveApartments(putanja);
+	}
+	public void obrisi(Apartment a) {
+		apartments.get(a.getId()).setObrisan(true);
 		saveApartments(putanja);
 	}
 

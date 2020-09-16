@@ -24,23 +24,12 @@ public class Apartment {
 	private String checkinTime;
 	private String checkoutTime;
 	private StatusApartmana status;
-	//private ArrayList<Comment> coments;
+	private boolean obrisan=false;
+	private ArrayList<Comment> coments = new ArrayList<Comment>();
 	private ArrayList<Amenities> amenities = new ArrayList<Amenities>();
-//	private ArrayList<Reservation> bookingList;
+	private ArrayList<Reservation> bookingList = new ArrayList<Reservation>();
 	
 	public Apartment() {
-//		id = "";
-//		roomNumber = 0;
-//		guestNumber = 0;
-//		location = "";
-//		dateOfRentingStart = "";
-//		dateOfRentingEnd = "";
-//		hostName = "";
-//		image = "";
-//		pracePerNight = 0;
-//		checkinTime = "";
-//		checkoutTime = "";
-//		status = false;
 	}
 	
 	public Apartment(String id, RoomType roomType, int roomNumber, int guestNumber, Location location, String hostName, String image, int pracePerNight, String checkinTime, String checkoutTime,
@@ -70,6 +59,14 @@ public class Apartment {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+	
+	public boolean getObrisan() {
+		return obrisan;
+	}
+
+	public void setObrisan(boolean ob) {
+		this.obrisan = ob;
 	}
 	
 
@@ -184,7 +181,7 @@ public class Apartment {
 		this.amenities = amenities;
 	}
 
-	/*public ArrayList<Comment> getComents() {
+	public ArrayList<Comment> getComents() {
 		return coments;
 	}
 
@@ -200,6 +197,6 @@ public class Apartment {
 
 	public void setBookingList(ArrayList<Reservation> bookingList) {
 		this.bookingList = bookingList;
-	}*/
+	}
 	
 }

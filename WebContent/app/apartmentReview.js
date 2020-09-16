@@ -163,6 +163,10 @@ Vue.component("prikazApartmana", {
 		<div v-if="this.user.role==='GUEST'">
 		<button type="button" onclick="window.location.href='#/izmenaApartmana';" class="button" id="t01">Rezervisi</button>
 		</div>
+		<div v-else-if="this.user.role==='ADMINISTRATOR'">
+		<button type="button" onclick="window.location.href='#/izmenaApartmana';" class="button" id="t01">Izmeni</button>
+		<button type="button" 	v-on:click.prevent="obrisi" class="button" id="t01">Obrisi</button>
+		</div>
 		<div v-else>
 		<button type="button" onclick="window.location.href='#/izmenaApartmana';" class="button" id="t01">Izmeni</button>
 		</div>
@@ -285,6 +289,19 @@ Vue.component("prikazApartmana", {
 	    	
 	        .then(function (response) {
 				window.location.href = '#/';
+
+	        })
+	        .catch(function (error) {
+	        	alert("usao u exaption!");
+	            alert(error.response.data);
+		});
+		},
+		obrisi : function() {
+			alert("dosao");
+		    axios.post('rest/apartmani/obrisi',this.apartman)
+	    	
+	        .then(function (response) {
+				window.location.href = '#/ar';
 
 	        })
 	        .catch(function (error) {

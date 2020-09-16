@@ -64,7 +64,12 @@ public class ApartmentService {
 			return null;
 		}		
 		Apartments apartmani = (Apartments) ctx.getAttribute("apartments");
-		return apartmani.getApartments();
+		HashMap<String, Apartment> postojeciApartmani = new HashMap<String, Apartment>();
+		for(Entry<String, Apartment> a:apartmani.getApartments().entrySet()) {
+			if(!a.getValue().getObrisan())
+			postojeciApartmani.put(a.getKey(),a.getValue());
+		}
+		return postojeciApartmani;
 	}
 	
 	@GET
@@ -79,7 +84,7 @@ public class ApartmentService {
 		HashMap<String,Apartment> aktivniApartmani = new HashMap<String,Apartment>();
 		Apartments apartmani = (Apartments) ctx.getAttribute("apartments");
 		for(Entry<String, Apartment> a : apartmani.getApartments().entrySet() ) {
-			if(a.getValue().getStatus().equals("ACTIVE")) {
+			if(a.getValue().getStatus().equals("ACTIVE")&&!a.getValue().getObrisan()) {
 				aktivniApartmani.put(a.getKey(),a.getValue());
 			}else {
 			}
@@ -99,7 +104,7 @@ public class ApartmentService {
 		HashMap<String,Apartment> neaktivniApartmani = new HashMap<String,Apartment>();
 		Apartments apartmani = (Apartments) ctx.getAttribute("apartments");
 		for(Entry<String, Apartment> a : apartmani.getApartments().entrySet() ) {
-			if(a.getValue().getStatus().toString().equals("INACTIVE")) {
+			if(a.getValue().getStatus().toString().equals("INACTIVE")&& !a.getValue().getObrisan()) {
 				neaktivniApartmani.put(a.getKey(),a.getValue());
 			}
 		}
@@ -119,14 +124,22 @@ public class ApartmentService {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public ArrayList<Apartment> prikazApartmanaZaDomacina() {
+		Apartments postojeciApartmani = (Apartments) ctx.getAttribute("apartments");
 		Host h = new Host();
 		try {
 			h = (Host)request.getSession().getAttribute("ulogovani");
 		}catch(Exception e) {
 			
+		} 
+		ArrayList<Apartment> ap = new ArrayList<Apartment>();
+		for(Apartment a : h.getApartmentsForRent()) {
+			for(Entry<String, Apartment> pa : postojeciApartmani.getApartments().entrySet()) {
+				if(pa.getValue().getId().equals(a.getId())&& !pa.getValue().getObrisan()) {
+					ap.add(a);
+				}
+			}
 		}
-
-		return h.getApartmentsForRent(); 
+		return ap; 
 	}
 	
 	
@@ -190,6 +203,20 @@ public class ApartmentService {
 			return Response.status(400).entity("Apartman sa id koji ste unijeli vec postoji.").build();
 		}
 	}
+	
+	
+	@POST
+	@Path("/obrisi")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response obrisiApartman(Apartment a) {
+		String contextPath = ctx.getRealPath("");
+		System.out.println("Usao u obrisi");
+		Apartments apartments = (Apartments) ctx.getAttribute("apartments");
+		apartments.obrisi(a);
+		ctx.setAttribute("apartments", apartments);
+		return Response.status(200).build();
+	}
 
 
 @POST
@@ -217,10 +244,7 @@ public Response editApartman(Apartment a) {
 		return Response.status(400).entity("Apartman sa id koji ste unijeline postoji!").build();
 	}
 	else {
-		//Host h = users.getHost(kor.getUsername());
-		
-		//Host h = (Host)us;
-		//Host us= host(kor.getUsername());
+	
 		User us = (User)users.getUser(a.getHost());
 		Host h;
 		try {
