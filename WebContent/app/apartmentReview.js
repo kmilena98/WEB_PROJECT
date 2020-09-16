@@ -44,7 +44,7 @@ Vue.component("ar", {
 	<a href="#/prikazRezervacijaDomacin">Rezervacije korisnika</a>
 	<a href="#/aa">Dodavanje apartmana</a>
 	<div class="topnav-right">
-		<a href="#/pr">Moj profil</a>
+		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
 	</div>
 	</div>
@@ -179,7 +179,7 @@ Vue.component("prikazApartmana", {
 	<a href="#/prikazRezervacijaDomacin">Rezervacije korisnika</a>
 	<a href="#/aa">Dodavanje apartmana</a>
 	<div class="topnav-right">
-		<a href="#/pr">Moj profil</a>
+		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
 	</div>
 	</div>
@@ -457,7 +457,7 @@ Vue.component("izmenaApartmana", {
 	<a href="#/prikazRezervacijaDomacin">Rezervacije korisnika</a>
 	<a href="#/aa">Dodavanje apartmana</a>
 	<div class="topnav-right">
-		<a href="#/pr">Moj profil</a>
+		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
 	</div>
 	</div>
@@ -929,7 +929,7 @@ Vue.component("prikazApartmanaZaDomacina", {
 	<a href="#/prikazRezervacijaDomacin">Rezervacije korisnika</a>
 	<a href="#/aa">Dodavanje apartmana</a>
 	<div class="topnav-right">
-		<a href="#/pr">Moj profil</a>
+		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
 	</div>
 	</div>
@@ -1049,7 +1049,7 @@ Vue.component("us", {
 	<a href="#/prikazRezervacijaDomacin">Rezervacije korisnika</a>
 	<a href="#/aa">Dodavanje apartmana</a>
 	<div class="topnav-right">
-		<a href="#/pr">Moj profil</a>
+		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
 	</div>
 	</div>
@@ -1205,7 +1205,7 @@ Vue.component("ush", {
 	<a href="#/prikazRezervacijaDomacin">Rezervacije korisnika</a>
 	<a href="#/aa">Dodavanje apartmana</a>
 	<div class="topnav-right">
-		<a href="#/pr">Moj profil</a>
+		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
 	</div>
 	</div>

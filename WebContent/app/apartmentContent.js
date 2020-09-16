@@ -43,7 +43,7 @@ Vue.component("sadrzajApartmanaPrikaz", {
 	<a href="#/prikazRezervacijaDomacin">Rezervacije korisnika</a>
 	<a href="#/aa">Dodavanje apartmana</a>
 	<div class="topnav-right">
-		<a href="#/pr">Moj profil</a>
+		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
 	</div>
 	</div>
@@ -166,7 +166,7 @@ Vue.component("dodajsadrzajApartmana", {
 	<a href="#/prikazRezervacijaDomacin">Rezervacije korisnika</a>
 	<a href="#/aa">Dodavanje apartmana</a>
 	<div class="topnav-right">
-		<a href="#/pr">Moj profil</a>
+		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
 	</div>
 	</div>

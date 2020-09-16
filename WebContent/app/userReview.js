@@ -32,14 +32,14 @@ Vue.component("pk", {
 		<p>Izaberite svoju najbolju ponudu iz snova!</p>
 	</div>
 
-<<div class="topnav">
+<div class="topnav">
 	<div v-if="user.role==='HOST'" >
 	<a href="#/prikazApartmanaDomacin">Apartmani</a>
 	<a href="#/pk">Korisnici</a>
 	<a href="#/prikazRezervacijaDomacin">Rezervacije korisnika</a>
 	<a href="#/aa">Dodavanje apartmana</a>
 	<div class="topnav-right">
-		<a href="#/pr">Moj profil</a>
+		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
 	</div>
 	</div>
@@ -134,7 +134,7 @@ Vue.component("us", {
 	<a href="#/prikazRezervacijaDomacin">Rezervacije korisnika</a>
 	<a href="#/aa">Dodavanje apartmana</a>
 	<div class="topnav-right">
-		<a href="#/pr">Moj profil</a>
+		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
 	</div>
 	</div>
@@ -293,7 +293,7 @@ Vue.component("ush", {
 	<a href="#/prikazRezervacijaDomacin">Rezervacije korisnika</a>
 	<a href="#/aa">Dodavanje apartmana</a>
 	<div class="topnav-right">
-		<a href="#/pr">Moj profil</a>
+		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
 	</div>
 	</div>
