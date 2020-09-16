@@ -105,7 +105,6 @@ Vue.component("reservation", {
 	, 
 	methods : {
 		prikazi : function(a) {
-			/*alert("dosao"+id);*/
 		    axios.post('rest/apartmani/prikazApartmana',a)
 	        .then(function (response) {
 				window.location.href = '#/prikazApartmanaZaGosta';
@@ -331,7 +330,6 @@ Vue.component("prikazRezervacijaGost", {
         axios
             .get('rest/reservation/rezervacijeGost')
             .then(response =>{
-            	alert("Uslo uspesno");
 	        	this.reservations = response.data;
     	    })
 	        .catch(error => {
@@ -343,7 +341,6 @@ Vue.component("prikazRezervacijaGost", {
         .then(response =>{
         	this.user = response.data;
         	
-        	/*alert("Usao gde treba da udje!");*/
 	    })
         .catch(error => {
 	        alert("Doslo je do greske prilikom ucitavanja korisnika");

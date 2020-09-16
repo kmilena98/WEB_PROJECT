@@ -61,7 +61,7 @@ public class ReservationService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response dodajRezervaciju(Reservation r) {
-		//ctx.setAttribute("izabrani", r);
+		
 		System.out.println("Zahtev je dosao do backa!");
 
 		User kor = (User) request.getSession().getAttribute("ulogovani");
@@ -76,29 +76,38 @@ public class ReservationService {
 		ArrayList<Reservation> mapaRezervacija = reservations.getReservations();
 		Users users = (Users) ctx.getAttribute("users");
 		String contextPath = ctx.getRealPath("");
-		
-			//Host h = users.getHost(kor.getUsername());
-			
-			//Host h = (Host)us;
-			//Host us= host(kor.getUsername());
-			User us = (User)users.getUser(kor.getUsername());
-			Guest g;
-			String usernameHosta= r.getApartment().getHost();
-			try {
-		      g = (Guest) users.getUser(kor.getUsername());
-			}catch(Exception e) {
-			  g = new Guest(us.getUsername(),us.getPassword(),us.getName(),us.getSurname(),us.toEnumGender(us.getGender()),us.toEnumRole(us.getRole()));
-			 
+		boolean prosao = false;
+		for(Reservation res : reservations.getReservations()) {
+			if(res.getApartment().getId().equals(r.getApartment().getId()) && res.getBookingStartDate().equals(r.getBookingStartDate()) && res.getStatus().equals("ACCEPTED")){
+				prosao = true;
+				break;
 			}
+		}
+			if(!prosao) {
+				System.out.println("Usao je u if");
+					User us = (User)users.getUser(kor.getUsername());
+					Guest g;
+					String usernameHosta= r.getApartment().getHost();
+					try {
+						g = (Guest) users.getUser(kor.getUsername());
+					}catch(Exception e) {
+						g = new Guest(us.getUsername(),us.getPassword(),us.getName(),us.getSurname(),us.toEnumGender(us.getGender()),us.toEnumRole(us.getRole()));
+			 
+					}
 			
-			g.addReservation(r);
-			reservations.add(r);
+					g.addReservation(r);
+					reservations.add(r);
 			
-			users.getUsers().remove(g.getUsername());
-			users.dodaj(g);
-			users.sacuvajKorisnike(contextPath);
-			reservations.saveReservations(contextPath);
-			return Response.status(200).build();
+					users.getUsers().remove(g.getUsername());
+					users.dodaj(g);
+					users.sacuvajKorisnike(contextPath);
+					reservations.saveReservations(contextPath);
+					return Response.status(200).build();
+				
+			}else {
+				System.out.println("Usao je u else");
+				return Response.status(400).entity("Apartman koji zelite da rezervisete u tom periodu je zauzet.").build();
+			}
 		
 	}
 	@GET

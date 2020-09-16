@@ -78,9 +78,22 @@ public class Reservation {
 	public void setGuest(Guest guest) {
 		this.guest = guest;
 	}
-	public Status getStatus() {
-		return status;
+	public String getStatus() {
+		if(status.toString().equals("CREATED"))
+			return "CREATED";
+		else if(status.toString().equals("REJECTED"))
+			return "REJECTED";
+		else if(status.toString().equals("CANCELED"))
+			return "CANCELED";
+		else if(status.toString().equals("ACCEPTED"))
+			return "ACCEPTED";
+		else if(status.toString().equals("COMPLETED"))
+			return "COMPLETED";
+		else
+			return "";
 	}
+	
+	
 	public void setStatus(Status status) {
 		this.status = status;
 	}

@@ -2,6 +2,7 @@ Vue.component("prikazApartmanaZaGosta", {
 	data: function () {
 		    return {
 		      apartman: null,
+		      rezervacija: null,
 		      user:null,
 		      pocetniDatumRezervacije:null,
 		      brojNocenja:null,
@@ -268,7 +269,7 @@ Vue.component("prikazApartmanaZaGosta", {
                     'status' : "CREATED",
                     
                 };
-			alert("Dosao do slanja zahteva");
+			/*alert("Dosao do slanja zahteva");*/
 	            axios.post('rest/reservation/addReservation',rezervacija)
                 .then(function (response) {
                 	alert("Uspesno ste izvrsili rezervaciju.");
