@@ -11,6 +11,7 @@ Vue.component("prikazApartmanaZaGosta", {
 		    }
 	},
 	mounted(){
+		this.brojNocenja=1;
         axios
             .get('rest/apartmani/prikaz')
             .then(response =>{
@@ -199,14 +200,15 @@ Vue.component("prikazApartmanaZaGosta", {
                             			<td><input type="date" id="start" name="trip-start"
     										value="2018-07-22"
     										min="2018-01-01" max="2040-12-31" v-model="pocetniDatumRezervacije" style="width:208px;height:25px;"/></td>
+    										<p class="message4" style="color:red;font-size:12px">{{validacijaDatuma}}</p>
     								</tr>
 				 					
                            
 									<tr>
 										<td>&nbsp;</td>
                                 		<td align="left">Broj nocenja :</td>
-										 <td align="left"><input type="number" step="1" id="cijenaMin" name="cijenaMax" v-model="brojNocenja" style="width:210px;height:23px;"/></td>
-                                              
+										 <td align="left"><input type="number"  v-model="brojNocenja"  value="1"/></td>
+                                      	 <p class="message4" style="color:red;font-size:12px">{{validacijaNocenja}}</p>
 									</tr>
 									<tr>
 								
@@ -215,7 +217,6 @@ Vue.component("prikazApartmanaZaGosta", {
 										<td>&nbsp;</td>
 										<td align="left">Poruka :</td>
 										<td align="left"><input  v-model="poruka" style="width:208px;height:25px;"/></td>
-										
                             		</tr>
                             		<tr>
                             			<td>&nbsp;</td>
@@ -236,6 +237,18 @@ Vue.component("prikazApartmanaZaGosta", {
 </div>		  
 `
 	,
+	computed:{
+		validacijaDatuma: function(){
+			if(this.pocetniDatumRezervacije === '') return 'Niste uneli pocetni datum rezervacije.';
+			else return null;
+		},
+		validacijaNocenja: function(){
+			if(this.brojNocenja === '') return 'Niste uneli pocetni broj nocenja.';
+			else return null;
+		},
+		
+		
+	},
 	methods : {
 		prikazi : function(id) {
 			/*alert("dosao"+id);*/
@@ -251,16 +264,9 @@ Vue.component("prikazApartmanaZaGosta", {
 		});
 		},
 		rezervisi : function(){
-			alert("REZERVACIJA");
+			if(this.brojNocenja>="1" && this.pocetniDatumRezervacije){
 			this.ukupnaCena = this.brojNocenja*this.apartman.pracePerNight;
-			alert("REZERVACIJA");
-			
-			var u={
-					
-					
-					
-					
-			}
+		
 			var rezervacija = {
                 	'apartment' : this.apartman,
                 	'bookingStartDate':this.pocetniDatumRezervacije,
@@ -282,7 +288,9 @@ Vue.component("prikazApartmanaZaGosta", {
                     alert(error.response.data);
                 });
 			
-			
+			}else{
+				alert("Niste uneli sve neophodne podatke!");
+			}
 		},
 		logout : function() {
 	    axios.post('rest/registracija/logout')
