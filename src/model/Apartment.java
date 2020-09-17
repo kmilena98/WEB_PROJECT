@@ -214,4 +214,8 @@ public class Apartment {
 		}
 	}
 	
+	public void dodajKomentar(Comment comment) {
+		coments.add(comment);
+	}
+	
 }

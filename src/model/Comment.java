@@ -6,16 +6,17 @@ public class Comment {
 	private String apartmentId;
 	private String text;
 	private int grade;
-	//private boolean dopusti;
-	
+	private boolean dopusti;
+
 	public Comment() {}
 	
-	public Comment(Guest guest, String apartmentId, String text, int grade) {
+	public Comment(Guest guest, String apartmentId, String text, int grade, boolean dopusti) {
 		super();
 		this.guest = guest;
 		this.apartmentId = apartmentId;
 		this.text = text;
 		this.grade = grade;
+		this.dopusti = dopusti;
 		
 	}
 	public Guest getGuest() {
@@ -43,13 +44,13 @@ public class Comment {
 		this.grade = grade;
 	}
 
-	/*public boolean isDopusti() {
+	public boolean isDopusti() {
 		return dopusti;
 	}
 
 	public void setDopusti(boolean dopusti) {
 		this.dopusti = dopusti;
-	}*/
+	}
 	
 	
 }

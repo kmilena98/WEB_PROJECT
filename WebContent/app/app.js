@@ -30,6 +30,7 @@ const DodajSadrzajApartmana = { template: '<dodajsadrzajApartmana></dodajsadrzaj
 const WriteComment = { template: '<writeComment></writeComment>'}
 const ShowComment = { template: '<showComment></showComment>'}
 const ShowAllComment = { template: '<showAllComment></showAllComment>'}
+const ShowCommentForGuest = { template: '<showCommentForGuest></showCommentForGuest>'}
 const router = new VueRouter({
 	  mode: 'hash',
 	  routes: [
@@ -64,7 +65,8 @@ const router = new VueRouter({
 	    { path: '/ush', component: UsersShow },
 	    { path: '/writeComment', component: WriteComment },
 	    { path: '/showComment', component: ShowComment },
-	    { path: '/showAllComment', component: ShowAllComment }
+	    { path: '/showAllComment', component: ShowAllComment },
+	    { path: '/showCommentForGuest', component: ShowCommentForGuest }
 	  ]
 });
 

@@ -189,7 +189,7 @@ public class ApartmentService {
 				}
 			
 		}
-			System.out.println("Svi komentari " + komentari.size());
+			//System.out.println("Svi komentari " + komentari.size());
 		return komentari; 
 	}
 	
@@ -270,104 +270,129 @@ public class ApartmentService {
 	}
 
 
-@POST
-@Path("/edit")
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
-public Response editApartman(Apartment a) {
-	ctx.setAttribute("izabraniApartman", a);
-	User ulogovani = (User) request.getSession().getAttribute("ulogovani");
-	if(ulogovani == null /*|| !ulogovani.getRole().equals("HOST")*/) {
-		return Response.status(400).entity("Samo domacini mogu dodavati apartmane").build();
-	}
-//	if(a.getRoomType().equals("") || a.getLocation().equals("") || a.getDateOfRentingStart().equals("") || a.getDateOfRentingEnd().equals("") 
-//			|| a.getImage().equals("")/* || a.getPracePerNight().equals("")*/) {
-//		return Response.status(400).entity("Niste unijeli sva obavezna polja.").build();
-//	}
+	@POST
+	@Path("/edit")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response editApartman(Apartment a) {
+		ctx.setAttribute("izabraniApartman", a);
+		User ulogovani = (User) request.getSession().getAttribute("ulogovani");
+		if(ulogovani == null /*|| !ulogovani.getRole().equals("HOST")*/) {
+			return Response.status(400).entity("Samo domacini mogu dodavati apartmane").build();
+		}
+//		if(a.getRoomType().equals("") || a.getLocation().equals("") || a.getDateOfRentingStart().equals("") || a.getDateOfRentingEnd().equals("") 
+//				|| a.getImage().equals("")/* || a.getPracePerNight().equals("")*/) {
+//			return Response.status(400).entity("Niste unijeli sva obavezna polja.").build();
+//		}
 		
-	Apartments apartments = (Apartments) ctx.getAttribute("apartments");
-	HashMap<String, Apartment> mapaApartments = apartments.getApartments();
-	//Kategorije kategorije = (Kategorije) ctx.getAttribute("kategorije");
-	Users users = (Users) ctx.getAttribute("users");
-	String contextPath = ctx.getRealPath("");
-	User kor = (User) request.getSession().getAttribute("ulogovani");
-	if(!mapaApartments.containsKey(a.getId())) {
-		return Response.status(400).entity("Apartman sa id koji ste unijeline postoji!").build();
-	}
-	else {
+		Apartments apartments = (Apartments) ctx.getAttribute("apartments");
+		HashMap<String, Apartment> mapaApartments = apartments.getApartments();
+
+		Users users = (Users) ctx.getAttribute("users");
+		String contextPath = ctx.getRealPath("");
+		User kor = (User) request.getSession().getAttribute("ulogovani");
+		if(!mapaApartments.containsKey(a.getId())) {
+			return Response.status(400).entity("Apartman sa id koji ste unijeline postoji!").build();
+		}
+		else {
 	
-		User us = (User)users.getUser(a.getHost());
-		Host h;
-		try {
-	      h = (Host) users.getUser(a.getHost());
-		}catch(Exception e) {
-		  h = new Host(us.getUsername(),us.getPassword(),us.getName(),us.getSurname(),us.toEnumGender(us.getGender()),us.toEnumRole(us.getRole()));
-		}	
-		apartments.add(a);
-		h.removeApartment(a);
-		h.addAppartment(a);
+			User us = (User)users.getUser(a.getHost());
+			Host h;
+			try {
+				h = (Host) users.getUser(a.getHost());
+			}catch(Exception e) {
+				h = new Host(us.getUsername(),us.getPassword(),us.getName(),us.getSurname(),us.toEnumGender(us.getGender()),us.toEnumRole(us.getRole()));
+			}	
+			apartments.add(a);
+			h.removeApartment(a);
+			h.addAppartment(a);
 		
-		User user = users.getUser(h.getUsername());
-		users.getUsers().remove(user.getUsername());
-		users.dodaj(h);
-		users.sacuvajKorisnike(contextPath);
+			User user = users.getUser(h.getUsername());
+			users.getUsers().remove(user.getUsername());
+			users.dodaj(h);
+			users.sacuvajKorisnike(contextPath);
+			apartments.saveApartments(contextPath);
+			return Response.status(200).build();
+		}
+	}
+
+	/*Komentari*/
+
+	@POST
+	@Path("/sendComment")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response posaljiPoruku(Comment comment) {
+		User ulogovani = (User) request.getSession().getAttribute("ulogovani");
+		if(ulogovani == null)
+			return Response.status(400).entity("Morate biti prijavljeni").build();
+		/*if(comment.getText().equals("") || Integer.parseInt(comment.getGrade())==0) {
+			return Response.status(400).entity("Niste popunili sva obavezna polja.").build();
+		}*/
+	
+		/*DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Date date = new Date();
+		String datum = dateFormat.format(date);
+		poruka.setDatum(datum);*/
+		Apartments apartments = (Apartments)ctx.getAttribute("apartments");
+	
+		Apartment ap = apartments.getApartment(comment.getApartmentId());
+	
+		ap.dodajKomentar(comment);
+	
+		String contextPath = ctx.getRealPath("");
 		apartments.saveApartments(contextPath);
 		return Response.status(200).build();
+	
 	}
-}
 
-/*Komentari*/
-
-@POST
-@Path("/sendComment")
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
-public Response posaljiPoruku(Comment comment) {
-	User ulogovani = (User) request.getSession().getAttribute("ulogovani");
-	if(ulogovani == null)
-		return Response.status(400).entity("Morate biti prijavljeni").build();
-	/*if(comment.getText().equals("") || Integer.parseInt(comment.getGrade())==0) {
-		return Response.status(400).entity("Niste popunili sva obavezna polja.").build();
-	}*/
+	@POST
+	@Path("/dopusti")
+	@Produces(MediaType.APPLICATION_JSON)
+	public void dopusti(Comment comment) {
 	
-	/*DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-	Date date = new Date();
-	String datum = dateFormat.format(date);
-	poruka.setDatum(datum);*/
-	Apartments apartments = (Apartments)ctx.getAttribute("apartments");
-	/*Users korisnici = (Users) ctx.getAttribute("korisnici");
-	Korisnik posiljalac = korisnici.getKorisnika(poruka.getPosiljalac());
-	Korisnik primalac = korisnici.getKorisnika(poruka.getPrimalac());*/
-
-	/*int idPrim = primalac.getPoruke().size();
-	int idPos = posiljalac.getPoruke().size();*/
-	Apartment ap = apartments.getApartment(comment.getApartmentId());
-	/*poruka.setId(idPrim);
-	poruka.setPar(idPos);
-	primalac.getPoruke().add(poruka);*/
-	ap.getComents().add(comment);
-
-	/*Poruka poruka2 = new Poruka(poruka.getNazivOglasa(), poruka.getPosiljalac(), poruka.getNaslov(), poruka.getSadrzaj(), poruka.getDatum(), poruka.getPrimalac());
-	poruka2.setId(idPos);
-	poruka2.setPar(idPrim);
-	posiljalac.getPoruke().add(poruka2);*/
+		Apartments apartments = (Apartments)ctx.getAttribute("apartments");
+		for(Map.Entry<String, Apartment> a : apartments.getApartments().entrySet()) {
+			for(Comment c : a.getValue().getComents()) {
+				if(comment.getApartmentId().equals(c.getApartmentId()) && comment.getGuest().getUsername().equals(c.getGuest().getUsername()) && 
+						comment.getGrade() == c.getGrade() && comment.getText().equals(c.getText())) {
+					if(c.isDopusti()) {
+						c.setDopusti(false);
+					}else {
+						c.setDopusti(true);
+					}
+				
+				}
+			}
+		}	
+		String contextPath = ctx.getRealPath("");
+		apartments.saveApartments(contextPath);
+	}
 	
-	String contextPath = ctx.getRealPath("");
-	apartments.saveApartments(contextPath);
-	return Response.status(200).build();
-	
-}
-
-/*@GET
-@Path("/korisnici")
-@Produces(MediaType.APPLICATION_JSON)
-public HashMap<String, User> getKorisnici() {
-	User ulogovani = (User) request.getSession().getAttribute("ulogovani");
-	if(ulogovani == null) {
-		return null;
-	}		
-	Users users = (Users) ctx.getAttribute("users");
-	return users.getUsers();
-}*/
-
+	@GET
+	@Path("/svihKomentaraZaGosta")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public ArrayList<Comment> sviKomentariZaGosta() {
+		System.out.println("Usao ovde!");
+		Apartments postojeciApartmani = (Apartments) ctx.getAttribute("apartments");
+		User u = (User)request.getSession().getAttribute("ulogovani");
+		
+		 
+		ArrayList<Comment> komentari = new ArrayList<Comment>();
+		
+			for(Entry<String, Apartment> pa : postojeciApartmani.getApartments().entrySet()) {
+				if(!pa.getValue().getObrisan()) {
+					System.out.println("Usao ovde");
+					for(Comment c: pa.getValue().getComents()) {
+						if(c.isDopusti()) {
+							komentari.add(c);
+						}
+					}
+				}
+			
+		}
+			//System.out.println("Svi komentari " + komentari.size());
+		return komentari; 
+	}
 }
