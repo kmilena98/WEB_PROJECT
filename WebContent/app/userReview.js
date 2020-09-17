@@ -2,6 +2,7 @@ Vue.component("pk", {
 	data: function () {
 		    return {
 		      users: null,
+		      usersH: null,
 		      user:null
 		    }
 	},
@@ -14,6 +15,14 @@ Vue.component("pk", {
 	        .catch(error => {
     	        alert("Doslo je do greske prilikom ucitavanja korisnika");
     	    });
+        axios
+        .get('rest/registracija/korisniciZaDomacina')
+        .then(response =>{
+        	this.usersH = response.data;
+	    })
+        .catch(error => {
+	        alert("Doslo je do greske prilikom ucitavanja korisnika");
+	    });
         axios
         .get('rest/registracija/ulogovani')
         .then(response =>{
@@ -68,6 +77,7 @@ Vue.component("pk", {
 		<button type="button" onclick="window.location.href='#/us';" type="button" class="button" id="t01">Pretrazi</button>
 
 	  <form accept-charset="UTF-8">
+	  <div v-if="user.role==='ADMINISTRATOR'" >
             <table class="t" id="tabela" style="width:80%">
                 <caption>Pregled korisnika</caption>
                 <tr>
@@ -86,7 +96,29 @@ Vue.component("pk", {
                 <td>{{u.gender}}</td>
                 </tr>
 						
-            </table>            
+            </table>   
+          </div>       
+          <div v-else>
+          		<table class="t" id="tabela" style="width:80%">
+                <caption>Pregled korisnika</caption>
+                <tr>
+                    <td>Korisnicko ime</td>
+                 	<td align="right">Ime</td>                    
+                     <td align="right">Prezime</td>
+                     <td align="right">Uloga</td>
+                     <td align="right">Pol</td>
+                </tr>
+                
+                <tr v-for="u in usersH">
+                <td>{{u.username}}</td>
+                <td>{{u.name}}</td>
+                <td>{{u.surname}}</td>
+                <td>{{u.role}}</td>
+                <td>{{u.gender}}</td>
+                </tr>
+						
+            </table>   
+          </div>    
         </form>
 	
 	

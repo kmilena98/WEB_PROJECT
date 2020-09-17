@@ -1,7 +1,9 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
@@ -16,6 +18,10 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import model.Apartment;
+import model.Apartments;
+import model.Reservation;
+import model.Reservations;
 import model.User;
 import model.Users;
 
@@ -37,6 +43,14 @@ public class Registration {
 			if (ctx.getAttribute("users") == null) {
 		    	String contextPath = ctx.getRealPath("");
 				ctx.setAttribute("users", new Users(contextPath));
+			}
+			if (ctx.getAttribute("apartments") == null) {
+		    	String contextPath = ctx.getRealPath("");
+				ctx.setAttribute("apartments", new Apartments(contextPath));
+			}
+			if (ctx.getAttribute("reservations") == null) {
+		    	String contextPath = ctx.getRealPath("");
+				ctx.setAttribute("reservations", new Reservations(contextPath));
 			}
 		}
 		
@@ -88,6 +102,48 @@ public class Registration {
 			return users.getUsers();
 		}
 		
+		/*@GET
+		@Path("/korisniciZaDomacina")
+		@Produces(MediaType.APPLICATION_JSON)
+		public HashMap<String, User> getKorisniciZaDomacina() {
+			User ulogovani = (User) request.getSession().getAttribute("ulogovani");
+			if(ulogovani == null) {
+				return null;
+			}		
+			Users users = (Users) ctx.getAttribute("users");
+			HashMap<String, User> korisnici = new HashMap<String, User>();
+			for(Map.Entry<String, User> kor : users.getUsers().entrySet()) {
+				if(kor.)
+			}
+			return users.getUsers();
+		}*/
+		
+		@GET
+		@Path("/korisniciZaDomacina")
+		@Produces(MediaType.APPLICATION_JSON)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public ArrayList<User> prikazApartmanaZaDomacina() {
+			System.out.println("Usao ovde!");
+			Apartments postojeciApartmani = (Apartments) ctx.getAttribute("apartments");
+			User u = (User)request.getSession().getAttribute("ulogovani");
+			Reservations reservations = (Reservations) ctx.getAttribute("reservations");
+			ArrayList<User> korisnici = new ArrayList<User>();
+			HashMap<String, Apartment> ap = new HashMap<String, Apartment>();
+			
+			for(Entry<String, Apartment> pa : postojeciApartmani.getApartments().entrySet()) {
+				if(pa.getValue().getHost().equals(u.getUsername())&& !pa.getValue().getObrisan()) {
+					ap.put(pa.getKey(), pa.getValue());
+				}
+				
+			}
+			 for(Reservation r : reservations.getReservations()) {
+				 if(ap.containsKey(r.getApartment().getId())) {
+					 korisnici.add(r.getGuest());
+				 }
+			 }
+			 
+			 return korisnici;
+		}
 		
 		
 		@POST
