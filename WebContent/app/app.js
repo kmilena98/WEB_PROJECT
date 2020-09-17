@@ -28,6 +28,8 @@ const IzmenaNazivaSadrzajaApartmana = { template: '<izmenaNazivaSadrzajaApartman
 const PrikazApartmanaZaGosta = { template : '<prikazApartmanaZaGosta></prikazApartmanaZaGosta>'}
 const DodajSadrzajApartmana = { template: '<dodajsadrzajApartmana></dodajsadrzajApartmana>'}
 const WriteComment = { template: '<writeComment></writeComment>'}
+const ShowComment = { template: '<showComment></showComment>'}
+const ShowAllComment = { template: '<showAllComment></showAllComment>'}
 const router = new VueRouter({
 	  mode: 'hash',
 	  routes: [
@@ -60,7 +62,9 @@ const router = new VueRouter({
 	    { path: '/prikazPretrageRezervacijaDA', component: PrikazPretrageRezervacijaDA },
 	    { path: '/prikazRezervacijaGost', component: PrikazRezervacijaGost },
 	    { path: '/ush', component: UsersShow },
-	    { path: '/writeComment', component: WriteComment }
+	    { path: '/writeComment', component: WriteComment },
+	    { path: '/showComment', component: ShowComment },
+	    { path: '/showAllComment', component: ShowAllComment }
 	  ]
 });
 

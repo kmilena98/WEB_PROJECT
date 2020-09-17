@@ -38,6 +38,7 @@ Vue.component("pk", {
 	<a href="#/pk">Korisnici</a>
 	<a href="#/prikazRezervacijaDomacin">Rezervacije korisnika</a>
 	<a href="#/aa">Dodavanje apartmana</a>
+	<a href="#/showAllComment">Komentari</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
@@ -49,6 +50,7 @@ Vue.component("pk", {
 	<a href="#/sh">Registracija domacina</a>
 	<a href="#/prikazRezervacijaAdministrator">Rezervacije korisnika</a>
 	<a href="#/sadrzajApartmanaPrikaz">SadrzajApartmana</a>
+	<a href="#/showAllComment">Komentari</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
@@ -134,6 +136,7 @@ Vue.component("us", {
 	<a href="#/pk">Korisnici</a>
 	<a href="#/prikazRezervacijaDomacin">Rezervacije korisnika</a>
 	<a href="#/aa">Dodavanje apartmana</a>
+	<a href="#/showAllComment">Komentari</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
@@ -145,6 +148,7 @@ Vue.component("us", {
 	<a href="#/sh">Registracija domacina</a>
 	<a href="#/prikazRezervacijaAdministrator">Rezervacije korisnika</a>
 	<a href="#/sadrzajApartmanaPrikaz">SadrzajApartmana</a>
+	<a href="#/showAllComment">Komentari</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
@@ -294,6 +298,7 @@ Vue.component("ush", {
 	<a href="#/pk">Korisnici</a>
 	<a href="#/prikazRezervacijaDomacin">Rezervacije korisnika</a>
 	<a href="#/aa">Dodavanje apartmana</a>
+	<a href="#/showAllComment">Komentari</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
@@ -305,6 +310,7 @@ Vue.component("ush", {
 	<a href="#/sh">Registracija domacina</a>
 	<a href="#/prikazRezervacijaAdministrator">Rezervacije korisnika</a>
 	<a href="#/sadrzajApartmanaPrikaz">SadrzajApartmana</a>
+	<a href="#/showAllComment">Komentari</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>

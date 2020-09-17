@@ -1,7 +1,10 @@
 package services;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -20,6 +23,7 @@ import javax.ws.rs.core.Response;
 
 import model.Apartment;
 import model.Apartments;
+import model.Comment;
 import model.Guest;
 import model.Host;
 import model.Reservation;
@@ -136,6 +140,57 @@ public class ApartmentService {
 			
 		}
 		return ap; 
+	}
+	
+
+	@GET
+	@Path("/svihKomentara")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public ArrayList<Comment> sviKomentari() {
+		System.out.println("Usao ovde!");
+		Apartments postojeciApartmani = (Apartments) ctx.getAttribute("apartments");
+		User u = (User)request.getSession().getAttribute("ulogovani");
+		
+		 
+		ArrayList<Comment> komentari = new ArrayList<Comment>();
+		
+			for(Entry<String, Apartment> pa : postojeciApartmani.getApartments().entrySet()) {
+				if(!pa.getValue().getObrisan()) {
+					System.out.println("Usao ovde");
+					for(Comment c: pa.getValue().getComents()) {
+						komentari.add(c);
+					}
+				}
+			
+		}
+			//System.out.println("Svi komentari " + komentari.size());
+		return komentari; 
+	}
+	
+	@GET
+	@Path("/svihKomentaraZaDomacina")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public ArrayList<Comment> sviKomentariZaDomacina() {
+		System.out.println("Usao ovde!");
+		Apartments postojeciApartmani = (Apartments) ctx.getAttribute("apartments");
+		User u = (User)request.getSession().getAttribute("ulogovani");
+		
+		 
+		ArrayList<Comment> komentari = new ArrayList<Comment>();
+		
+			for(Entry<String, Apartment> pa : postojeciApartmani.getApartments().entrySet()) {
+				if(pa.getValue().getHost().equals(u.getUsername()) && !pa.getValue().getObrisan()) {
+					System.out.println("Usao ovde");
+					for(Comment c: pa.getValue().getComents()) {
+						komentari.add(c);
+					}
+				}
+			
+		}
+			System.out.println("Svi komentari " + komentari.size());
+		return komentari; 
 	}
 	
 	
@@ -261,6 +316,58 @@ public Response editApartman(Apartment a) {
 	}
 }
 
+/*Komentari*/
 
+@POST
+@Path("/sendComment")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
+public Response posaljiPoruku(Comment comment) {
+	User ulogovani = (User) request.getSession().getAttribute("ulogovani");
+	if(ulogovani == null)
+		return Response.status(400).entity("Morate biti prijavljeni").build();
+	/*if(comment.getText().equals("") || Integer.parseInt(comment.getGrade())==0) {
+		return Response.status(400).entity("Niste popunili sva obavezna polja.").build();
+	}*/
+	
+	/*DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+	Date date = new Date();
+	String datum = dateFormat.format(date);
+	poruka.setDatum(datum);*/
+	Apartments apartments = (Apartments)ctx.getAttribute("apartments");
+	/*Users korisnici = (Users) ctx.getAttribute("korisnici");
+	Korisnik posiljalac = korisnici.getKorisnika(poruka.getPosiljalac());
+	Korisnik primalac = korisnici.getKorisnika(poruka.getPrimalac());*/
+
+	/*int idPrim = primalac.getPoruke().size();
+	int idPos = posiljalac.getPoruke().size();*/
+	Apartment ap = apartments.getApartment(comment.getApartmentId());
+	/*poruka.setId(idPrim);
+	poruka.setPar(idPos);
+	primalac.getPoruke().add(poruka);*/
+	ap.getComents().add(comment);
+
+	/*Poruka poruka2 = new Poruka(poruka.getNazivOglasa(), poruka.getPosiljalac(), poruka.getNaslov(), poruka.getSadrzaj(), poruka.getDatum(), poruka.getPrimalac());
+	poruka2.setId(idPos);
+	poruka2.setPar(idPrim);
+	posiljalac.getPoruke().add(poruka2);*/
+	
+	String contextPath = ctx.getRealPath("");
+	apartments.saveApartments(contextPath);
+	return Response.status(200).build();
+	
+}
+
+/*@GET
+@Path("/korisnici")
+@Produces(MediaType.APPLICATION_JSON)
+public HashMap<String, User> getKorisnici() {
+	User ulogovani = (User) request.getSession().getAttribute("ulogovani");
+	if(ulogovani == null) {
+		return null;
+	}		
+	Users users = (Users) ctx.getAttribute("users");
+	return users.getUsers();
+}*/
 
 }

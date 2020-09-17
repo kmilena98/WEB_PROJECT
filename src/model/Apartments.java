@@ -40,6 +40,11 @@ public class Apartments {
 		return apartments;
 	}
 	
+	public Apartment getApartment(String name) {
+		Apartment a = apartments.get(name);
+		return a;
+	}
+	
 	public void izmeni(Amenities a) {
 		for(Map.Entry<String, Apartment> ap : apartments.entrySet()) {
 			ap.getValue().izmeniAmenitie(a);

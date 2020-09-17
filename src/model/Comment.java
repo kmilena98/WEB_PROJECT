@@ -3,16 +3,20 @@ package model;
 public class Comment {
 
 	private Guest guest;
-	private Apartment apartment;
+	private String apartmentId;
 	private String text;
 	private int grade;
+	//private boolean dopusti;
 	
-	public Comment(Guest guest, Apartment apartment, String text, int grade) {
+	public Comment() {}
+	
+	public Comment(Guest guest, String apartmentId, String text, int grade) {
 		super();
 		this.guest = guest;
-		this.apartment = apartment;
+		this.apartmentId = apartmentId;
 		this.text = text;
 		this.grade = grade;
+		
 	}
 	public Guest getGuest() {
 		return guest;
@@ -20,11 +24,11 @@ public class Comment {
 	public void setGuest(Guest guest) {
 		this.guest = guest;
 	}
-	public Apartment getApartment() {
-		return apartment;
+	public String getApartmentId() {
+		return apartmentId;
 	}
-	public void setApartment(Apartment apartment) {
-		this.apartment = apartment;
+	public void setApartmentId(String apartmentId) {
+		this.apartmentId = apartmentId;
 	}
 	public String getText() {
 		return text;
@@ -38,6 +42,14 @@ public class Comment {
 	public void setGrade(int grade) {
 		this.grade = grade;
 	}
+
+	/*public boolean isDopusti() {
+		return dopusti;
+	}
+
+	public void setDopusti(boolean dopusti) {
+		this.dopusti = dopusti;
+	}*/
 	
 	
 }

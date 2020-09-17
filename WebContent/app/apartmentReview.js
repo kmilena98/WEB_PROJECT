@@ -43,6 +43,7 @@ Vue.component("ar", {
 	<a href="#/pk">Korisnici</a>
 	<a href="#/prikazRezervacijaDomacin">Rezervacije korisnika</a>
 	<a href="#/aa">Dodavanje apartmana</a>
+	<a href="#/showAllComment">Komentari</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
@@ -54,6 +55,7 @@ Vue.component("ar", {
 	<a href="#/sh">Registracija domacina</a>
 	<a href="#/prikazRezervacijaAdministrator">Rezervacije korisnika</a>
 	<a href="#/sadrzajApartmanaPrikaz">SadrzajApartmana</a>
+	<a href="#/showAllComment">Komentari</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
@@ -179,6 +181,7 @@ Vue.component("prikazApartmana", {
 	<a href="#/pk">Korisnici</a>
 	<a href="#/prikazRezervacijaDomacin">Rezervacije korisnika</a>
 	<a href="#/aa">Dodavanje apartmana</a>
+	<a href="#/showAllComment">Komentari</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
@@ -190,6 +193,7 @@ Vue.component("prikazApartmana", {
 	<a href="#/sh">Registracija domacina</a>
 	<a href="#/prikazRezervacijaAdministrator">Rezervacije korisnika</a>
 	<a href="#/sadrzajApartmanaPrikaz">SadrzajApartmana</a>
+	<a href="#/showAllComment">Komentari</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
@@ -210,9 +214,11 @@ Vue.component("prikazApartmana", {
 		<div v-else-if="this.user.role==='ADMINISTRATOR'">
 		<button type="button" onclick="window.location.href='#/izmenaApartmana';" class="button" id="t01">Izmeni</button>
 		<button type="button" 	v-on:click.prevent="obrisi" class="button" id="t01">Obrisi</button>
+		<button type="button" v-on:click.prevent="posalji(apartman)" class="button" id="t01" style="width:120px;height:60px;">Prikaz komentar</button>
 		</div>
 		<div v-else>
 		<button type="button" onclick="window.location.href='#/izmenaApartmana';" class="button" id="t01">Izmeni</button>
+		<button type="button" v-on:click.prevent="posalji(apartman)" class="button" id="t01" style="width:120px;height:60px;">Prikaz komentar</button>
 		</div>
 	  <form accept-charset="UTF-8">
             <table class="bla" id="tabela" style="width:25%;">
@@ -327,6 +333,17 @@ Vue.component("prikazApartmana", {
 `
 	,
 	methods : {
+		posalji : function(apartman){
+			axios.post('rest/apartmani/prikazApartmana', apartman)
+			.then(function (response) {
+				alert("Usao u pregled komentara");
+				window.location.href = '#/showComment';
+	        })
+	        .catch(function (error) {
+	        	alert("usao u exaption!");
+	            alert(error.response.data);
+		});
+		},
 		prikazi : function(id) {
 			/*alert("dosao"+id);*/
 		    axios.post('rest/apartmani/prikazApartmana')
@@ -458,6 +475,7 @@ Vue.component("izmenaApartmana", {
 	<a href="#/pk">Korisnici</a>
 	<a href="#/prikazRezervacijaDomacin">Rezervacije korisnika</a>
 	<a href="#/aa">Dodavanje apartmana</a>
+	<a href="#/showAllComment">Komentari</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
@@ -469,6 +487,7 @@ Vue.component("izmenaApartmana", {
 	<a href="#/sh">Registracija domacina</a>
 	<a href="#/prikazRezervacijaAdministrator">Rezervacije korisnika</a>
 	<a href="#/sadrzajApartmanaPrikaz">SadrzajApartmana</a>
+	<a href="#/showAllComment">Komentari</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
@@ -931,6 +950,7 @@ Vue.component("prikazApartmanaZaDomacina", {
 	<a href="#/pk">Korisnici</a>
 	<a href="#/prikazRezervacijaDomacin">Rezervacije korisnika</a>
 	<a href="#/aa">Dodavanje apartmana</a>
+	<a href="#/showAllComment">Komentari</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
@@ -942,6 +962,7 @@ Vue.component("prikazApartmanaZaDomacina", {
 	<a href="#/sh">Registracija domacina</a>
 	<a href="#/prikazRezervacijaAdministrator">Rezervacije korisnika</a>
 	<a href="#/sadrzajApartmanaPrikaz">SadrzajApartmana</a>
+	<a href="#/showAllComment">Komentari</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
@@ -1052,6 +1073,7 @@ Vue.component("us", {
 	<a href="#/pk">Korisnici</a>
 	<a href="#/prikazRezervacijaDomacin">Rezervacije korisnika</a>
 	<a href="#/aa">Dodavanje apartmana</a>
+	<a href="#/showAllComment">Komentari</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
@@ -1063,6 +1085,7 @@ Vue.component("us", {
 	<a href="#/sh">Registracija domacina</a>
 	<a href="#/prikazRezervacijaAdministrator">Rezervacije korisnika</a>
 	<a href="#/sadrzajApartmanaPrikaz">SadrzajApartmana</a>
+	<a href="#/showAllComment">Komentari</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
@@ -1209,6 +1232,7 @@ Vue.component("ush", {
 	<a href="#/pk">Korisnici</a>
 	<a href="#/prikazRezervacijaDomacin">Rezervacije korisnika</a>
 	<a href="#/aa">Dodavanje apartmana</a>
+	<a href="#/showAllComment">Komentari</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
@@ -1220,6 +1244,7 @@ Vue.component("ush", {
 	<a href="#/sh">Registracija domacina</a>
 	<a href="#/prikazRezervacijaAdministrator">Rezervacije korisnika</a>
 	<a href="#/sadrzajApartmanaPrikaz">SadrzajApartmana</a>
+	<a href="#/showAllComment">Komentari</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>

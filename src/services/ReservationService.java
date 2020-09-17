@@ -257,7 +257,7 @@ public class ReservationService {
 			if(res.getApartment().getId().equals(r.getApartment().getId()) && res.getBookingStartDate().equals(r.getBookingStartDate())) {
 				res.izmeniStatus("REJECTED");
 				//g.izmeniStatus("REJECTED", r);
-				//res.getGuest()
+				//res.getGuest().get
 				break;
 			}
 		}
