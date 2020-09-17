@@ -941,7 +941,6 @@ Vue.component("writeComment", {
         axios
             .get('rest/apartmani/prikaz')
             .then(response =>{
-            	alert("Nasao apartman");
 	        	this.apartman = response.data;
 	        	
     	    })
@@ -1061,6 +1060,7 @@ Vue.component("writeComment", {
 				'apartmentId' : this.apartman.id,
 				'text': this.text,
 				'grade': this.grade,
+				'dopusti' : "false"
 			}
 			
             axios.post('rest/apartmani/sendComment', komentar)
@@ -1120,7 +1120,6 @@ Vue.component("showComment", {
         axios
             .get('rest/apartmani/prikaz')
             .then(response =>{
-            	alert("Nasao nasao apartman");
 	        	this.apartmanA = response.data;
 	        	alert(this.apartman.id);
 	        	
@@ -1231,6 +1230,7 @@ Vue.component("showAllComment", {
 		      user:null,
 		      text: null,
 		      grade: null,
+		      dopusteno: null,
 		      komentariA: null,
 		      komentariH: null
 		      
@@ -1251,7 +1251,6 @@ Vue.component("showAllComment", {
         axios
         .get('rest/apartmani/svihKomentaraZaDomacina')
         .then(response =>{
-        	alert("Nasao nasao komentare");
         	this.komentariH = response.data;
         	
 	    })
@@ -1357,10 +1356,164 @@ Vue.component("showAllComment", {
 					<td>Sadrzaj:</td>
 					<td>{{c.text}}</td>
 				</tr>
+				<tr>
+					<td>Dopusteno korisniku:</td>
+					<td>{{c.dopusti}}</td>
+					<td><button v-on:click.prevent="dopusti(c)">Izmeni</button></td>
+				</tr>
 			   </td>
 			</tr>
 		</table>
 	</div>
+</div>		  
+`
+	, 
+	
+	methods : {
+		dopusti :function(c){
+			axios.post('rest/apartmani/dopusti', c)
+            .then(function (response) {
+      
+            	if(c.dopusti == true){
+            		c.dopusti = false;
+            	}else{
+            		c.dopusti = true;
+            	}
+            	window.location.reload();
+            })
+            .catch(function (error) {
+            	alert("exception");
+                alert(error.response.data);
+            });
+		},
+		
+		logout : function() {
+	    axios.post('rest/registracija/logout')
+    	
+        .then(function (response) {
+			window.location.href = '#/';
+
+        })
+        .catch(function (error) {
+        	alert("usao u exaption!");
+            alert(error.response.data);
+	});
+	},
+
+		
+	},
+});
+
+
+Vue.component("showCommentForGuest", {
+	data: function () {
+		    return {
+		      user:null,
+		      text: null,
+		      grade: null,
+		      komentariA: null
+		      
+		    }
+	},
+	mounted(){
+        axios
+            .get('rest/apartmani/svihKomentaraZaGosta')
+            .then(response =>{
+	        	this.komentariA = response.data;
+	        	
+    	    })
+	        .catch(error => {
+    	        alert("Doslo je do greske prilikom ucitavanja apartmana");
+    	        alert(error.response.data);
+    	    });
+        
+        axios
+        .get('rest/apartmani/svihKomentaraZaDomacina')
+        .then(response =>{
+        	alert("Nasao nasao komentare");
+        	this.komentariH = response.data;
+        	
+	    })
+        .catch(error => {
+	        alert("Doslo je do greske prilikom ucitavanja apartmana");
+	        alert(error.response.data);
+	    });
+        axios
+        .get('rest/registracija/ulogovani')
+        .then(response =>{
+        	this.user = response.data;
+	    })
+        .catch(error => {
+	        alert("Doslo je do greske prilikom ucitavanja korisnika");
+	    })
+	},
+	template: ` 
+<div>
+	
+	<div class="header">
+		<img class="image" src="images/l.jpg" style="width:150px;height:100px;">
+		<h1>Rezervacija apartmana </h1>
+		<p>Izaberite svoju najbolju ponudu iz snova!</p>
+	</div>
+
+<div class="topnav">
+	<div v-if="user.role==='HOST'" >
+	<a href="#/prikazApartmanaDomacin">Apartmani</a>
+	<a href="#/pk">Korisnici</a>
+	<a href="#/prikazRezervacijaDomacin">Rezervacije korisnika</a>
+	<a href="#/aa">Dodavanje apartmana</a>
+	<a href="#/showAllComment">Komentari</a>
+	<div class="topnav-right">
+		<a href="#/pd">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+	</div>
+	<div v-else-if="user.role==='ADMINISTRATOR'" >
+	<a href="#/ar">Apartmani</a>
+	<a href="#/pk">Korisnici</a>
+	<a href="#/sh">Registracija domacina</a>
+	<a href="#/prikazRezervacijaAdministrator">Rezervacije korisnika</a>
+	<a href="#/sadrzajApartmanaPrikaz">SadrzajApartmana</a>
+	<a href="#/showAllComment">Komentari</a>
+	<div class="topnav-right">
+		<a href="#/pd">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+	</div>
+	<div v-else>
+	<a href="#/reservation">Apartmani</a>
+	<a href="#/prikazRezervacijaGost">Moje rezervacije</a>
+	<div class="topnav-right">
+		<a href="#/pd">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+	</div>
+</div>
+
+		<p style="text-align:center; margin-bottom:80px;">Prikaz komentara:</p>
+		
+		<table class="tulum" style="margin-left: auto; margin-right: auto;font-size:18px;">
+			<tr v-for="c in komentariA">
+				<td>
+				<tr>
+					<td>ID apartmana:</td>
+					<td>{{c.apartmentId}}</td>
+				</tr>
+				<tr>
+					<td>Korisnicko ime gosta:</td>
+					<td>{{c.guest.username}}</td>
+				</tr>
+				<tr>
+					<td>Ocena:</td>
+					<td>{{c.grade}}</td>
+				</tr>
+				<tr>
+					<td>Sadrzaj:</td>
+					<td>{{c.text}}</td>
+				</tr>
+			   </td>
+			</tr>
+		</table>
 </div>		  
 `
 	, 
