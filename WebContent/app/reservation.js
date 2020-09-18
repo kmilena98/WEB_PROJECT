@@ -162,7 +162,8 @@ Vue.component("prikazRezervacijaDomacin", {
 	data: function () {
 		    return {
 		      reservations: null,
-		      user:null
+		      user:null,
+		      rez:[]
 		    }
 	},
 	mounted(){
@@ -170,6 +171,7 @@ Vue.component("prikazRezervacijaDomacin", {
             .get('rest/reservation/rezervacijeDomacin')
             .then(response =>{
 	        	this.reservations = response.data;
+	        	this.rez = this.reservations;
     	    })
 	        .catch(error => {
     	        alert("Doslo je do greske prilikom ucitavanja rezervacija");
@@ -242,7 +244,10 @@ Vue.component("prikazRezervacijaDomacin", {
 </div>
 
 		<button type="button" onclick="window.location.href='#/pretragaRezervacijaDA';" class="button" id="t01">Pretrazi</button>
+		<button type="button" v-on:click="rastuce" class="button" id="t01" style="width:150px;height:60px">Rastuce sortiraj</button>
+		<button type="button" v-on:click="opadajuce" class="button" id="t01" style="width:150px;height:60px"">Opadajuce sortiraj</button>
 
+		
 	  <form accept-charset="UTF-8">
             <table class="t" id="tabela" style="width:80%;height:20%;">
                 <caption>Pregled rezervacija</caption>
@@ -296,6 +301,35 @@ Vue.component("prikazRezervacijaDomacin", {
 `
 	, 
 	methods : {
+rastuce : function(){
+			
+			for(var i = 0; i < this.rez.length-1; i++){
+				for(var j = i+1; j < this.rez.length; j++){
+					if(this.rez[i].totalPrice > this.rez[j].totalPrice){
+						let pom = this.rez[i];
+						this.rez[i] = this.rez[j];
+						this.rez[j] = pom;
+					}
+				}
+			}
+			this.reservations = [];
+			this.reservations = this.rez;
+		},
+		
+		opadajuce : function(){
+			
+			for(var i = 0; i < this.rez.length-1; i++){
+				for(var j = i+1; j < this.rez.length; j++){
+					if(this.rez[i].totalPrice < this.rez[j].totalPrice){
+						let pom = this.rez[i];
+						this.rez[i] = this.rez[j];
+						this.rez[j] = pom;
+					}
+				}
+			}
+			this.reservations = [];
+			this.reservations = this.rez;
+		},
 		odbi : function(ap){
 			axios.post('rest/reservation/odgovorDomacinaZaRezervacijeReject', ap)
 			.then(function (response) {
@@ -363,7 +397,8 @@ Vue.component("prikazRezervacijaGost", {
 	data: function () {
 		    return {
 		      reservations: null,
-		      user:null
+		      user:null,
+		      res:[]
 		    }
 	},
 	mounted(){
@@ -371,6 +406,7 @@ Vue.component("prikazRezervacijaGost", {
             .get('rest/reservation/rezervacijeGost')
             .then(response =>{
 	        	this.reservations = response.data;
+	        	this.rez = this.reservations;
     	    })
 	        .catch(error => {
     	        alert("Doslo je do greske prilikom ucitavanja rezervacija");
@@ -432,7 +468,10 @@ Vue.component("prikazRezervacijaGost", {
 </div>
 
 		<button type="button" onclick="window.location.href='#/pretragaRezervacijaDA';" class="button" id="t01">Pretrazi</button>
+		<button type="button" v-on:click="rastuce" class="button" id="t01" style="width:150px;height:60px">Rastuce sortiraj</button>
+		<button type="button" v-on:click="opadajuce" class="button" id="t01" style="width:150px;height:60px"">Opadajuce sortiraj</button>
 
+		
 	  <form accept-charset="UTF-8">
             <table class="t" id="tabela" style="width:80%;height:20%;">
                 <caption>Pregled rezervacija</caption>
@@ -487,6 +526,35 @@ Vue.component("prikazRezervacijaGost", {
 `
 	, 
 	methods : {
+rastuce : function(){
+			
+			for(var i = 0; i < this.rez.length-1; i++){
+				for(var j = i+1; j < this.rez.length; j++){
+					if(this.rez[i].totalPrice > this.rez[j].totalPrice){
+						let pom = this.rez[i];
+						this.rez[i] = this.rez[j];
+						this.rez[j] = pom;
+					}
+				}
+			}
+			this.reservations = [];
+			this.reservations = this.rez;
+		},
+		
+		opadajuce : function(){
+			
+			for(var i = 0; i < this.rez.length-1; i++){
+				for(var j = i+1; j < this.rez.length; j++){
+					if(this.rez[i].totalPrice < this.rez[j].totalPrice){
+						let pom = this.rez[i];
+						this.rez[i] = this.rez[j];
+						this.rez[j] = pom;
+					}
+				}
+			}
+			this.reservations = [];
+			this.reservations = this.rez;
+		},
 		posalji : function(ap){
 			axios.post('rest/apartmani/prikazApartmana', ap.apartment)
 			.then(function (response) {
@@ -556,7 +624,8 @@ Vue.component("prikazRezervacijaAdministrator", {
 	data: function () {
 		    return {
 		      reservations: null,
-		      user:null
+		      user:null,
+		      res:[]
 		    }
 	},
 	mounted(){
@@ -564,6 +633,7 @@ Vue.component("prikazRezervacijaAdministrator", {
             .get('rest/reservation/rezervacijeAdministrator')
             .then(response =>{
 	        	this.reservations = response.data;
+	        	this.rez = this.reservations;
 
 	        	/*alert("Usao gde treba da udje!");*/
     	    })
@@ -629,6 +699,10 @@ Vue.component("prikazRezervacijaAdministrator", {
 
 
 		<button type="button" onclick="window.location.href='#/pretragaRezervacijaDA';" class="button" id="t01">Pretrazi</button>
+		
+		<button type="button" v-on:click="rastuce" class="button" id="t01" style="width:150px;height:60px">Rastuce sortiraj</button>
+		<button type="button" v-on:click="opadajuce" class="button" id="t01" style="width:150px;height:60px"">Opadajuce sortiraj</button>
+
 
 	  <form accept-charset="UTF-8">
             <table class="t" id="tabela" style="width:80%;height:20%;">
@@ -670,6 +744,35 @@ Vue.component("prikazRezervacijaAdministrator", {
 `
 	, 
 	methods : {
+rastuce : function(){
+			
+			for(var i = 0; i < this.rez.length-1; i++){
+				for(var j = i+1; j < this.rez.length; j++){
+					if(this.rez[i].totalPrice > this.rez[j].totalPrice){
+						let pom = this.rez[i];
+						this.rez[i] = this.rez[j];
+						this.rez[j] = pom;
+					}
+				}
+			}
+			this.reservations = [];
+			this.reservations = this.rez;
+		},
+		
+		opadajuce : function(){
+			
+			for(var i = 0; i < this.rez.length-1; i++){
+				for(var j = i+1; j < this.rez.length; j++){
+					if(this.rez[i].totalPrice < this.rez[j].totalPrice){
+						let pom = this.rez[i];
+						this.rez[i] = this.rez[j];
+						this.rez[j] = pom;
+					}
+				}
+			}
+			this.reservations = [];
+			this.reservations = this.rez;
+		},
 		prikazi : function(a) {
 			/*alert("dosao"+id);*/
 		    axios.post('rest/apartmani/prikazApartmana',a)
