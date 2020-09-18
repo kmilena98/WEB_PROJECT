@@ -220,6 +220,11 @@ Vue.component("aa", {
         /*comments: null*/
     }},
     mounted(){
+    	this.roomType="ROOM";
+    	this.guestNumber=1;
+    	this.roomNuber=1;
+    	this.checkinTime="14:00";
+    	this.checkoutTime="10:00";
 		axios
         .get('rest/sadrzaj/prikazSadrzaja')
         .then(response =>{
@@ -289,6 +294,7 @@ Vue.component("aa", {
                             	 <tr>
                                 <td align="left">ID:</td>
                                 <td align="left"><input type="text" v-model="id" style="width:208px;height:25px;"/></td>
+                                <p class="message1" style="color:red;font-size:12px">{{idValidacija}}</p>
                                 <td>&nbsp;&nbsp;</td>
                             </tr>
                             
@@ -329,7 +335,7 @@ Vue.component("aa", {
                                 <td align="left">
                                 	<tr>
                                 		<td>Geografska sirina:</td>
-                                		<td><input type="text" v-model="latitude" style="width:208px;height:25px;"/></td>
+                                		<td><input type="number" v-model="latitude" style="width:208px;height:25px;"/></td>
                                 	</tr>
                                 	<tr><td>&nbsp;</td>
 				 						<td align="left" style="color: red;font-size:12px">{{cenaValidacija}}</td>
@@ -442,8 +448,11 @@ Vue.component("aa", {
 				if(this.id === null || this.pracePerNight === '') return 'Cena je je obavezno polje.';
 				else if(Number(this.id) < 0) return 'Cena ne moze biti negativan broj.'; 
 				else return null;
-     },
-		geografskaSirinaValidacija: function(){
+		},
+     	geografskaSirinaValidacija: function(){
+			if(this.latitude === '') return 'Niste unijeli geografsku sirinu.';
+			else return null;
+		},idValidacija: function(){
 			if(this.latitude === '') return 'Niste unijeli geografsku sirinu.';
 			else return null;
 		},
