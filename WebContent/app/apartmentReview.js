@@ -972,7 +972,7 @@ Vue.component("prikazApartmanaZaDomacina", {
 <div>
 	
 	<div class="header">
-		<img class="image" src="images/l.jpg" style="width:150px;height:100px;">
+		<img class="image" src="images/l.jpg" style="width:350px;height:200px;">
 		<h1>Rezervacija apartmana </h1>
 		<p>Izaberite svoju najbolju ponudu iz snova!</p>
 	</div>
@@ -1014,10 +1014,10 @@ Vue.component("prikazApartmanaZaDomacina", {
 		<button type="button" onclick="window.location.href='#/izmenaApartmana';" class="button" id="t01">Izmeni</button>
 		
 	   <form accept-charset="UTF-8">
-            <table class="bla" id="tabela" style="width:25%;">
+            <table class="bla" id="tabela" style="width:50%;">
                 <caption>Pregled apartmana</caption>
               <br></br>
-                <p>Aktivni apartmani</p>
+                <p>Aktivni apartmani :</p>
                 <br></br>
                 <select  v-model="opt" v-on:click="sortiraj(opt)">
 				    <option>OPADAJUCE</option>
@@ -1027,15 +1027,14 @@ Vue.component("prikazApartmanaZaDomacina", {
                  <tr v-for="ap in aktivniApartmani">
                   
                   <div class="post-media">
-                                <a href="#"><img style="width:150px;height:100px;" v-bind:src="ap.image" alt="" class="img-responsive"></a>
+                                <a href="#"><img style="width:400px;height:250px;" v-bind:src="ap.image" alt="" class="img-responsive"></a>
                    </div><!-- end media -->
                             
                 <td>
-                	<tr><td>{{ap.location.address.street}}</td></tr>
-					<tr><td>{{ap.location.address.place}}</td>
-					<td>{{ap.location.address.zipCode}}</td></tr>
-					<tr><td>{{ap.location.latitude}}</td>
-					<td>{{ap.location.longitude}}</td></tr>
+                	<tr><td>Ulica : {{ap.location.address.street}}</td></tr>
+					<tr><td>Grad : {{ap.location.address.place}}</td></tr>
+					<tr><td>Postanski broj : {{ap.location.address.zipCode}}</td></tr>
+					<tr><td>Cena : {{ap.pracePerNight}} $</td>
 			
 				</td>
                 <td>
@@ -1043,19 +1042,18 @@ Vue.component("prikazApartmanaZaDomacina", {
 				</td>
                 </tr>
                 <br></br>
-                <p>Neaktivni apartmani</p>
+                <p>Neaktivni apartmani :</p>
                 <br></br>
                 <tr v-for="ap in neaktivniApartmani">
                   <div class="post-media">
-                                <a href="#"><img style="width:150px;height:100px;" v-bind:src="ap.image" alt="" class="img-responsive"></a>
+                                <a href="#"><img style="width:400px;height:250px;" v-bind:src="ap.image" alt="" class="img-responsive"></a>
                    </div><!-- end media -->
                             
                 <td>
-                	<tr><td>{{ap.location.address.street}}</td></tr>
-					<tr><td>{{ap.location.address.place}}</td>
-					<td>{{ap.location.address.zipCode}}</td></tr>
-					<tr><td>{{ap.location.latitude}}</td>
-					<td>{{ap.location.longitude}}</td></tr>
+                	<tr><td>Ulica : {{ap.location.address.street}}</td></tr>
+					<tr><td>Grad : {{ap.location.address.place}}</td></tr>
+					<tr><td>Postanski broj :{{ap.location.address.zipCode}}</td></tr>
+					<tr><td>Cena : {{ap.pracePerNight}} $</td>
 			
 				</td>
                 <td>
