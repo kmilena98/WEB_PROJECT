@@ -20,7 +20,6 @@ Vue.component("reservation", {
         .get('rest/registracija/ulogovani')
         .then(response =>{
         	this.user = response.data;
-        	alert("Dobio korisnika : "+this.user.username);
 	    })
         .catch(error => {
 	        alert("Doslo je do greske prilikom ucitavanja korisnika");
@@ -255,7 +254,7 @@ Vue.component("prikazRezervacijaDomacin", {
 						<tr><td><button type="button" v-on:click.prevent="odbi(ap)">Odbi</button></td></tr>
 					</div>
 					<div v-else-if="ap.status ==='ACCEPTED'">
-						<tr><td><button type="button" v-on:click.prevent="prikazi(ap)">Ponisti</button></td></tr>
+						<tr><td><button type="button" v-on:click.prevent="odbi(ap)">Ponisti</button></td></tr>
 						<tr><td><button type="button" v-on:click.prevent="prikazi(ap)">Zavrsi</button></td>
 					</div>
 				</td>
@@ -284,6 +283,17 @@ Vue.component("prikazRezervacijaDomacin", {
 		},
 		odobri : function(ap){
 			axios.post('rest/reservation/odgovorDomacinaZaRezervacije', ap)
+			.then(function (response) {
+				window.location.reload();
+
+	        })
+	        .catch(function (error) {
+	        	alert("usao u exaption!");
+	            alert(error.response.data);
+		});
+		},
+		zavrsi : function(ap){
+			axios.post('rest/reservation/zavrsi', ap)
 			.then(function (response) {
 				window.location.reload();
 
@@ -465,6 +475,17 @@ Vue.component("prikazRezervacijaGost", {
 		},
 		odobri : function(ap){
 			axios.post('rest/reservation/odgovorDomacinaZaRezervacije', ap)
+			.then(function (response) {
+				window.location.reload();
+
+	        })
+	        .catch(function (error) {
+	        	alert("usao u exaption!");
+	            alert(error.response.data);
+		});
+		},
+		odustani : function(ap){
+			axios.post('rest/reservation/odustani', ap)
 			.then(function (response) {
 				window.location.reload();
 
@@ -995,6 +1016,7 @@ Vue.component("writeComment", {
 	<div v-else>
 	<a href="#/reservation">Apartmani</a>
 	<a href="#/prikazRezervacijaGost">Moje rezervacije</a>
+	<a href="#/showCommentForGuest">Komentari</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>

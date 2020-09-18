@@ -14,7 +14,6 @@ Vue.component("start", {
 	</div>
 
 <div class="topnav">
-	<a href="#/samoApartmani">Apartmani</a>
 	<div class="topnav-right">
 		<a href="#/sc">Prijava</a>
 		<a href="#/ss">Registracija</a>
@@ -68,7 +67,7 @@ Vue.component("start", {
 	},
 	mounted () {
 		 axios
-         .get('rest/apartmani/appom')
+         .get('rest/apartmani/aktivniApartmani')
          .then(response =>{
 	        	this.apartmants = response.data;
 	        	/*alert("Usao gde treba da udje!");*/

@@ -57,12 +57,27 @@ public class ReservationService {
 	}
 	
 	@POST
+	@Path("/addR")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response dodajRezervaciju2(Reservation r) {
+		
+		System.out.println("Izgled datuma : "+r.getBookingStartDate());
+		
+	
+			return Response.status(400).entity("Nema dovoljno noci za rezervaciju.").build();
+		
+		
+	}
+	
+	
+	
+	@POST
 	@Path("/addReservation")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response dodajRezervaciju(Reservation r) {
 		
-		System.out.println("Zahtev je dosao do backa!");
 		System.out.println("Izgled datuma : "+r.getBookingStartDate());
 		
 		Apartments apartmani = (Apartments)ctx.getAttribute("apartments");
@@ -91,7 +106,6 @@ public class ReservationService {
 				}
 			}
 				if(!prosao) {
-					System.out.println("Usao je u if");
 						User us = (User)users.getUser(kor.getUsername());
 						Guest g;
 						String usernameHosta= r.getApartment().getHost();
@@ -112,7 +126,6 @@ public class ReservationService {
 						return Response.status(200).build();
 					
 				}else {
-					System.out.println("Usao je u else");
 					return Response.status(400).entity("Apartman koji zelite da rezervisete u tom periodu je zauzet.").build();
 				}
 		}else {
@@ -146,7 +159,6 @@ public class ReservationService {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public ArrayList<Reservation> getReservationsForGest() {
-			System.out.println("Uslo u prikaz rezervacija za gosta");
 			User ulogovani = (User) request.getSession().getAttribute("ulogovani");
 			if(ulogovani == null) {
 				return null;
@@ -154,7 +166,6 @@ public class ReservationService {
 			ArrayList<Reservation> rez = new ArrayList<Reservation>();
 			Reservations rezervacije = (Reservations) ctx.getAttribute("reservations");
 			for(Reservation r : rezervacije.getReservations()) {
-				//System.out.println("Username " + r.getGuest().getUsername() + "username ulogovanog: " + ulogovani.getUsername());
 				if(r.getGuest().getUsername().equals(ulogovani.getUsername())) {
 					rez.add(r);
 				}
@@ -184,7 +195,6 @@ public class ReservationService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Reservation> pretrazi(@PathParam("username") String username) {
-		System.out.println("Udjeeeeee");
 		User ulogovani = (User) request.getSession().getAttribute("ulogovani");
 		if(ulogovani == null) {
 			return null;
@@ -198,6 +208,74 @@ public class ReservationService {
 		
 				return reservations.pretraga(username);
 			}
+	}
+	
+	@POST
+	@Path("/ponistavanjeRezervacije")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response ponistavanje(Reservation r) {
+		User ulogovani = (User) request.getSession().getAttribute("ulogovani");
+		if(ulogovani == null) {
+			return null;
+		}	
+		Users users = (Users) ctx.getAttribute("users");
+		String contextPath = ctx.getRealPath("");
+		
+		
+		Reservations reservations = (Reservations) ctx.getAttribute("reservations");
+		for(Reservation res : reservations.getReservations()) {
+			if(res.getApartment().getId().equals(r.getApartment().getId()) && res.getBookingStartDate().equals(r.getBookingStartDate())) {
+				res.izmeniStatus("REJECTED");
+				break;
+			}
+		}
+	
+		reservations.saveReservations(contextPath);
+		users.sacuvajKorisnike(contextPath);
+		ctx.setAttribute("reservations", reservations);
+		
+		return Response.status(200).build();
+	}
+	
+	
+	@POST
+	@Path("/odustani")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response odustajanjeGosta(Reservation r) {
+		User ulogovani = (User) request.getSession().getAttribute("ulogovani");
+		if(ulogovani == null) {
+			return null;
+		}	
+		Users users = (Users) ctx.getAttribute("users");
+		String contextPath = ctx.getRealPath("");
+		
+		/*User us = (User)users.getUser(ulogovani.getUsername());
+		Guest g;
+		String usernameHosta= r.getApartment().getHost();
+		try {
+	      g = (Guest) users.getUser(ulogovani.getUsername());
+		}catch(Exception e) {
+		  g = new Guest(us.getUsername(),us.getPassword(),us.getName(),us.getSurname(),us.toEnumGender(us.getGender()),us.toEnumRole(us.getRole()));
+		 
+		}*/
+
+		
+		Reservations reservations = (Reservations) ctx.getAttribute("reservations");
+		for(Reservation res : reservations.getReservations()) {
+			if(res.getApartment().getId().equals(r.getApartment().getId()) && res.getBookingStartDate().equals(r.getBookingStartDate())) {
+				res.izmeniStatus("CANCELED");
+				//res.getGuest()
+				break;
+			}
+		}
+	
+		reservations.saveReservations(contextPath);
+		users.sacuvajKorisnike(contextPath);
+		//ctx.setAttribute("reservations", reservations);
+		
+		return Response.status(200).build();
 	}
 	
 	@POST
@@ -252,32 +330,65 @@ public class ReservationService {
 		String contextPath = ctx.getRealPath("");
 		
 		User us = (User)users.getUser(ulogovani.getUsername());
-		/*Host h;
-		String usernameHosta= r.getApartment().getHost();
-		try {
-	      h = (Host) users.getUser(ulogovani.getUsername());
-		}catch(Exception e) {
-		  g = new Guest(us.getUsername(),us.getPassword(),us.getName(),us.getSurname(),us.toEnumGender(us.getGender()),us.toEnumRole(us.getRole()));
-		 
-		}*/
 
 		
 		Reservations reservations = (Reservations) ctx.getAttribute("reservations");
 		for(Reservation res : reservations.getReservations()) {
 			if(res.getApartment().getId().equals(r.getApartment().getId()) && res.getBookingStartDate().equals(r.getBookingStartDate())) {
 				res.izmeniStatus("REJECTED");
-				//g.izmeniStatus("REJECTED", r);
-				//res.getGuest().get
 				break;
 			}
 		}
 		
-		//User user = users.getUser(g.getUsername());
-		//users.getUsers().remove(user.getUsername());
-		//users.dodaj(g);
 		reservations.saveReservations(contextPath);
 		users.sacuvajKorisnike(contextPath);
-		//ctx.setAttribute("reservations", reservations);
+		ctx.setAttribute("reservations", reservations);
+		
+		return Response.status(200).build();
+	}
+	
+	@POST
+	@Path("/zavrsi")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response zavrsi(Reservation r) {
+		User ulogovani = (User) request.getSession().getAttribute("ulogovani");
+		if(ulogovani == null) {
+			return null;
+		}	
+		Users users = (Users) ctx.getAttribute("users");
+		String contextPath = ctx.getRealPath("");
+		
+		User us = (User)users.getUser(ulogovani.getUsername());
+
+		
+		Reservations reservations = (Reservations) ctx.getAttribute("reservations");
+		for(Reservation res : reservations.getReservations()) {
+			if(res.getApartment().getId().equals(r.getApartment().getId()) && res.getBookingStartDate().equals(r.getBookingStartDate())) {
+				String[] delovi = res.getBookingStartDate().split("-");
+				Integer god = Integer.parseInt(delovi[0]);
+				Integer month = Integer.parseInt(delovi[1]);
+				Integer day = Integer.parseInt(delovi[2]);
+				String[] delovi2=java.time.LocalDate.now().toString().split("-");
+				Integer god2 = Integer.parseInt(delovi2[0]);
+				Integer month2 = Integer.parseInt(delovi2[1]);
+				Integer day2 = Integer.parseInt(delovi2[2]);
+				if(god<god2) {
+				res.izmeniStatus("COMPLETED");
+				break;
+				}else if(god<=god2 && month<month2) {
+					res.izmeniStatus("COMPLETED");
+					break;
+				}else if(god<=god2 && month<=month2 && day<=day2) {
+					res.izmeniStatus("COMPLETED");
+					break;
+				}
+			}
+		}
+		
+		reservations.saveReservations(contextPath);
+		users.sacuvajKorisnike(contextPath);
+		ctx.setAttribute("reservations", reservations);
 		
 		return Response.status(200).build();
 	}

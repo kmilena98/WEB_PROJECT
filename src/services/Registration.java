@@ -123,7 +123,6 @@ public class Registration {
 		@Produces(MediaType.APPLICATION_JSON)
 		@Consumes(MediaType.APPLICATION_JSON)
 		public ArrayList<User> prikazApartmanaZaDomacina() {
-			System.out.println("Usao ovde!");
 			Apartments postojeciApartmani = (Apartments) ctx.getAttribute("apartments");
 			User u = (User)request.getSession().getAttribute("ulogovani");
 			Reservations reservations = (Reservations) ctx.getAttribute("reservations");

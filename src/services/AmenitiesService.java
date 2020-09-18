@@ -57,7 +57,6 @@ public class AmenitiesService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response dodajSadrzaj(Amenities a) {
-		System.out.println("udjeeeeeeeeeeeeeeeeeeee" + a.getId());
 		
 		User ulogovani = (User) request.getSession().getAttribute("ulogovani");
 		if(ulogovani == null /*|| !ulogovani.getRole().equals("HOST")*/) {
@@ -73,9 +72,7 @@ public class AmenitiesService {
 		Users users = (Users) ctx.getAttribute("users");
 		String contextPath = ctx.getRealPath("");
 		//User kor = (User) request.getSession().getAttribute("ulogovani");
-		System.out.println("Id je : "+a.getId());
 		if(!mapaAmenities.containsKey(a.getId())) {
-			System.out.println("Usao u if, a broj apartmana je "+ amenitiess.getAmenitiess().size());
 			
 			amenitiess.dodaj(a);
 			

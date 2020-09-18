@@ -142,7 +142,6 @@ public class ApartmentService {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public ArrayList<Apartment> prikazApartmanaZaDomacina() {
-		System.out.println("Usao ovde!");
 		Apartments postojeciApartmani = (Apartments) ctx.getAttribute("apartments");
 		User u = (User)request.getSession().getAttribute("ulogovani");
 		
@@ -164,7 +163,6 @@ public class ApartmentService {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public ArrayList<Comment> sviKomentari() {
-		System.out.println("Usao ovde!");
 		Apartments postojeciApartmani = (Apartments) ctx.getAttribute("apartments");
 		User u = (User)request.getSession().getAttribute("ulogovani");
 		
@@ -173,14 +171,12 @@ public class ApartmentService {
 		
 			for(Entry<String, Apartment> pa : postojeciApartmani.getApartments().entrySet()) {
 				if(!pa.getValue().getObrisan()) {
-					System.out.println("Usao ovde");
 					for(Comment c: pa.getValue().getComents()) {
 						komentari.add(c);
 					}
 				}
 			
 		}
-			//System.out.println("Svi komentari " + komentari.size());
 		return komentari; 
 	}
 	
@@ -189,7 +185,6 @@ public class ApartmentService {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public ArrayList<Comment> sviKomentariZaDomacina() {
-		System.out.println("Usao ovde!");
 		Apartments postojeciApartmani = (Apartments) ctx.getAttribute("apartments");
 		User u = (User)request.getSession().getAttribute("ulogovani");
 		
@@ -198,14 +193,12 @@ public class ApartmentService {
 		
 			for(Entry<String, Apartment> pa : postojeciApartmani.getApartments().entrySet()) {
 				if(pa.getValue().getHost().equals(u.getUsername()) && !pa.getValue().getObrisan()) {
-					System.out.println("Usao ovde");
 					for(Comment c: pa.getValue().getComents()) {
 						komentari.add(c);
 					}
 				}
 			
 		}
-			//System.out.println("Svi komentari " + komentari.size());
 		return komentari; 
 	}
 	
@@ -278,7 +271,6 @@ public class ApartmentService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response obrisiApartman(Apartment a) {
 		String contextPath = ctx.getRealPath("");
-		System.out.println("Usao u obrisi");
 		Apartments apartments = (Apartments) ctx.getAttribute("apartments");
 		apartments.obrisi(a);
 		ctx.setAttribute("apartments", apartments);
@@ -390,7 +382,6 @@ public class ApartmentService {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public ArrayList<Comment> sviKomentariZaGosta() {
-		System.out.println("Usao ovde!");
 		Apartments postojeciApartmani = (Apartments) ctx.getAttribute("apartments");
 		User u = (User)request.getSession().getAttribute("ulogovani");
 		
@@ -399,7 +390,6 @@ public class ApartmentService {
 		
 			for(Entry<String, Apartment> pa : postojeciApartmani.getApartments().entrySet()) {
 				if(!pa.getValue().getObrisan()) {
-					System.out.println("Usao ovde");
 					for(Comment c: pa.getValue().getComents()) {
 						if(c.isDopusti()) {
 							komentari.add(c);
@@ -408,7 +398,6 @@ public class ApartmentService {
 				}
 			
 		}
-			//System.out.println("Svi komentari " + komentari.size());
 		return komentari; 
 	}
 }

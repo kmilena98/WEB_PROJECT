@@ -71,6 +71,7 @@ Vue.component("prikazApartmanaZaGosta", {
 	<div v-else>
 	<a href="#/reservation">Apartmani</a>
 	<a href="#/prikazRezervacijaGost">Moje rezervacije</a>
+	<a href="#/showCommentForGuest">Komentari</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
@@ -144,7 +145,7 @@ Vue.component("prikazApartmanaZaGosta", {
                             <tr>
                             	<td>Datumi za izdavanje od:</td>
                             	<td>  <tr v-for="d in this.apartman.datesForRenting">
-									<label> {{d | dateFormat('DD.MM>YYYY')}}</label><br>
+									<label> {{d}}</label><br>
     								</tr>
     							</td>
                             	
@@ -252,7 +253,6 @@ Vue.component("prikazApartmanaZaGosta", {
 	},
 	methods : {
 		prikazi : function(id) {
-			/*alert("dosao"+id);*/
 		    axios.post('rest/apartmani/prikazApartmana')
 	    	
 	        .then(function (response) {
@@ -265,10 +265,9 @@ Vue.component("prikazApartmanaZaGosta", {
 		});
 		},
 		rezervisi : function(){
-
 			if(this.brojNocenja>="1" && this.pocetniDatumRezervacije){
 			this.ukupnaCena = this.brojNocenja*this.apartman.pracePerNight;
-		
+			
 			var rezervacija = {
                 	'apartment' : this.apartman,
                 	'bookingStartDate':this.pocetniDatumRezervacije,
@@ -279,7 +278,9 @@ Vue.component("prikazApartmanaZaGosta", {
                     'status' : "CREATED",
                     
                 };
-
+			
+			
+			alert("Malo pre poziva");
 	            axios.post('rest/reservation/addReservation',rezervacija)
                 .then(function (response) {
                 	alert("Uspesno ste izvrsili rezervaciju.");
