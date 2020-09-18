@@ -175,6 +175,89 @@ public class Apartments {
 		apartments.get(a.getId()).setObrisan(true);
 		saveApartments(putanja);
 	}
+	
+	public HashMap<String, Apartment> pretragaZaDomacina(User u, String datumOd, String datumDo, String grad, double cenaOd, double cenaDo, int brojSobaOd,int brojSobaDo,int brojOsoba) {
+		System.out.println("Uso za pretragu kod domacia");
+		HashMap<String, Apartment> rez = new HashMap<String, Apartment>();
+			for (Map.Entry<String, Apartment> entry : apartments.entrySet()) {
+				if(entry.getValue().getHost().equals(u.getUsername()) && u.getRole().equals("HOST") && !entry.getValue().getObrisan()) {
+					System.out.println("cccccccccccccc " + u.getUsername() + u.getRole());
+					if(provera(entry.getValue(), datumOd, datumDo, grad, cenaOd, cenaDo, brojSobaOd, brojSobaDo, brojOsoba))
+						rez.put(entry.getKey(), entry.getValue());
+				}
+			}
+					
+		return rez;
+	}
+	
+	public HashMap<String, Apartment> pretraga(String datumOd, String datumDo, String grad, double cenaOd, double cenaDo, int brojSobaOd,int brojSobaDo,int brojOsoba) {
+		HashMap<String, Apartment> rez = new HashMap<String, Apartment>();
+			for (Map.Entry<String, Apartment> entry : apartments.entrySet()) {
+				if(provera(entry.getValue(), datumOd, datumDo, grad, cenaOd, cenaDo, brojSobaOd, brojSobaDo, brojOsoba))
+					rez.put(entry.getKey(), entry.getValue());
+			}
+					
+		return rez;
+	}
+	
+	public boolean provera(Apartment a, String datumOd, String datumDo, String grad, double cenaOd, double cenaDo, int brojSobaOd,int brojSobaDo,int brojOsoba) {
+		System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaa");
+		datumOd.trim();
+		datumDo.trim();
+		grad.trim();
+		System.out.println("Datum do " + datumDo);
+		int pom = 0;
+		if(/*!datumOd.equals("") && !datumDo.equals("") &&*/ datumDo.equals(null) || datumOd.equals(null)) {
+			String[] datum1 = datumOd.split("\\-");
+			int godina1 = Integer.parseInt(datum1[0].trim());
+			int mesec1 = Integer.parseInt(datum1[1]);
+			int dan1 = Integer.parseInt(datum1[2]);
+		
+			String[] datum2 = datumDo.split("\\-");
+			int godina2 = Integer.parseInt(datum2[0]);
+			int mesec2 = Integer.parseInt(datum2[1]);
+			int dan2 = Integer.parseInt(datum2[2]);
+		
+		System.out.println("Datum do " + datumDo);
+			for(String trenutni : a.getDatesForRenting()) {
+				System.out.println(a.getDatesForRenting());
+				if(trenutni != null) {
+					String[] datumTrenutni = trenutni.split("\\-");
+					int godinaT = Integer.parseInt(datumTrenutni[0]);
+					int mesecT = Integer.parseInt(datumTrenutni[1]);
+					int danT = Integer.parseInt(datumTrenutni[2]);
+			
+					if(godina1 < godinaT && godina2 > godinaT) {
+						pom++;
+					}else if(godina1 == godinaT || godina2 == godinaT) {
+						if(mesec1 < mesecT && mesec2 > mesecT) {
+							pom++;
+						}else if(mesec1 == mesecT || mesec2 == mesecT) {
+							if(dan1 < danT && dan2 > danT) {
+								pom++;
+							}else if(dan1 == danT || dan2 == danT) {
+								pom++;
+							}
+						}
+					}
+				}
+			}
+		}
+		System.out.println("Pom je: " + pom);
+		/*if((!datumDo.equals(null) && !datumOd.equals(null)) && pom == 0) {
+			System.out.println("Usao ovdeeeeeeeeeeeeee");
+			return false;
+		}*/
+		if(cenaOd != 0 && cenaDo != 0 && (a.getPracePerNight()>= cenaDo || a.getPracePerNight() <= cenaOd)) 
+			return false;
+		if( brojSobaOd != 0 && brojSobaDo != 0 && (a.getRoomNumber()>= brojSobaDo || a.getRoomNumber() <= brojSobaOd)) 
+			return false;
+		if(brojOsoba != 0 && brojOsoba != a.getGuestNumber()) 
+			return false;
+
+
+		return true;
+	}
 
 
 }

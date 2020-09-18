@@ -1396,3 +1396,318 @@ Vue.component("ush", {
 		
 	},
 });
+
+/*Pretraga apartmana  za sve uloge*/
+
+var APARTMANI;
+
+Vue.component("pretragaApartmana", {
+	data: function () {
+		    return {
+		      username: undefined,
+		      role: undefined,
+		      gender: undefined,
+		      user:null,
+		      
+		      datumOd:null,
+		      datumDo:null,
+		      grad:null,
+		      cenaOd:null,
+		      cenaDo:null,
+		      brojSobaOd:null,
+		      brojSobaDo:null,
+		      brojOsoba:null
+		      
+		      
+		    }
+	},
+	template: ` 
+<div>
+	
+	<div class="header">
+		<img class="image" src="images/l.jpg" style="width:150px;height:100px;">
+		<h1>Rezervacija apartmana </h1>
+		<p>Izaberite svoju najbolju ponudu iz snova!</p>
+	</div>
+
+<div class="topnav">
+	<div v-if="user.role==='HOST'" >
+	<a href="#/prikazApartmanaDomacin">Apartmani</a>
+	<a href="#/pk">Korisnici</a>
+	<a href="#/prikazRezervacijaDomacin">Rezervacije korisnika</a>
+	<a href="#/aa">Dodavanje apartmana</a>
+	<a href="#/showAllComment">Komentari</a>
+	<div class="topnav-right">
+		<a href="#/pd">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+	</div>
+	<div v-else-if="user.role==='ADMINISTRATOR'" >
+	<a href="#/ar">Apartmani</a>
+	<a href="#/pk">Korisnici</a>
+	<a href="#/sh">Registracija domacina</a>
+	<a href="#/prikazRezervacijaAdministrator">Rezervacije korisnika</a>
+	<a href="#/sadrzajApartmanaPrikaz">SadrzajApartmana</a>
+	<a href="#/showAllComment">Komentari</a>
+	<div class="topnav-right">
+		<a href="#/pd">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+	</div>
+	<div v-else>
+	<a href="#/reservation">Apartmani</a>
+	<a href="#/prikazRezervacijaGost">Moje rezervacije</a>
+	<div class="topnav-right">
+		<a href="#/pd">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+	</div>
+</div>
+
+
+	  <form accept-charset="UTF-8">
+	  <p style=" text-align:center;">Pretraga apartmana</p>
+            <table class="pretraga" style="margin-left:auto;margin-right:auto;width:40%">
+               
+                <tr>
+                    <td align="right">Datum dolaska:</td>
+                    <td>&nbsp;</td>
+                    <td><input type="date" id="start" name="trip-start"
+    										value="2018-07-22"
+    										min="2018-01-01" max="2040-12-31" v-model="datumOd" style="width:208px;height:25px;"/></td>
+                    <td>&nbsp;</td>
+                    <td align="right">Datum odlaska:</td>
+                    <td>&nbsp;</td>
+                    <td><input type="date" id="start" name="trip-start"
+    										value="2018-07-22"
+    										min="2018-01-01" max="2040-12-31" v-model="datumDo" style="width:208px;height:25px;"/></td>
+
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                 	<td align="right">Grad:</td>
+                    <td>&nbsp;</td>
+                    <td align="left"><input type="text" id="lozinka" v-model="grad"/></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                 	<td align="right">Cena od:</td>
+                    <td>&nbsp;</td>
+                    <td align="left"><input type="number" id="lozinka" v-model="cenaOd"/></td>
+                    <td>&nbsp;</td>
+                    <td align="right">Cena do:</td>
+                    <td>&nbsp;</td>
+                    <td align="left"><input type="number" id="lozinka" v-model="cenaDo"/></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                 	<td align="right">Broj soba od:</td>
+                    <td>&nbsp;</td>
+                    <td align="left"><input type="number" id="lozinka" v-model="brojSobaOd"/></td>
+                    <td>&nbsp;</td>
+                    <td align="right">Broj soba do:</td>
+                    <td>&nbsp;</td>
+                    <td align="left"><input type="number" id="lozinka" v-model="brojSobaDo"/></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                 	<td align="right">Broj osoba u apartmanu:</td>
+                    <td>&nbsp;</td>
+                    <td align="left"><input type="number" id="lozinka" v-model="brojOsoba"/></td>
+                    <td>&nbsp;</td>
+                </tr>
+				 <tr><td>&nbsp;</td><td>&nbsp;</td>
+                  
+                <tr>
+             
+                	<td></td>
+					<td>&nbsp;</td>
+                    	<td align="left">
+                    	<button v-on:click.prevent="pretrazi">Pretrazi</button>
+                    	
+                    	<button onclick="window.location.href='#/pk'">Odustani</button></td>
+                </tr>
+               
+						
+            </table>            
+        </form>
+	
+	
+</div>		  
+`
+	, 
+	mounted(){
+		axios
+        .get('rest/registracija/ulogovani')
+        .then(response =>{
+        	this.user = response.data;
+	    })
+        .catch(error => {
+	        alert("Doslo je do greske prilikom ucitavanja korisnika");
+	    })
+	},
+	methods : {
+		
+		pretrazi: function(){
+           
+            
+            var paramentri = this.datumOd + ";" + this.datumDo + ";" + this.grad + ";" + this.cenaOd + ";" + this.cenaDo + ";" + this.brojSobaOd + ";" + this.brojSobaDo + ";" + this.brojOsoba;
+            
+            if(this.user.role == "ADMINISTRATOR"){
+            	axios.get('rest/apartmani/pretragaApartmana', {params:{naziv:paramentri}})
+            	.then(function (response) {
+            		APARTMANI = response.data;
+            		window.location.href = '#/prikazPretrageApartmana';
+            	})
+            	.catch(function (error) {
+            		alert("Doslo je do greske prilikom pretrage");
+            		alert(error.response.data);
+            	});
+            }else{
+            	axios.get('rest/apartmani/pretragaApartmanaZaDomacina', {params:{naziv:paramentri}})
+            	.then(function (response) {
+            		APARTMANI = response.data;
+            		window.location.href = '#/prikazPretrageApartmana';
+            	})
+            	.catch(function (error) {
+            		alert("Doslo je do greske prilikom pretrage");
+            		alert(error.response.data);
+            	});
+            }
+        },
+		
+		logout : function() {
+	    axios.post('rest/registracija/logout')
+    	
+        .then(function (response) {
+			window.location.href = '#/';
+
+        })
+        .catch(function (error) {
+            alert(error.response.data);
+	});
+	},
+
+		
+	},
+});
+
+Vue.component("prikazPretrageApartmana", {
+	data: function () {
+		    return {
+		    	user:null,
+		    	id:null,
+		    	imeHost:null,
+		    	cena:null,
+		    	brojSobe:null,
+		    	brojGostiju:null,
+		    	status:null,
+		    	apartmani: APARTMANI
+		    }
+	},
+	template: ` 
+<div>
+	
+	<div class="header">
+		<img class="image" src="images/l.jpg" style="width:150px;height:100px;">
+		<h1>Rezervacija apartmana </h1>
+		<p>Izaberite svoju najbolju ponudu iz snova!</p>
+	</div>
+
+<div class="topnav">
+	<div v-if="user.role==='HOST'" >
+	<a href="#/prikazApartmanaDomacin">Apartmani</a>
+	<a href="#/pk">Korisnici</a>
+	<a href="#/prikazRezervacijaDomacin">Rezervacije korisnika</a>
+	<a href="#/aa">Dodavanje apartmana</a>
+	<a href="#/showAllComment">Komentari</a>
+	<div class="topnav-right">
+		<a href="#/pd">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+	</div>
+	<div v-else-if="user.role==='ADMINISTRATOR'" >
+	<a href="#/ar">Apartmani</a>
+	<a href="#/pk">Korisnici</a>
+	<a href="#/sh">Registracija domacina</a>
+	<a href="#/prikazRezervacijaAdministrator">Rezervacije korisnika</a>
+	<a href="#/sadrzajApartmanaPrikaz">SadrzajApartmana</a>
+	<a href="#/showAllComment">Komentari</a>
+	<div class="topnav-right">
+		<a href="#/pd">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+	</div>
+	<div v-else>
+	<a href="#/reservation">Apartmani</a>
+	<a href="#/prikazRezervacijaGost">Moje rezervacije</a>
+	<div class="topnav-right">
+		<a href="#/pd">Moj profil</a>
+		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+	</div>
+</div>
+
+		<button type="button" onclick="window.location.href='#/pretragaApartmana';" type="button" class="button" id="t01">Pretrazi</button>
+
+	  <form accept-charset="UTF-8">
+            <table class="t" id="tabela" style="width:80%">
+                <caption>Pregled korisnika</caption>
+                <tr>
+                	<td></td>
+                    <td>ID:</td>
+                 	<td align="right">Ime domacina</td>                    
+                     <td align="right">Cena</td>
+                     <td align="right">Broj soba</td>
+                     <td align="right">Broj gostiju</td>
+                     <td align="right">Status</td>
+                </tr>
+                
+                <tr v-for="ap in apartmani">
+                
+                <div class="post-media">
+                                <a href="#"><img style="width:150px;height:100px;" v-bind:src="ap.image" alt="" class="img-responsive"></a>
+                   </div><!-- end media -->
+                
+                <td>{{ap.id}}</td>
+                <td>{{ap.host}}</td>
+                <td>{{ap.pracePerNight}}</td>
+                <td>{{ap.roomNumber}}</td>
+                <td>{{ap.guestNumber}}</td>
+                <td>{{ap.status}}</td>
+                </tr>
+						
+            </table>            
+        </form>
+	
+	
+</div>		  
+`
+	, 
+	mounted(){	
+		axios
+        .get('rest/registracija/ulogovani')
+        .then(response =>{
+        	this.user = response.data;
+      	    })
+        .catch(error => {
+	        alert("Doslo je do greske prilikom ucitavanja korisnika");
+	    })
+	},
+	methods : {
+		
+		logout : function() {
+	    axios.post('rest/registracija/logout')
+    	
+        .then(function (response) {
+			window.location.href = '#/';
+
+        })
+        .catch(function (error) {
+            alert(error.response.data);
+	});
+	},
+
+		
+	},
+});
