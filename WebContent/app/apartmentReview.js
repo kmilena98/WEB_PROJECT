@@ -931,21 +931,34 @@ Vue.component("izmenaApartmana", {
 Vue.component("prikazApartmanaZaDomacina", {
 	data: function () {
 		    return {
-		      apartmani: null,
-		      user:null
+		      aktivniApartmani: null,
+		      neaktivniApartmani:null,
+		      user:null,
+		      opt:''
 		      
 		    }
 	},
 	mounted(){
+		this.opt="OPADAJUCE";
         axios
-            .get('rest/apartmani/prikazZaDomacina')
+            .get('rest/apartmani/prikazZaDomacinaAktivni')
             .then(response =>{
-	        	this.apartmani = response.data;
+	        	this.aktivniApartmani = response.data;
     	    })
 	        .catch(error => {
     	        alert("Doslo je do greske prilikom ucitavanja apartmana");
     	        alert(error.response.data);
     	    });
+        
+        axios
+        .get('rest/apartmani/prikazZaDomacinaNeaktivni')
+        .then(response =>{
+        	this.neaktivniApartmani = response.data;
+	    })
+        .catch(error => {
+	        alert("Doslo je do greske prilikom ucitavanja apartmana");
+	        alert(error.response.data);
+	    });
         axios
         .get('rest/registracija/ulogovani')
         .then(response =>{
@@ -999,12 +1012,40 @@ Vue.component("prikazApartmanaZaDomacina", {
 </div>
 
 		<button type="button" onclick="window.location.href='#/izmenaApartmana';" class="button" id="t01">Izmeni</button>
-
+		
 	   <form accept-charset="UTF-8">
             <table class="bla" id="tabela" style="width:25%;">
                 <caption>Pregled apartmana</caption>
-              
-                 <tr v-for="ap in apartmani">
+              <br></br>
+                <p>Aktivni apartmani</p>
+                <br></br>
+                <select  v-model="opt" v-on:click="sortiraj(opt)">
+				    <option>OPADAJUCE</option>
+				    <option>RASTUCE</option>
+				    </select>
+				    <br></br>
+                 <tr v-for="ap in aktivniApartmani">
+                  
+                  <div class="post-media">
+                                <a href="#"><img style="width:150px;height:100px;" v-bind:src="ap.image" alt="" class="img-responsive"></a>
+                   </div><!-- end media -->
+                            
+                <td>
+                	<tr><td>{{ap.location.address.street}}</td></tr>
+					<tr><td>{{ap.location.address.place}}</td>
+					<td>{{ap.location.address.zipCode}}</td></tr>
+					<tr><td>{{ap.location.latitude}}</td>
+					<td>{{ap.location.longitude}}</td></tr>
+			
+				</td>
+                <td>
+					<button type="button" v-on:click.prevent="prikazi(ap)">Prikazi</button>
+				</td>
+                </tr>
+                <br></br>
+                <p>Neaktivni apartmani</p>
+                <br></br>
+                <tr v-for="ap in neaktivniApartmani">
                   <div class="post-media">
                                 <a href="#"><img style="width:150px;height:100px;" v-bind:src="ap.image" alt="" class="img-responsive"></a>
                    </div><!-- end media -->
@@ -1031,6 +1072,26 @@ Vue.component("prikazApartmanaZaDomacina", {
 `
 	, 
 	methods : {
+		sortiraj: function(m) {
+		    function compare(a, b) {
+				  if(m=="RASTUCE"){
+				      if (a.pracePerNight < b.pracePerNight)
+				        return -1;
+				      if (a.pracePerNight > b.pracePerNight)
+				        return 1;
+				      return 0;
+				    }
+				  else{
+					      if (a.pracePerNight < b.pracePerNight)
+					        return 1;
+					      if (a.pracePerNight > b.pracePerNight)
+					        return -1;
+					      return 0;
+					    }
+				  }
+				    return this.aktivniApartmani.sort(compare);
+
+			  },
 		prikazi : function(a) {
 			/*alert("dosao"+id);*/
 		    axios.post('rest/apartmani/prikazApartmana',a)

@@ -157,10 +157,10 @@ public class ApartmentService {
 	}
 	
 	@GET
-	@Path("/prikazZaDomacina")
+	@Path("/prikazZaDomacinaAktivni")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public ArrayList<Apartment> prikazApartmanaZaDomacina() {
+	public ArrayList<Apartment> prikazApartmanaZaDomacinaAktivni() {
 		Apartments postojeciApartmani = (Apartments) ctx.getAttribute("apartments");
 		User u = (User)request.getSession().getAttribute("ulogovani");
 		
@@ -168,11 +168,47 @@ public class ApartmentService {
 		ArrayList<Apartment> ap = new ArrayList<Apartment>();
 		
 			for(Entry<String, Apartment> pa : postojeciApartmani.getApartments().entrySet()) {
-				if(pa.getValue().getHost().equals(u.getUsername())&& !pa.getValue().getObrisan()) {
+				if(pa.getValue().getHost().equals(u.getUsername())&& !pa.getValue().getObrisan() && pa.getValue().getStatus().toString().equals("ACTIVE")) {
 					ap.add(pa.getValue());
 				}
 			
 		}
+		return ap; 
+	}
+	@GET
+	@Path("/prikazZaDomacinaNeaktivni")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public ArrayList<Apartment> prikazApartmanaZaDomacinaNeaktivni() {
+		Apartments postojeciApartmani = (Apartments) ctx.getAttribute("apartments");
+		User u = (User)request.getSession().getAttribute("ulogovani");
+		if(u==null) {
+			System.out.println("Nemamo ulogovanog!");
+		}
+		 
+		ArrayList<Apartment> ap = new ArrayList<Apartment>();
+		
+			for(Entry<String, Apartment> pa : postojeciApartmani.getApartments().entrySet()) {
+				System.out.println(pa.getValue().getHost());
+				System.out.println(u.getUsername());
+				System.out.println(pa.getValue().getObrisan());
+				System.out.println(pa.getValue().getStatus());
+				if(pa.getValue().getHost().equals(u.getUsername())) {
+					System.out.println("Prosao prvu");
+				}
+				if(!pa.getValue().getObrisan()) {
+					System.out.println("Prosao drugu");
+				}
+				if(pa.getValue().getStatus().toString().equals("INACTIVE")) {
+					System.out.println("Prosao 3");
+				}
+				if(pa.getValue().getHost().equals(u.getUsername()) && !pa.getValue().getObrisan() && pa.getValue().getStatus().toString().equals("INACTIVE")) {
+					System.out.println("Dodaoooo!");
+					ap.add(pa.getValue());
+				
+				}
+		}
+			System.out.println(ap.size());
 		return ap; 
 	}
 	

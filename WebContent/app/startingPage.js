@@ -13,8 +13,9 @@ Vue.component("start", {
 		<h1>Rezervacija apartmana </h1>
 		<p>Izaberite svoju najbolju ponudu iz snova!</p>
 	</div>
-
+		
 <div class="topnav">
+<a href="#/showCommentForGuest">Komentari</a>
 	<div class="topnav-right">
 		<a href="#/sc">Prijava</a>
 		<a href="#/ss">Registracija</a>
@@ -68,7 +69,8 @@ Vue.component("start", {
 </div>		  
 `
 	, 
-	methods : {sortiraj: function(m) {
+	methods : {
+		sortiraj: function(m) {
 	    function compare(a, b) {
 			  if(m=="RASTUCE"){
 			      if (a.pracePerNight < b.pracePerNight)

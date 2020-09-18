@@ -2,12 +2,14 @@ Vue.component("reservation", {
 	data: function () {
 		    return {
 		      apartmants: null,
-		      user:null
+		      user:null,
+		      opt:''
 		    }
 	},
 	mounted(){
+		this.opt="OPADAJUCE";
         axios
-            .get('rest/apartmani/aktivniApartmani')
+            .get('rest/apartmani/aktivniApartmaniLista')
             .then(response =>{
 	        	this.apartmants = response.data;
 	        	/*alert("Usao gde treba da udje!");*/
@@ -73,6 +75,10 @@ Vue.component("reservation", {
 
 
 		<button type="button" onclick="window.location.href='#/us';" class="button" id="t01">Pretrazi</button>
+		<select  v-model="opt" v-on:click="sortiraj(opt)">
+				    <option>OPADAJUCE</option>
+				    <option>RASTUCE</option>
+				    </select>
 
 	  <form accept-charset="UTF-8">
             <table class="bla" id="tabela" style="width:25%;">
@@ -105,6 +111,26 @@ Vue.component("reservation", {
 `
 	, 
 	methods : {
+		sortiraj: function(m) {
+		    function compare(a, b) {
+				  if(m=="RASTUCE"){
+				      if (a.pracePerNight < b.pracePerNight)
+				        return -1;
+				      if (a.pracePerNight > b.pracePerNight)
+				        return 1;
+				      return 0;
+				    }
+				  else{
+					      if (a.pracePerNight < b.pracePerNight)
+					        return 1;
+					      if (a.pracePerNight > b.pracePerNight)
+					        return -1;
+					      return 0;
+					    }
+				  }
+				    return this.apartmants.sort(compare);
+
+			  },
 		prikazi : function(a) {
 		    axios.post('rest/apartmani/prikazApartmana',a)
 	        .then(function (response) {
@@ -1324,12 +1350,19 @@ Vue.component("showAllComment", {
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
 	</div>
 	</div>
-	<div v-else>
+	<div v-else-if="user.role==='USER'">
 	<a href="#/reservation">Apartmani</a>
 	<a href="#/prikazRezervacijaGost">Moje rezervacije</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+	</div>
+	<div v-else>
+	<a href="#/showCommentForGuest">Komentari</a>
+	<div class="topnav-right">
+		<a href="#/sc">Prijava</a>
+		<a href="#/ss">Registracija</a>
 	</div>
 	</div>
 </div>
@@ -1454,13 +1487,11 @@ Vue.component("showCommentForGuest", {
         axios
         .get('rest/apartmani/svihKomentaraZaDomacina')
         .then(response =>{
-        	alert("Nasao nasao komentare");
         	this.komentariH = response.data;
         	
 	    })
         .catch(error => {
-	        alert("Doslo je do greske prilikom ucitavanja apartmana");
-	        alert(error.response.data);
+	       
 	    });
         axios
         .get('rest/registracija/ulogovani')
@@ -1504,13 +1535,20 @@ Vue.component("showCommentForGuest", {
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
 	</div>
 	</div>
-	<div v-else>
+	<div v-else-if="user.role==='GUEST'">
 	<a href="#/reservation">Apartmani</a>
 	<a href="#/prikazRezervacijaGost">Moje rezervacije</a>
 	<a href="#/showCommentForGuest">Komentari</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
+	</div>
+	</div>
+	<div v-else>
+	<a href="#/showCommentForGuest">Komentari</a>
+	<div class="topnav-right">
+		<a href="#/sc">Prijava</a>
+		<a href="#/ss">Registracija</a>
 	</div>
 	</div>
 </div>
