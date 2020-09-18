@@ -113,6 +113,7 @@ Vue.component("ar", {
 	, 
 	methods : {
 		sortiraj: function(m) {
+			alert("Usao!");
 		    function compare(a, b) {
 		  if(m=="RASTUCE"){
 		      if (a.pracePerNight < b.pracePerNight)

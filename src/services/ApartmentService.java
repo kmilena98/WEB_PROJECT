@@ -111,6 +111,25 @@ public class ApartmentService {
 	}
 	
 	@GET
+	@Path("/aktivniApartmaniLista")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public ArrayList<Apartment> getAktivniApartmaniLista() {
+
+				
+		ArrayList<Apartment> aktivniApartmani = new ArrayList<Apartment>();
+		Apartments apartmani = (Apartments) ctx.getAttribute("apartments");
+		for(Entry<String, Apartment> a : apartmani.getApartments().entrySet() ) {
+			if(a.getValue().getStatus().equals("ACTIVE")&&!a.getValue().getObrisan()) {
+				aktivniApartmani.add(a.getValue());
+			}else {
+			}
+		}
+		return aktivniApartmani;
+	}
+	
+	
+	@GET
 	@Path("/neaktivniApartmani")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)

@@ -1,7 +1,8 @@
 Vue.component("start", {
 	data: function () {
 		    return {
-		      apartmants: null
+		      apartmants: null,
+		      opt:''
 		    }
 	},
 	template: ` 
@@ -23,7 +24,12 @@ Vue.component("start", {
  <div id="wrapper">
 			    
             <div class="container">
-
+			<button type="button" onclick="window.location.href='#/us';" type="button" class="button" id="t01">Pretrazi</button>
+		 
+		 <select  v-model="opt" v-on:click="sortiraj(opt)">
+				    <option>OPADAJUCE</option>
+				    <option>RASTUCE</option>
+				    </select>
 			<tr >
 			<span v-for="ap in apartmants">
 			<td>
@@ -62,12 +68,32 @@ Vue.component("start", {
 </div>		  
 `
 	, 
-	methods : {
+	methods : {sortiraj: function(m) {
+	    function compare(a, b) {
+			  if(m=="RASTUCE"){
+			      if (a.pracePerNight < b.pracePerNight)
+			        return -1;
+			      if (a.pracePerNight > b.pracePerNight)
+			        return 1;
+			      return 0;
+			    }
+			  else{
+				      if (a.pracePerNight < b.pracePerNight)
+				        return 1;
+				      if (a.pracePerNight > b.pracePerNight)
+				        return -1;
+				      return 0;
+				    }
+			  }
+			    return this.apartmants.sort(compare);
+
+		  },
 		
 	},
 	mounted () {
+		this.opt="OPADAJUCE"
 		 axios
-         .get('rest/apartmani/aktivniApartmani')
+         .get('rest/apartmani/aktivniApartmaniLista')
          .then(response =>{
 	        	this.apartmants = response.data;
 	        	/*alert("Usao gde treba da udje!");*/
