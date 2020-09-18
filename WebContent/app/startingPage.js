@@ -200,6 +200,7 @@ Vue.component("host", {
 	<a href="#/prikazRezervacijaDomacin">Rezervacije korisnika</a>
 	<a href="#/aa">Dodavanje apartmana</a>
 	<a href="#/showAllComment">Komentari</a>
+	<a href="#/pretragaApartmana">Pretraga apartmana</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
@@ -212,6 +213,7 @@ Vue.component("host", {
 	<a href="#/prikazRezervacijaAdministrator">Rezervacije korisnika</a>
 	<a href="#/sadrzajApartmanaPrikaz">SadrzajApartmana</a>
 	<a href="#/showAllComment">Komentari</a>
+	<a href="#/pretragaApartmana">Pretraga apartmana</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
@@ -221,6 +223,7 @@ Vue.component("host", {
 	<a href="#/reservation">Apartmani</a>
 	<a href="#/prikazRezervacijaGost">Moje rezervacije</a>
 	<a href="#/showCommentForGuest">Komentari</a>
+	<a href="#/pretragaApartmana">Pretraga apartmana</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>

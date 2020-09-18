@@ -17,6 +17,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -455,4 +456,145 @@ public class ApartmentService {
 		}
 		return komentari; 
 	}
+	
+	@GET
+	@Path("/pretragaApartmana")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public HashMap<String, Apartment> pretragaApartmana(@QueryParam("naziv") String paramentri) {
+		
+		System.out.println("Usao u rest");
+		
+		Users users = (Users) ctx.getAttribute("users");
+		Apartments apartments = (Apartments) ctx.getAttribute("apartments");
+		String[] deo = paramentri.split(";");
+		String datumOd = "";
+		String datumDo = "";
+		String grad = "";
+		double cenaOd = 0;
+		double cenaDo = 0;
+		int brojSobaOd = 0;
+		int brojSobaDo = 0;
+		int brojOsoba = 0;
+		try {
+			datumOd = deo[0];
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		try {
+			datumDo = deo[1];
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		try {
+			grad = deo[2];
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		try {
+			cenaOd = Double.parseDouble(deo[3]);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		try {
+			cenaDo = Double.parseDouble(deo[4]);
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		}
+		try {
+			brojSobaOd =Integer.parseInt(deo[5]);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		try {
+			brojSobaDo = Integer.parseInt(deo[6]);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		try{
+			brojOsoba = Integer.parseInt(deo[7]);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		System.out.println("Broj soba od: " + brojSobaOd);
+		System.out.println("Broj soba do: " + brojSobaDo);
+		System.out.println("Broj osoba: " + brojOsoba);
+		
+		return apartments.pretraga(datumOd, datumDo, grad, cenaOd, cenaDo, brojSobaOd, brojSobaDo, brojOsoba);
+	
+	}
+	
+	@GET
+	@Path("/pretragaApartmanaZaDomacina")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public HashMap<String, Apartment> pretragaApartmanaZaDomacina(@QueryParam("naziv") String paramentri) {
+		
+		System.out.println("Usao u rest");
+		
+		User u = (User)request.getSession().getAttribute("ulogovani");
+		
+		Users users = (Users) ctx.getAttribute("users");
+		Apartments apartments = (Apartments) ctx.getAttribute("apartments");
+		String[] deo = paramentri.split(";");
+		String datumOd = "";
+		String datumDo = "";
+		String grad = "";
+		double cenaOd = 0;
+		double cenaDo = 0;
+		int brojSobaOd = 0;
+		int brojSobaDo = 0;
+		int brojOsoba = 0;
+		try {
+			datumOd = deo[0];
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		try {
+			datumDo = deo[1];
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		try {
+			grad = deo[2];
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		try {
+			cenaOd = Double.parseDouble(deo[3]);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		try {
+			cenaDo = Double.parseDouble(deo[4]);
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		}
+		try {
+			brojSobaOd =Integer.parseInt(deo[5]);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		try {
+			brojSobaDo = Integer.parseInt(deo[6]);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		try{
+			brojOsoba = Integer.parseInt(deo[7]);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		System.out.println("Broj soba od: " + brojSobaOd);
+		System.out.println("Broj soba do: " + brojSobaDo);
+		System.out.println("Broj osoba: " + brojOsoba);
+		
+		return apartments.pretragaZaDomacina(u, datumOd, datumDo, grad, cenaOd, cenaDo, brojSobaOd, brojSobaDo, brojOsoba);
+	
+	}
+
 }
