@@ -62,11 +62,27 @@ public class ApartmentService {
 	@Path("/ap")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public HashMap<String, Apartment> getApartmani() {
+	public ArrayList<Apartment> getApartmani() {
 		User ulogovani = (User) request.getSession().getAttribute("ulogovani");
 		if(ulogovani == null) {
 			return null;
 		}		
+		Apartments apartmani = (Apartments) ctx.getAttribute("apartments");
+		ArrayList<Apartment> postojeciApartmani = new ArrayList<Apartment>();
+		for(Entry<String, Apartment> a:apartmani.getApartments().entrySet()) {
+			if(!a.getValue().getObrisan())
+			postojeciApartmani.add(a.getValue());
+		}
+		return postojeciApartmani;
+	}
+	
+	@GET
+	@Path("/appom")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public HashMap<String, Apartment> getApartmani2() {
+		User ulogovani = (User) request.getSession().getAttribute("ulogovani");
+				
 		Apartments apartmani = (Apartments) ctx.getAttribute("apartments");
 		HashMap<String, Apartment> postojeciApartmani = new HashMap<String, Apartment>();
 		for(Entry<String, Apartment> a:apartmani.getApartments().entrySet()) {

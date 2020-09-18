@@ -555,7 +555,7 @@ Vue.component("aa", {
         },
         
     	dodajApartman(){
-        	alert("tooooooooo");
+        	
             /*var date = new Date();
 			var month = ('0' + (date.getMonth() + 1)).slice(-2);
 			var day = ('0' + date.getDate()).slice(-2);
@@ -611,7 +611,7 @@ Vue.component("aa", {
 				}*/
 				
 				/*if(ok){*/
-        	alert("ssssssss");
+        	
         	
         			var adresa = {
         					 'street': this.street,
@@ -641,18 +641,18 @@ Vue.component("aa", {
                         
                     };
         			var i;
-        			alert("Selektovani amenities"+this.selectedAmenities[0]);
+        			
         			/*for (i = 0; i < amenities.length; i++) {
         				alert("Usao u for");
         				var el = document.getElementById('this.amanities[i].id');
         				alert(el);
         			  
         			}*/
-                    alert("aaaaaaaa");
+                   
 		            axios.post('rest/apartmani/add', ap)
                     .then(function (response) {
-                    	alert("dovdexxxxxxx");
-                        /*window.location.href = "#/sh";*/
+                    	alert("Uspesno dodavanje apartmana!");
+                        window.location.href = "#/prikazApartmanaDomacin";
                     })
                     .catch(function (error) {
                     	alert("exception");

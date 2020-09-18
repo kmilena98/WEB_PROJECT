@@ -218,4 +218,43 @@ public class Apartment {
 		coments.add(comment);
 	}
 	
+	public boolean ispravnaRezervacija(Reservation r) {
+		System.out.println("Stigao");
+		String[] delovi = r.getBookingStartDate().split("-");
+		int godinaR = Integer.parseInt(delovi[0]);
+		int mesecR = Integer.parseInt(delovi[1]);
+		int danR = Integer.parseInt(delovi[2]);
+		
+		int pom = 0;
+		
+		for(int i = 0; i < r.getNumberOfNights();i++) {
+			
+			for(String d : datesForRenting) {
+				String[] delovi2 = r.getBookingStartDate().split("-");
+				int godina = Integer.parseInt(delovi2[0]);
+				int mesec = Integer.parseInt(delovi2[1]);
+				int dan = Integer.parseInt(delovi2[2]);
+				
+				if(godina==godinaR && mesec==mesecR && dan==danR) {
+					pom++;
+					break;
+				}
+			}
+			if(danR==30) {
+				if(mesecR==12) {
+					mesecR=1;
+				}
+				danR=0;
+			}
+			danR++;
+		}
+		
+		if(pom>= r.getNumberOfNights()) {
+			return true;
+		}else {
+			return false;
+		}
+		
+	}
+	
 }

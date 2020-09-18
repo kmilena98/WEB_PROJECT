@@ -63,51 +63,61 @@ public class ReservationService {
 	public Response dodajRezervaciju(Reservation r) {
 		
 		System.out.println("Zahtev je dosao do backa!");
-
-		User kor = (User) request.getSession().getAttribute("ulogovani");
-		if(kor == null ) {
-			return Response.status(400).entity("Niste ulogovani").build();
-		}
-		if(r.getNumberOfNights()<=0  || r.getGuest()==null || r.getApartment()==null || r.getBookingStartDate()==null) {
-			return Response.status(400).entity("Greska prilikom popunjavanja polja.").build();
-		}
-			
-		Reservations reservations = (Reservations) ctx.getAttribute("reservations");
-		ArrayList<Reservation> mapaRezervacija = reservations.getReservations();
-		Users users = (Users) ctx.getAttribute("users");
-		String contextPath = ctx.getRealPath("");
-		boolean prosao = false;
-		for(Reservation res : reservations.getReservations()) {
-			if(res.getApartment().getId().equals(r.getApartment().getId()) && res.getBookingStartDate().equals(r.getBookingStartDate()) && res.getStatus().equals("ACCEPTED")){
-				prosao = true;
-				break;
+		System.out.println("Izgled datuma : "+r.getBookingStartDate());
+		
+		Apartments apartmani = (Apartments)ctx.getAttribute("apartments");
+		Apartment a = apartmani.getApartment(r.getApartment().getId());
+		boolean ispravna = a.ispravnaRezervacija(r);
+		System.out.println("dA LI JE ISPRAVNA?? "+ispravna);
+		if(ispravna) {
+		
+			User kor = (User) request.getSession().getAttribute("ulogovani");
+			if(kor == null ) {
+				return Response.status(400).entity("Niste ulogovani").build();
 			}
-		}
-			if(!prosao) {
-				System.out.println("Usao je u if");
-					User us = (User)users.getUser(kor.getUsername());
-					Guest g;
-					String usernameHosta= r.getApartment().getHost();
-					try {
-						g = (Guest) users.getUser(kor.getUsername());
-					}catch(Exception e) {
-						g = new Guest(us.getUsername(),us.getPassword(),us.getName(),us.getSurname(),us.toEnumGender(us.getGender()),us.toEnumRole(us.getRole()));
-			 
-					}
-			
-					g.addReservation(r);
-					reservations.add(r);
-			
-					users.getUsers().remove(g.getUsername());
-					users.dodaj(g);
-					users.sacuvajKorisnike(contextPath);
-					reservations.saveReservations(contextPath);
-					return Response.status(200).build();
+			if(r.getNumberOfNights()<=0  || r.getGuest()==null || r.getApartment()==null || r.getBookingStartDate()==null) {
+				return Response.status(400).entity("Greska prilikom popunjavanja polja.").build();
+			}
 				
-			}else {
-				System.out.println("Usao je u else");
-				return Response.status(400).entity("Apartman koji zelite da rezervisete u tom periodu je zauzet.").build();
+			Reservations reservations = (Reservations) ctx.getAttribute("reservations");
+			ArrayList<Reservation> mapaRezervacija = reservations.getReservations();
+			Users users = (Users) ctx.getAttribute("users");
+			String contextPath = ctx.getRealPath("");
+			boolean prosao = false;
+			for(Reservation res : reservations.getReservations()) {
+				if(res.getApartment().getId().equals(r.getApartment().getId()) && res.getBookingStartDate().equals(r.getBookingStartDate()) && res.getStatus().equals("ACCEPTED")){
+					prosao = true;
+					break;
+				}
 			}
+				if(!prosao) {
+					System.out.println("Usao je u if");
+						User us = (User)users.getUser(kor.getUsername());
+						Guest g;
+						String usernameHosta= r.getApartment().getHost();
+						try {
+							g = (Guest) users.getUser(kor.getUsername());
+						}catch(Exception e) {
+							g = new Guest(us.getUsername(),us.getPassword(),us.getName(),us.getSurname(),us.toEnumGender(us.getGender()),us.toEnumRole(us.getRole()));
+				 
+						}
+				
+						g.addReservation(r);
+						reservations.add(r);
+				
+						users.getUsers().remove(g.getUsername());
+						users.dodaj(g);
+						users.sacuvajKorisnike(contextPath);
+						reservations.saveReservations(contextPath);
+						return Response.status(200).build();
+					
+				}else {
+					System.out.println("Usao je u else");
+					return Response.status(400).entity("Apartman koji zelite da rezervisete u tom periodu je zauzet.").build();
+				}
+		}else {
+			return Response.status(400).entity("Nema dovoljno noci za rezervaciju.").build();
+		}
 		
 	}
 	@GET

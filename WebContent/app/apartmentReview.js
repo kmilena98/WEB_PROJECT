@@ -3,10 +3,12 @@ Vue.component("ar", {
 	data: function () {
 		    return {
 		      apartmants: null,
-		      user:null
+		      user:null,
+		      opt:""
 		    }
 	},
 	mounted(){
+		opt="RASTUCE";
         axios
             .get('rest/apartmani/ap')
             .then(response =>{
@@ -70,30 +72,33 @@ Vue.component("ar", {
 	</div>
 	</div>
 </div>
-
+		
 		<button type="button" onclick="window.location.href='#/us';" type="button" class="button" id="t01">Pretrazi</button>
-
+		 
+		 <select  v-model="opt" v-on:click="sortiraj(opt)">
+				    <option>OPADAJUCE</option>
+				    <option>RASTUCE</option>
+				    </select>
 	  <form accept-charset="UTF-8">
-            <table class="bla" id="tabela" style="width:25%;">
+            <table class="bla" id="tabela" style="width:50%;">
                 <caption>Pregled apartmana</caption>
               
                  <tr v-for="ap in apartmants">
                   <div class="post-media">
-                                <a href="#"><img style="width:150px;height:100px;" v-bind:src="ap.image" alt="" class="img-responsive"></a>
+                                <a href="#"><img style="width:250px;height:200px;" v-bind:src="ap.image" alt="" class="img-responsive"></a>
                    </div><!-- end media -->
                             
                 <td>
-                	<tr><td>{{ap.location.address.street}}</td></tr>
-					<tr><td>{{ap.location.address.place}}</td>
-					<td>{{ap.location.address.zipCode}}</td></tr>
-					<tr><td>{{ap.location.latitude}}</td>
-					<td>{{ap.location.longitude}}</td></tr>
-			
+                	<tr><td>Ulica : {{ap.location.address.street}}</td></tr>
+					<tr><td>Grad :{{ap.location.address.place}}</td></tr>
+					<tr><td>Zip kod :{{ap.location.address.zipCode}}</td></tr>
+					<tr><td>Cena :{{ap.pracePerNight}}</td>
 				</td>
+				<br></br>
                 <td>
                
 					<button type="button" v-on:click.prevent="prikazi(ap)">Prikazi</button>
-				
+				   
 					</td>
                 </tr>
                 
@@ -106,8 +111,29 @@ Vue.component("ar", {
 `
 	, 
 	methods : {
+		sortiraj: function(m) {
+		    function compare(a, b) {
+		  if(m=="RASTUCE"){
+		      if (a.pracePerNight < b.pracePerNight)
+		        return -1;
+		      if (a.pracePerNight > b.pracePerNight)
+		        return 1;
+		      return 0;
+		    }
+		  else{
+			      if (a.pracePerNight < b.pracePerNight)
+			        return 1;
+			      if (a.pracePerNight > b.pracePerNight)
+			        return -1;
+			      return 0;
+			    }
+		  }
+		    return this.apartmants.sort(compare);
+
+	  },
+			
+		
 		prikazi : function(a) {
-			/*alert("dosao"+id);*/
 		    axios.post('rest/apartmani/prikazApartmana',a)
 	    	
 	        .then(function (response) {
@@ -115,7 +141,6 @@ Vue.component("ar", {
 
 	        })
 	        .catch(function (error) {
-	        	alert("usao u exaption!");
 	            alert(error.response.data);
 		});
 		},
@@ -149,21 +174,17 @@ Vue.component("prikazApartmana", {
             .get('rest/apartmani/prikaz')
             .then(response =>{
 	        	this.apartman = response.data;
-	        	alert("Dobio trazeni apartman"+this.apartman.id);
     	    })
 	        .catch(error => {
     	        alert("Doslo je do greske prilikom ucitavanja apartmana");
-    	        alert(error.response.data);
     	    })
         axios
         .get('rest/registracija/ulogovani')
         .then(response =>{
         	this.user = response.data;
-        	alert("Dobio korisnika"+this.user.username);
 	    })
         .catch(error => {
 	        alert("Doslo je do greske prilikom ucitavanja korisnika");
-	        alert(error.response.data);
 	    })
 	},
 	template: ` 
@@ -221,37 +242,43 @@ Vue.component("prikazApartmana", {
 		<button type="button" v-on:click.prevent="posalji(apartman)" class="button" id="t01" style="width:120px;height:60px;">Prikaz komentar</button>
 		</div>
 	  <form accept-charset="UTF-8">
-            <table class="bla" id="tabela" style="width:25%;">
+            <table class="bla" id="tabela" style="width:100%;">
                 <caption>Pregled izabranog apartmana</caption>
               
-                <tr>
+         <tr>
                  <td>
+                 
                   <div class="post-media">
-                                <a href="#"><img style="width:150px;height:100px;" v-bind:src="this.apartman.image" alt="" class="img-responsive"></a>
+                                <a href="#"><img style="width:350px;height:200px;" v-bind:src="this.apartman.image" alt="" class="img-responsive"></a>
                    </div><!-- end media -->
                  </td>        
-                <td>
+             <td >
+               
                 <tr>
-                	<div id="forme" class="dodavanjeApartmana">
+                	<div >
 		    		
                             <tr>
-                            	 <tr>
+                            	
                                 <td align="left">ID:</td>
                                 <td align="left">{{this.apartman.id}}</td>
-                                <td>&nbsp;&nbsp;</td>
+                                &nbsp;&nbsp;
                             </tr>
-                            
+                            <tr>
                                 <td align="left">Tip apartmana:</td>
                                 <td align="left">{{this.apartman.roomType}}</td>
+                                  <td>&nbsp;&nbsp;</td>
 							</tr>	
 							 <tr>
                                 <td align="left">Broj soba:</td>
                                 <td align="left">{{this.apartman.roomNumber}}</td>
+                                  <td>&nbsp;&nbsp;</td>
 							</tr>
 							<tr>
                                 <td align="left">Broj gostiju:</td>
                                 <td align="left">{{this.apartman.guestNumber}}</td>
+                                  <td>&nbsp;&nbsp;</td>
 							</tr>
+							<br></br>
                             <tr>
                                 <td align="left">Lokacija:</td>
                                 <td align="left">
@@ -276,15 +303,17 @@ Vue.component("prikazApartmana", {
                                 		<td>{{this.apartman.location.address.zipCode}}</td>
                                 	</tr>
                                 </td>
-                               </tr>
+                             </tr>
+                               <br></br>
                             <tr>
                             	<td>Datumi za izdavanje od:</td>
                             	<td>  <tr v-for="d in this.apartman.datesForRenting">
 									<label> {{d | dateFormat('DD.MM>YYYY')}}</label><br>
-    								</tr>
+    							
     							</td>
                             	
                             </tr>
+                            <br></br>
                             <tr>
                                 <td align="left">Cena:</td>
                                 <td align="left">{{this.apartman.pracePerNight}}</td>
@@ -321,6 +350,7 @@ Vue.component("prikazApartmana", {
                           	   			
                       </div>
 					</tr>
+				
 				</td>
                </tr>
                 
@@ -336,12 +366,10 @@ Vue.component("prikazApartmana", {
 		posalji : function(apartman){
 			axios.post('rest/apartmani/prikazApartmana', apartman)
 			.then(function (response) {
-				alert("Usao u pregled komentara");
 				window.location.href = '#/showComment';
 	        })
 	        .catch(function (error) {
 	        	alert("usao u exaption!");
-	            alert(error.response.data);
 		});
 		},
 		prikazi : function(id) {
@@ -354,11 +382,9 @@ Vue.component("prikazApartmana", {
 	        })
 	        .catch(function (error) {
 	        	alert("usao u exaption!");
-	            alert(error.response.data);
 		});
 		},
 		obrisi : function() {
-			alert("dosao");
 		    axios.post('rest/apartmani/obrisi',this.apartman)
 	    	
 	        .then(function (response) {
@@ -430,7 +456,6 @@ Vue.component("izmenaApartmana", {
 	            this.place= this.apartman.location.address.place,
 	            this.zipCode =this.apartman.location.address.zipCode,
 	            this.datesForRenting = this.apartman.datesForRenting,
-	            alert(this.apartman.datesForRenting);
 	            this.host= this.apartman.host,
 	            this.pracePerNight= this.apartman.pracePerNight,
 	            this.checkinTime= this.apartman.checkinTime,
@@ -787,12 +812,8 @@ Vue.component("izmenaApartmana", {
 			return false;
 		},
 		dodajDatum(dateForRenting){
-			alert("Usao u dodajDatum");
-			alert(dateForRenting);
 			this.datesForRenting.push(dateForRenting);
 
-			alert("Usao u dodajDatum2");
-			alert(this.datesForRenting[0]);
 		},
         uploadImage(e){
             const im = e.target.files[0];
@@ -891,11 +912,9 @@ Vue.component("izmenaApartmana", {
                         'amenities' : this.selectedAmenities,
                         
                     };
-        			alert("Status apartmana je"+this.status);
-        			alert("Status u samom apartmanu je "+ ap.status);
 		            axios.post('rest/apartmani/edit', ap)
                     .then(function (response) {
-                    	alert("dovdexxxxxxx");
+                    	alert("Apartman je uspesno editovan!");
                         window.location.href = "#/prikazApartmana";
                     })
                     .catch(function (error) {
@@ -920,7 +939,6 @@ Vue.component("prikazApartmanaZaDomacina", {
             .get('rest/apartmani/prikazZaDomacina')
             .then(response =>{
 	        	this.apartmani = response.data;
-	        	alert("Dobio trazene apartmane");
     	    })
 	        .catch(error => {
     	        alert("Doslo je do greske prilikom ucitavanja apartmana");

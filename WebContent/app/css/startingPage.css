@@ -3,6 +3,11 @@ body {
   box-sizing: border-box;
 }
 
+.m div{
+  display: flex;  
+  flex-wrap: wrap;
+}
+
 /* Style the header */
 .header {
   padding: 20px;

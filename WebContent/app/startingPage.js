@@ -1,7 +1,7 @@
 Vue.component("start", {
 	data: function () {
 		    return {
-		      products: null
+		      apartmants: null
 		    }
 	},
 	template: ` 
@@ -21,22 +21,39 @@ Vue.component("start", {
 	</div>
 </div>
 
-<div class="row">
-  <div class="column side">
-    <h2>Side</h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
-  </div>
+ <div id="wrapper">
+			    
+            <div class="container">
+
+			<tr >
+			<span v-for="ap in apartmants">
+			<td>
+                  <div class="blog-box">
+                <br></br>
+                <span  class="post-media">
+                                <a href="#"><img style="width:350px;height:250px;" v-bind:src="ap.image" alt="" class="img-responsive"></a>
+                   &nbsp;
+                    &nbsp;
+                     &nbsp;
+                      &nbsp;
+                       &nbsp;
+                   </span><!-- end media -->
+                    <div class="blog-desc">
+                	<tr><td>{{ap.location.address.street}}</td></tr>
+					<tr><td>{{ap.location.address.place}}</td>
+					<td>{{ap.location.address.zipCode}}</td></tr>
+					<tr><td>{{ap.location.latitude}}</td>
+					<td>{{ap.location.longitude}}</td></tr>
+					<td>&nbsp;</td>
+			
+			</td>
+				</span>
+             </div>
+           </tr>
+           </div>
+		</div>
   
-  <div class="column middle">
-    <h2>Main Content</h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet pretium urna. Vivamus venenatis velit nec neque ultricies, eget elementum magna tristiq.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet pretium urna. Vivamus venenatis velit nec neque ultricies, eget elementum magna tristi.</p>
-  </div>
-  
-  <div class="column side">
-    <h2>Side</h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
-  </div>
+ 
 </div>
 <div class="footer">
   <p>Footer</p>
@@ -50,6 +67,16 @@ Vue.component("start", {
 		
 	},
 	mounted () {
+		 axios
+         .get('rest/apartmani/appom')
+         .then(response =>{
+	        	this.apartmants = response.data;
+	        	/*alert("Usao gde treba da udje!");*/
+ 	    })
+	        .catch(error => {
+ 	        alert("Doslo je do greske prilikom ucitavanja apartmana");
+ 	        alert(error.response.data);
+ 	    })
         
     },
 });

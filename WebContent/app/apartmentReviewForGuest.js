@@ -78,7 +78,7 @@ Vue.component("prikazApartmanaZaGosta", {
 </div>
 			
 	  <form accept-charset="UTF-8">
-            <table class="bu" id="tabela" style="width:25%;margin-left: 50px;">
+            <table class="bu" id="tabela" style="width:100%;margin-left: 100px;">
                 <caption  style="font-size:25px;font-family: serif;">Pregled izabranog apartmana</caption>
               
                 <tr>
@@ -264,6 +264,7 @@ Vue.component("prikazApartmanaZaGosta", {
 		});
 		},
 		rezervisi : function(){
+			alert("Pozvao funkciju");
 			if(this.brojNocenja>="1" && this.pocetniDatumRezervacije){
 			this.ukupnaCena = this.brojNocenja*this.apartman.pracePerNight;
 		
@@ -277,7 +278,7 @@ Vue.component("prikazApartmanaZaGosta", {
                     'status' : "CREATED",
                     
                 };
-			/*alert("Dosao do slanja zahteva");*/
+			alert("Pozvao rest");
 	            axios.post('rest/reservation/addReservation',rezervacija)
                 .then(function (response) {
                 	alert("Uspesno ste izvrsili rezervaciju.");
