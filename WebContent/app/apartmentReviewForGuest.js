@@ -16,7 +16,8 @@ Vue.component("prikazApartmanaZaGosta", {
             .get('rest/apartmani/prikaz')
             .then(response =>{
 	        	this.apartman = response.data;
-	        	alert("Dobio trazeni apartman : "+this.apartman.id);
+
+	        	
     	    })
 	        .catch(error => {
     	        alert("Doslo je do greske prilikom ucitavanja apartmana");
@@ -26,7 +27,7 @@ Vue.component("prikazApartmanaZaGosta", {
         .get('rest/registracija/ulogovani')
         .then(response =>{
         	this.user = response.data;
-        	alert("Dobio korisnika : "+this.user.username);
+
 	    })
         .catch(error => {
 	        alert("Doslo je do greske prilikom ucitavanja korisnika");
@@ -264,7 +265,7 @@ Vue.component("prikazApartmanaZaGosta", {
 		});
 		},
 		rezervisi : function(){
-			alert("Pozvao funkciju");
+
 			if(this.brojNocenja>="1" && this.pocetniDatumRezervacije){
 			this.ukupnaCena = this.brojNocenja*this.apartman.pracePerNight;
 		
@@ -278,7 +279,7 @@ Vue.component("prikazApartmanaZaGosta", {
                     'status' : "CREATED",
                     
                 };
-			alert("Pozvao rest");
+
 	            axios.post('rest/reservation/addReservation',rezervacija)
                 .then(function (response) {
                 	alert("Uspesno ste izvrsili rezervaciju.");

@@ -387,6 +387,7 @@ Vue.component("prikazRezervacijaGost", {
 	<div v-else>
 	<a href="#/reservation">Apartmani</a>
 	<a href="#/prikazRezervacijaGost">Moje rezervacije</a>
+	<a href="#/showCommentForGuest">Komentari</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>
@@ -453,7 +454,8 @@ Vue.component("prikazRezervacijaGost", {
 		posalji : function(ap){
 			axios.post('rest/apartmani/prikazApartmana', ap.apartment)
 			.then(function (response) {
-				alert("Usao u slanje komentara");
+
+				
 				window.location.href = '#/writeComment';
 	        })
 	        .catch(function (error) {
@@ -515,7 +517,7 @@ Vue.component("prikazRezervacijaAdministrator", {
             .get('rest/reservation/rezervacijeAdministrator')
             .then(response =>{
 	        	this.reservations = response.data;
-	        	alert("Preuzeo"+this.reservations);
+
 	        	/*alert("Usao gde treba da udje!");*/
     	    })
 	        .catch(error => {
@@ -677,7 +679,6 @@ Vue.component("pretragaRezervacijaDA", {
         axios
         .get('rest/registracija/ulogovani')
         .then(response =>{
-        	alert("Usao kod usera")
         	this.user = response.data;
 	    })
         .catch(error => {
@@ -776,7 +777,7 @@ Vue.component("pretragaRezervacijaDA", {
                 'role': '',
                 'gender': ''
             }*/
-			alert(username);
+
             axios.get('rest/reservation/pretragaRezervacija/' + username)
             .then(function (response) {
             	RESERVATIONS = response.data;
@@ -904,7 +905,7 @@ Vue.component("prikazPretrageRezervacijaDA", {
 	        .get('rest/registracija/ulogovani')
 	        .then(response =>{
 	        	this.user = response.data;
-	        	alert("Dobio korisnika : "+this.user.username);
+
 		    })
 	        .catch(error => {
 		        alert("Doslo je do greske prilikom ucitavanja korisnika");
@@ -1122,7 +1123,7 @@ Vue.component("showComment", {
             .get('rest/apartmani/prikaz')
             .then(response =>{
 	        	this.apartmanA = response.data;
-	        	alert(this.apartman.id);
+
 	        	
     	    })
 	        .catch(error => {
@@ -1484,6 +1485,7 @@ Vue.component("showCommentForGuest", {
 	<div v-else>
 	<a href="#/reservation">Apartmani</a>
 	<a href="#/prikazRezervacijaGost">Moje rezervacije</a>
+	<a href="#/showCommentForGuest">Komentari</a>
 	<div class="topnav-right">
 		<a href="#/pd">Moj profil</a>
 		<a href="#/" v-on:click.prevent="logout">Odjava</a>

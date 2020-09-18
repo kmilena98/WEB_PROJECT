@@ -264,7 +264,7 @@ Vue.component("us", {
 	        .get('rest/registracija/ulogovani')
 	        .then(response =>{
 	        	this.user = response.data;
-	        	alert("Dobio korisnika : "+this.user.username);
+
 		    })
 	        .catch(error => {
 		        alert("Doslo je do greske prilikom ucitavanja korisnika");

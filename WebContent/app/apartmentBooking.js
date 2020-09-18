@@ -536,11 +536,10 @@ Vue.component("aa", {
 			return false;
 		},
 		dodajDatum(dateForRenting){
-			alert("Usao u dodajDatum");
+
 			this.datesForRenting.push(dateForRenting);
 
-			alert("Usao u dodajDatum2");
-			alert(this.datesForRenting[0]);
+
 		},
         uploadImage(e){
             const image = e.target.files[0];
